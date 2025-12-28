@@ -1,223 +1,240 @@
-// winrate-script.js
+// Fungsi untuk menghitung win rate
 function calculateWinRate() {
-    // Get input values
-    const totalMatch = parseInt(document.getElementById('totalMatch').value) || 0;
-    const matchWin = parseInt(document.getElementById('matchWin').value) || 0;
-    const matchLose = parseInt(document.getElementById('matchLose').value) || 0;
+    // Ambil nilai dari input
+    const totalMatch = parseInt(document.getElementById('totalMatch').value);
+    const currentWR = parseFloat(document.getElementById('currentWR').value);
+    const targetWR = document.getElementById('targetWR').value;
     
-    // Validate input
-    if (totalMatch <= 0) {
-        showAlert('Total match harus lebih dari 0!', 'error');
+    // Validasi input
+    if (isNaN(totalMatch) || totalMatch <= 0) {
+        alert("Masukkan jumlah match yang valid (lebih dari 0)");
         return;
     }
     
-    if (matchWin < 0 || matchLose < 0) {
-        showAlert('Nilai tidak boleh negatif!', 'error');
+    if (isNaN(currentWR) || currentWR < 0 || currentWR > 100) {
+        alert("Masukkan win rate yang valid (0-100%)");
         return;
     }
     
-    if (matchWin + matchLose > totalMatch) {
-        showAlert('Jumlah win + lose tidak boleh melebihi total match!', 'error');
-        return;
-    }
+    // Hitung jumlah menang dan kalah saat ini
+    const currentWins = Math.round((currentWR / 100) * totalMatch);
+    const currentLosses = totalMatch - currentWins;
     
-    // Calculate win rate
-    const winRate = (matchWin / totalMatch) * 100;
-    const winRateDecimal = (matchWin / totalMatch).toFixed(3);
+    // Tampilkan hasil saat ini
+    document.getElementById('currentWRDisplay').textContent = currentWR.toFixed(2) + "%";
+    document.getElementById('totalWinResult').textContent = currentWins;
+    document.getElementById('totalLoseResult').textContent = currentLosses;
     
-    // Update results
-    document.getElementById('winRateResult').textContent = winRate.toFixed(1) + '%';
-    document.getElementById('totalMatchResult').textContent = totalMatch;
-    document.getElementById('matchWinResult').textContent = matchWin;
-    document.getElementById('matchLoseResult').textContent = matchLose;
-    document.getElementById('winRateDecimal').textContent = winRateDecimal;
-    
-    // Determine level and recommendation
-    const levelBadge = document.getElementById('levelBadge');
+    // Tampilkan section target jika ada target yang dimasukkan
+    const targetSection = document.getElementById('targetSection');
     const recommendation = document.getElementById('recommendation');
     
-    if (winRate >= 70) {
-        levelBadge.className = 'level-badge badge-pro';
-        levelBadge.textContent = 'PRO PLAYER 🏆';
+    if (targetWR !== "" && !isNaN(parseFloat(targetWR))) {
+        const targetWRValue = parseFloat(targetWR);
+        
+        // Validasi target WR
+        if (targetWRValue < 0 || targetWRValue > 100) {
+            alert("Masukkan target win rate yang valid (0-100%)");
+            return;
+        }
+        
+        if (targetWRValue <= currentWR) {
+            recommendation.innerHTML = `
+                <h4><i class="fas fa-check-circle"></i> INFORMASI</h4>
+                <p>Target win rate (${targetWRValue}%) sudah tercapai atau lebih rendah dari win rate saat ini (${currentWR.toFixed(2)}%).</p>
+            `;
+            
+            // Tetap tampilkan target section
+            targetSection.style.display = 'block';
+            document.getElementById('targetWRDisplay').textContent = targetWRValue.toFixed(2) + "%";
+            
+            // Hitung jika ingin meningkatkan sedikit
+            const requiredMatches = calculateMatchesToTarget(totalMatch, currentWins, targetWRValue);
+            const winStreakNeeded = Math.max(0, requiredMatches - currentLosses - currentWins);
+            
+            document.getElementById('requiredMatches').textContent = requiredMatches;
+            document.getElementById('winStreakNeeded').textContent = winStreakNeeded > 0 ? winStreakNeeded : "0";
+            document.getElementById('requiredWinRate').textContent = targetWRValue.toFixed(2) + "%";
+        } else {
+            // Hitung kebutuhan untuk mencapai target
+            const requiredMatches = calculateMatchesToTarget(totalMatch, currentWins, targetWRValue);
+            const additionalMatches = Math.max(0, requiredMatches - totalMatch);
+            const winStreakNeeded = Math.max(0, requiredMatches - currentLosses - currentWins);
+            
+            // Tampilkan hasil target
+            document.getElementById('targetWRDisplay').textContent = targetWRValue.toFixed(2) + "%";
+            document.getElementById('requiredMatches').textContent = requiredMatches;
+            document.getElementById('winStreakNeeded').textContent = winStreakNeeded > 0 ? winStreakNeeded : "0";
+            document.getElementById('requiredWinRate').textContent = targetWRValue.toFixed(2) + "%";
+            
+            // Berikan rekomendasi berdasarkan hasil
+            if (additionalMatches <= 0) {
+                recommendation.innerHTML = `
+                    <h4><i class="fas fa-trophy"></i> SELAMAT!</h4>
+                    <p>Anda sudah mencapai target win rate ${targetWRValue}% dengan performa saat ini.</p>
+                `;
+            } else if (additionalMatches <= 5) {
+                recommendation.innerHTML = `
+                    <h4><i class="fas fa-star"></i> REKOMENDASI</h4>
+                    <p>Anda hanya perlu ${additionalMatches} match menang lagi untuk mencapai target win rate ${targetWRValue}%.</p>
+                `;
+            } else if (additionalMatches <= 20) {
+                recommendation.innerHTML = `
+                    <h4><i class="fas fa-fire"></i> REKOMENDASI</h4>
+                    <p>Anda perlu ${additionalMatches} match menang untuk mencapai target. Fokus pada performa konsisten!</p>
+                `;
+            } else if (additionalMatches <= 100) {
+                recommendation.innerHTML = `
+                    <h4><i class="fas fa-mountain"></i> REKOMENDASI</h4>
+                    <p>Mencapai target ${targetWRValue}% membutuhkan ${additionalMatches} match menang. Tetap semangat dan konsisten!</p>
+                `;
+            } else {
+                recommendation.innerHTML = `
+                    <h4><i class="fas fa-chart-line"></i> REKOMENDASI</h4>
+                    <p>Target ${targetWRValue}% sangat ambisius! Butuh ${additionalMatches} match menang. Pertimbangkan target bertahap.</p>
+                `;
+            }
+            
+            targetSection.style.display = 'block';
+        }
+    } else {
+        // Jika tidak ada target, sembunyikan section target
+        targetSection.style.display = 'none';
+        
+        // Berikan rekomendasi berdasarkan win rate saat ini
+        updateRecommendation(currentWR);
+    }
+    
+    // Tampilkan hasil
+    document.getElementById('resultContainer').style.display = 'block';
+}
+
+// Fungsi untuk menghitung match yang dibutuhkan untuk mencapai target
+function calculateMatchesToTarget(totalMatches, currentWins, targetWR) {
+    const targetDecimal = targetWR / 100;
+    
+    // Jika target sudah 100% atau lebih dari current
+    if (targetDecimal >= 1) {
+        // Untuk mencapai 100%, kita perlu menang semua match yang kalah
+        const currentLosses = totalMatches - currentWins;
+        return totalMatches + currentLosses;
+    }
+    
+    // Rumus: (currentWins + x) / (totalMatches + x) = targetWR/100
+    // x = [(targetWR/100)*totalMatches - currentWins] / (1 - targetWR/100)
+    const numerator = (targetDecimal * totalMatches) - currentWins;
+    const denominator = 1 - targetDecimal;
+    
+    // Jika denominator 0 (targetWR = 100%), kita sudah handle di atas
+    if (Math.abs(denominator) < 0.0001) {
+        return totalMatches;
+    }
+    
+    const additionalWinsNeeded = numerator / denominator;
+    
+    // Jika additionalWinsNeeded negatif, artinya kita sudah mencapai target
+    if (additionalWinsNeeded <= 0) {
+        return totalMatches;
+    }
+    
+    // Total match yang dibutuhkan = match saat ini + match tambahan yang dibutuhkan
+    // Kita bulatkan ke atas karena tidak mungkin match pecahan
+    return Math.ceil(totalMatches + additionalWinsNeeded);
+}
+
+// Fungsi untuk memberikan rekomendasi berdasarkan win rate
+function updateRecommendation(currentWR) {
+    const recommendation = document.getElementById('recommendation');
+    
+    if (currentWR >= 90) {
         recommendation.innerHTML = `
-            <h3><i class="fas fa-crown"></i> REKOMENDASI</h3>
-            <p>Win rate Anda sangat tinggi! Pertahankan performa ini. Coba tantang diri dengan melawan pemain tier lebih tinggi.</p>
+            <h4><i class="fas fa-crown"></i> LEGENDARY PLAYER!</h4>
+            <p>Win rate Anda luar biasa! Anda termasuk pemain top tier. Pertahankan!</p>
         `;
-        createConfetti();
-    } else if (winRate >= 50) {
-        levelBadge.className = 'level-badge badge-good';
-        levelBadge.textContent = 'GOOD PLAYER ⭐';
+    } else if (currentWR >= 80) {
         recommendation.innerHTML = `
-            <h3><i class="fas fa-thumbs-up"></i> REKOMENDASI</h3>
-            <p>Win rate Anda bagus! Fokus pada konsistensi dan analisis match yang kalah untuk meningkatkan lebih lanjut.</p>
+            <h4><i class="fas fa-award"></i> ELITE PLAYER!</h4>
+            <p>Win rate Anda sangat mengesankan! Sedikit lagi mencapai level legendary.</p>
+        `;
+    } else if (currentWR >= 70) {
+        recommendation.innerHTML = `
+            <h4><i class="fas fa-trophy"></i> PRO PLAYER!</h4>
+            <p>Win rate Anda bagus! Anda sudah di atas rata-rata pemain.</p>
+        `;
+    } else if (currentWR >= 60) {
+        recommendation.innerHTML = `
+            <h4><i class="fas fa-thumbs-up"></i> SOLID PLAYER!</h4>
+            <p>Win rate Anda solid. Fokus pada konsistensi untuk menjadi pro player.</p>
+        `;
+    } else if (currentWR >= 50) {
+        recommendation.innerHTML = `
+            <h4><i class="fas fa-balance-scale"></i> AVERAGE PLAYER</h4>
+            <p>Win rate Anda rata-rata. Analisis permainan dan cari area perbaikan.</p>
+        `;
+    } else if (currentWR >= 40) {
+        recommendation.innerHTML = `
+            <h4><i class="fas fa-book"></i> LEARNING PLAYER</h4>
+            <p>Win rate Anda di bawah rata-rata. Pelajari strategi baru dan review gameplay.</p>
         `;
     } else {
-        levelBadge.className = 'level-badge badge-beginner';
-        levelBadge.textContent = 'BEGINNER 🔰';
         recommendation.innerHTML = `
-            <h3><i class="fas fa-graduation-cap"></i> REKOMENDASI</h3>
-            <p>Tingkatkan skill dengan latihan rutin, tonton tutorial, dan analisis kesalahan. Win rate akan naik seiring waktu!</p>
+            <h4><i class="fas fa-graduation-cap"></i> BEGINNER</h4>
+            <p>Win rate Anda masih rendah. Fokus belajar dasar-dasar dan jangan menyerah!</p>
         `;
     }
-    
-    // Show result container with animation
-    const resultContainer = document.getElementById('resultContainer');
-    resultContainer.classList.add('show');
-    
-    // Play success sound
-    playSuccessSound();
 }
 
-function createConfetti() {
-    const colors = ['#00ff00', '#ff0000', '#ffff00', '#0088ff'];
-    const container = document.querySelector('.container');
-    
-    for (let i = 0; i < 50; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.cssText = `
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            border-radius: 50%;
-            left: ${Math.random() * 100}%;
-            top: -20px;
-            z-index: 1000;
-            opacity: 0.8;
-        `;
-        
-        container.appendChild(confetti);
-        
-        // Animation
-        const animation = confetti.animate([
-            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-            { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
-        ], {
-            duration: 1000 + Math.random() * 1000,
-            easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
-        });
-        
-        animation.onfinish = () => confetti.remove();
-    }
+// Fungsi untuk reset form
+function resetCalculator() {
+    document.getElementById('totalMatch').value = '80';
+    document.getElementById('currentWR').value = '90.1';
+    document.getElementById('targetWR').value = '95';
+    document.getElementById('resultContainer').style.display = 'none';
 }
 
-function playSuccessSound() {
-    // Create a simple beep sound using Web Audio API
-    try {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.value = 800;
-        oscillator.type = 'sine';
-        
-        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.5);
-    } catch (e) {
-        console.log('Audio tidak didukung');
-    }
+// Fungsi untuk menghitung win streak yang dibutuhkan
+function calculateWinStreakNeeded(totalMatches, currentWins, currentLosses, targetMatches) {
+    const remainingMatches = targetMatches - totalMatches;
+    if (remainingMatches <= 0) return 0;
+    
+    // Untuk mencapai target, kita perlu menang semua match yang tersisa
+    return remainingMatches;
 }
 
-function showAlert(message, type) {
-    // Remove existing alert
-    const existingAlert = document.querySelector('.alert');
-    if (existingAlert) existingAlert.remove();
+// Event listener untuk input otomatis
+document.addEventListener('DOMContentLoaded', function() {
+    // Hitung otomatis saat halaman dimuat
+    calculateWinRate();
     
-    // Create alert
-    const alert = document.createElement('div');
-    alert.className = `alert alert-${type}`;
-    alert.textContent = message;
-    alert.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'error' ? '#ff4444' : '#00ff00'};
-        color: white;
-        padding: 15px 20px;
-        border-radius: 10px;
-        z-index: 1000;
-        animation: slideIn 0.3s ease;
-    `;
-    
-    document.body.appendChild(alert);
-    
-    // Auto remove
-    setTimeout(() => {
-        alert.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => alert.remove(), 300);
-    }, 3000);
-}
-
-// Add CSS for alert animations
-const alertStyle = document.createElement('style');
-alertStyle.textContent = `
-    @keyframes slideIn {
-        from { transform: translateX(100%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    @keyframes slideOut {
-        from { transform: translateX(0); opacity: 1; }
-        to { transform: translateX(100%); opacity: 0; }
-    }
-`;
-document.head.appendChild(alertStyle);
-
-// Auto-calculate lose matches
-document.getElementById('matchWin').addEventListener('input', function() {
-    const totalMatch = parseInt(document.getElementById('totalMatch').value) || 0;
-    const matchWin = parseInt(this.value) || 0;
-    const matchLoseInput = document.getElementById('matchLose');
-    
-    if (totalMatch > 0 && matchWin <= totalMatch) {
-        matchLoseInput.value = totalMatch - matchWin;
-    }
-});
-
-// Auto-calculate win matches
-document.getElementById('matchLose').addEventListener('input', function() {
-    const totalMatch = parseInt(document.getElementById('totalMatch').value) || 0;
-    const matchLose = parseInt(this.value) || 0;
-    const matchWinInput = document.getElementById('matchWin');
-    
-    if (totalMatch > 0 && matchLose <= totalMatch) {
-        matchWinInput.value = totalMatch - matchLose;
-    }
-});
-
-// Auto-calculate total match
-document.getElementById('totalMatch').addEventListener('input', function() {
-    const totalMatch = parseInt(this.value) || 0;
-    const matchWin = parseInt(document.getElementById('matchWin').value) || 0;
-    const matchLose = parseInt(document.getElementById('matchLose').value) || 0;
-    
-    if (matchWin + matchLose > totalMatch) {
-        document.getElementById('matchLose').value = totalMatch - matchWin;
-    }
-});
-
-// Calculate on Enter key
-document.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        calculateWinRate();
-    }
-});
-
-// Initial calculation on page load
-window.addEventListener('load', function() {
-    setTimeout(calculateWinRate, 500);
-});
-
-// Add input validation
-document.querySelectorAll('input[type="number"]').forEach(input => {
-    input.addEventListener('blur', function() {
-        if (this.value < 0) this.value = 0;
-        if (this.id === 'totalMatch' && this.value < 1) this.value = 1;
+    // Tambahkan event listener untuk input
+    const inputs = ['totalMatch', 'currentWR', 'targetWR'];
+    inputs.forEach(inputId => {
+        const input = document.getElementById(inputId);
+        if (input) {
+            input.addEventListener('input', calculateWinRate);
+        }
     });
+    
+    // Tambahkan tombol reset jika diperlukan
+    const calculateBtn = document.querySelector('.calculate-btn');
+    if (calculateBtn) {
+        // Tambahkan tooltip
+        calculateBtn.title = "Klik untuk menghitung win rate";
+        
+        // Tambahkan event listener untuk Enter key
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateWinRate();
+            }
+        });
+    }
 });
+
+// Fungsi untuk menghitung dengan contoh
+function calculateExample() {
+    // Contoh 1: Player dengan 100 match, WR 50%, target 60%
+    document.getElementById('totalMatch').value = '100';
+    document.getElementById('currentWR').value = '50';
+    document.getElementById('targetWR').value = '60';
+    calculateWinRate();
+}

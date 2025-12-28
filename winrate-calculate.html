@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Win Rate Calculator - Nand Ski</title>
+    <title>Win Rate Calculator - Target WR | Nand Ski</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="winrate-style.css">
 </head>
@@ -16,31 +16,34 @@
                 <i class="fas fa-arrow-left"></i>
             </a>
             <h1><i class="fas fa-calculator"></i> WIN RATE CALCULATOR</h1>
-            <p>Hitung win rate gaming Anda dengan akurat</p>
+            <p>Hitung win rate gaming Anda dengan target yang diinginkan</p>
         </div>
 
         <div class="input-group">
             <label for="totalMatch">Total Match Dimainkan</label>
             <div class="input-wrapper">
                 <i class="fas fa-gamepad"></i>
-                <input type="number" id="totalMatch" placeholder="Masukkan jumlah match" min="1" value="100">
+                <input type="number" id="totalMatch" placeholder="Masukkan jumlah match" min="1" value="80">
             </div>
+            <div class="input-hint">Jumlah total match yang sudah dimainkan</div>
         </div>
 
         <div class="input-group">
-            <label for="matchWin">Match Menang</label>
+            <label for="currentWR">Win Rate Saat Ini (%)</label>
             <div class="input-wrapper">
-                <i class="fas fa-trophy"></i>
-                <input type="number" id="matchWin" placeholder="Masukkan jumlah win" min="0" value="60">
+                <i class="fas fa-chart-line"></i>
+                <input type="number" id="currentWR" placeholder="Contoh: 90.1, 37.9, 20, 10.03" step="0.01" min="0" max="100" value="90.1">
             </div>
+            <div class="input-hint">Masukkan win rate saat ini (dalam persen)</div>
         </div>
 
         <div class="input-group">
-            <label for="matchLose">Match Kalah</label>
+            <label for="targetWR">Target Win Rate (%) - Opsional</label>
             <div class="input-wrapper">
-                <i class="fas fa-skull"></i>
-                <input type="number" id="matchLose" placeholder="Masukkan jumlah lose" min="0" value="40">
+                <i class="fas fa-bullseye"></i>
+                <input type="number" id="targetWR" placeholder="Masukkan target win rate" step="0.01" min="0" max="100" value="95">
             </div>
+            <div class="input-hint">Kosongkan jika hanya ingin menghitung statistik saat ini</div>
         </div>
 
         <button class="calculate-btn" onclick="calculateWinRate()" aria-label="Hitung win rate">
@@ -50,35 +53,54 @@
         <div class="result-container" id="resultContainer">
             <div class="result-header">
                 <i class="fas fa-chart-line"></i>
-                <h2>HASIL WIN RATE</h2>
+                <h2>HASIL PERHITUNGAN</h2>
             </div>
             
-            <div class="win-rate" id="winRateResult">0%</div>
+            <div class="win-rate-target">
+                <h3>WIN RATE SAAT INI</h3>
+                <div class="win-rate-display" id="currentWRDisplay">0%</div>
+            </div>
             
-            <div id="levelBadge" class="level-badge badge-pro">PRO PLAYER</div>
-            
-            <div class="stats">
-                <div class="stat-box">
-                    <div class="stat-value" id="totalMatchResult">0</div>
-                    <div class="stat-label">Total Match</div>
+            <div class="calculation-results">
+                <div class="result-box">
+                    <div class="result-value" id="totalWinResult">0</div>
+                    <div class="result-label">Total Menang</div>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-value" id="matchWinResult">0</div>
-                    <div class="stat-label">Match Menang</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-value" id="matchLoseResult">0</div>
-                    <div class="stat-label">Match Kalah</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-value" id="winRateDecimal">0.00</div>
-                    <div class="stat-label">Win Rate (Decimal)</div>
+                <div class="result-box">
+                    <div class="result-value" id="totalLoseResult">0</div>
+                    <div class="result-label">Total Kalah</div>
                 </div>
             </div>
-
-            <div class="recommendation" id="recommendation">
-                <h3><i class="fas fa-lightbulb"></i> REKOMENDASI</h3>
-                <p>Mainkan lebih banyak match untuk meningkatkan win rate Anda!</p>
+            
+            <div id="targetSection">
+                <div class="win-rate-target" style="margin-top: 20px;">
+                    <h3>TARGET WIN RATE</h3>
+                    <div class="win-rate-display" id="targetWRDisplay">0%</div>
+                </div>
+                
+                <div class="match-requirements">
+                    <h3><i class="fas fa-list-check"></i> KEBUTUHAN UNTUK MENCAPAI TARGET</h3>
+                    
+                    <div class="requirement-item">
+                        <div class="requirement-label">Total Match Dibutuhkan:</div>
+                        <div class="requirement-value" id="requiredMatches">0</div>
+                    </div>
+                    
+                    <div class="requirement-item">
+                        <div class="requirement-label">Match Menang Berturut-turut:</div>
+                        <div class="requirement-value" id="winStreakNeeded">0</div>
+                    </div>
+                    
+                    <div class="requirement-item">
+                        <div class="requirement-label">Win Rate per Match:</div>
+                        <div class="requirement-value" id="requiredWinRate">0%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-box" id="recommendation">
+                <h4><i class="fas fa-lightbulb"></i> REKOMENDASI</h4>
+                <p>Mainkan lebih banyak match dengan performa konsisten untuk meningkatkan win rate Anda!</p>
             </div>
         </div>
 
