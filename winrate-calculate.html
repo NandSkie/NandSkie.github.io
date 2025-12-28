@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="winrate-style.css">
 </head>
 <body>
-    <!-- HAPUS bg-overlay karena sudah menggunakan background image -->
-    <!-- <div class="bg-overlay"></div> -->
-    
     <div class="container">
         <div class="header">
             <a href="index.html" class="back-btn" aria-label="Kembali ke halaman utama">
@@ -39,7 +36,7 @@
         </div>
 
         <div class="input-group">
-            <label for="targetWR">Target Win Rate (%) - Opsional</label>
+            <label for="targetWR">Target Win Rate (%)</label>
             <div class="input-wrapper">
                 <i class="fas fa-bullseye"></i>
                 <input type="number" id="targetWR" placeholder="Masukkan target win rate" step="0.01" min="0" max="100" value="95">
@@ -57,6 +54,7 @@
                 <h2>HASIL PERHITUNGAN</h2>
             </div>
             
+            <!-- Status Saat Ini -->
             <div class="win-rate-target">
                 <h3>WIN RATE SAAT INI</h3>
                 <div class="win-rate-display" id="currentWRDisplay">0%</div>
@@ -73,14 +71,16 @@
                 </div>
             </div>
             
+            <!-- Bagian Target -->
             <div id="targetSection">
-                <div class="win-rate-target" style="margin-top: 20px;">
+                <div class="win-rate-target">
                     <h3>TARGET WIN RATE</h3>
                     <div class="win-rate-display" id="targetWRDisplay">0%</div>
                 </div>
                 
-                <div class="match-requirements">
-                    <h3><i class="fas fa-list-check"></i> KEBUTUHAN UNTUK MENCAPAI TARGET</h3>
+                <!-- Untuk Menaikkan Win Rate -->
+                <div class="match-requirements" id="increaseSection">
+                    <h3><i class="fas fa-chart-line"></i> KEBUTUHAN UNTUK MENAIKKAN WIN RATE</h3>
                     
                     <div class="requirement-item">
                         <div class="requirement-label">Total Match Dibutuhkan:</div>
@@ -97,8 +97,60 @@
                         <div class="requirement-value" id="requiredWinRate">0%</div>
                     </div>
                 </div>
+                
+                <!-- Untuk Menurunkan Win Rate -->
+                <div class="match-requirements" id="decreaseSection" style="display: none;">
+                    <h3><i class="fas fa-chart-line-down"></i> KEBUTUHAN UNTUK MENURUNKAN WIN RATE</h3>
+                    
+                    <div class="requirement-item">
+                        <div class="requirement-label">Total Match Dibutuhkan:</div>
+                        <div class="requirement-value" id="decreaseMatches">0</div>
+                    </div>
+                    
+                    <div class="requirement-item">
+                        <div class="requirement-label">Match Kalah Berturut-turut:</div>
+                        <div class="requirement-value" id="loseStreakNeeded">0</div>
+                    </div>
+                    
+                    <div class="requirement-item">
+                        <div class="requirement-label">Win Rate per Match:</div>
+                        <div class="requirement-value" id="decreaseWinRate">0%</div>
+                    </div>
+                </div>
+                
+                <!-- Statistik Detail -->
+                <div class="stats-detail">
+                    <h3><i class="fas fa-list-check"></i> STATISTIK DETAIL</h3>
+                    
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-percentage"></i></div>
+                            <div class="detail-content">
+                                <div class="detail-label">Selisih Win Rate</div>
+                                <div class="detail-value" id="wrDifference">0%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-arrow-trend-up"></i></div>
+                            <div class="detail-content">
+                                <div class="detail-label">Perubahan Dibutuhkan</div>
+                                <div class="detail-value" id="wrChangeNeeded">0%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon"><i class="fas fa-calendar-alt"></i></div>
+                            <div class="detail-content">
+                                <div class="detail-label">Estimasi Waktu</div>
+                                <div class="detail-value" id="estimatedTime">0 hari</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
+            <!-- Rekomendasi -->
             <div class="info-box" id="recommendation">
                 <h4><i class="fas fa-lightbulb"></i> REKOMENDASI</h4>
                 <p>Mainkan lebih banyak match dengan performa konsisten untuk meningkatkan win rate Anda!</p>
