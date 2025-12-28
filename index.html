@@ -3,319 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NandSki | Link Hub</title>
+    <title>Nand Ski - Official Links</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/25/25231.png">
 </head>
 <body>
-    <!-- Background Effects -->
-    <div class="background">
-        <div class="glow-circle" id="glow1"></div>
-        <div class="glow-circle" id="glow2"></div>
-        <div class="glow-circle" id="glow3"></div>
-        <div class="grid-lines"></div>
-        <div class="particles" id="particles-container"></div>
-    </div>
-
-    <!-- Main Container -->
+    <div class="bg-overlay"></div>
     <div class="container">
-        <!-- Profile Section -->
-        <section class="profile-section">
-            <!-- Profile Image -->
-            <div class="profile-image-container">
-                <div class="profile-image-wrapper">
-                    <img src="media/avatar.png" alt="Profile" class="profile-image" id="profileImage">
-                    <div class="profile-glow"></div>
-                    <div class="profile-border"></div>
-                </div>
-            </div>
-
-            <!-- Profile Info -->
-            <div class="profile-info">
-                <h1 class="username">
-                    <span class="at-sign">@</span>NandSki
-                </h1>
-                <p class="bio">Digital Creator • Developer • Content Specialist</p>
-                
-                <!-- Stats -->
-                <div class="stats-container">
-                    <div class="stat-item">
-                        <span class="stat-number" id="projectsCount">24</span>
-                        <span class="stat-label">Projects</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="followersCount">1.2K</span>
-                        <span class="stat-label">Followers</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="experienceCount">3+</span>
-                        <span class="stat-label">Years</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Social Media Icons -->
-            <div class="social-media">
-                <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram">
-                    <i class="fab fa-instagram"></i>
-                    <span class="tooltip">Instagram</span>
+        <header class="profile">
+            <img src="./media/avatar.png" alt="Subs Nandski">
+            <h2>@NandSki</h2>
+            
+            <div class="social-icons">
+                <a href="https://wa.me/628126487243" target="_blank" aria-label="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
                 </a>
-                <a href="https://youtube.com" target="_blank" class="social-icon" aria-label="YouTube">
-                    <i class="fab fa-youtube"></i>
-                    <span class="tooltip">YouTube</span>
+                <a href="https://youtube.com/@NandSki" target="_blank" aria-label="YouTube">
+                    <i class="fa-brands fa-youtube"></i>
                 </a>
-                <a href="https://telegram.org" target="_blank" class="social-icon" aria-label="Telegram">
-                    <i class="fab fa-telegram"></i>
-                    <span class="tooltip">Telegram</span>
-                </a>
-                <a href="https://github.com" target="_blank" class="social-icon" aria-label="GitHub">
-                    <i class="fab fa-github"></i>
-                    <span class="tooltip">GitHub</span>
-                </a>
-                <a href="https://discord.com" target="_blank" class="social-icon" aria-label="Discord">
-                    <i class="fab fa-discord"></i>
-                    <span class="tooltip">Discord</span>
+                <a href="https://www.tiktok.com/@sewabot1" target="_blank" aria-label="TikTok">
+                    <i class="fa-brands fa-tiktok"></i>
                 </a>
             </div>
+        </header>
 
-            <!-- Online Status -->
-            <div class="status-indicator">
-                <div class="status-dot"></div>
-                <span class="status-text">Online</span>
-            </div>
-        </section>
+        <div class="links-container">
+            <a href="pricepanel.html" class="link-btn">
+                <i class="fa-solid fa-server"></i> Order Panel NandSki
+            </a>
 
-        <!-- Links Section -->
-        <section class="links-section">
-            <div class="section-header">
-                <h2>
-                    <i class="fas fa-link"></i>
-                    Quick Links
-                </h2>
-                <p class="section-subtitle">Access my digital resources and services</p>
-            </div>
+            <a href="sewabot.html" class="link-btn btn-main">
+                <i class="fa-solid fa-robot"></i> Order Sewa Bot NandSki
+            </a>
 
-            <!-- Links Container -->
-            <div class="links-container">
-                <!-- Category: Services -->
-                <div class="link-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-crown"></i>
-                        Premium Services
-                    </h3>
-                    
-                    <a href="#" class="link-button premium">
-                        <div class="link-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <div class="link-content">
-                            <h4>Order Panel</h4>
-                            <p>Custom dashboard for service orders</p>
-                        </div>
-                        <div class="link-arrow">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
+            <a href="winrate-calculate.html" class="link-btn btn-wr">
+                <i class="fa-solid fa-chart-line"></i> WR CALCULATE
+            </a>
 
-                    <a href="#" class="link-button premium">
-                        <div class="link-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="link-content">
-                            <h4>Order Bot</h4>
-                            <p>Automated ordering system via Telegram</p>
-                        </div>
-                        <div class="link-arrow">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
-                </div>
+            <a href="scriptpremium.html" class="link-btn">
+                <i class="fa-solid fa-code"></i> Script Bot WhatsApp Premium
+            </a>
 
-                <!-- Category: Scripts -->
-                <div class="link-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-code"></i>
-                        Script Collection
-                    </h3>
-                    
-                    <a href="#" class="link-button script-premium">
-                        <div class="link-icon">
-                            <i class="fas fa-gem"></i>
-                        </div>
-                        <div class="link-content">
-                            <h4>Script Premium</h4>
-                            <p>Exclusive premium scripts collection</p>
-                            <span class="badge">🔥 Hot</span>
-                        </div>
-                        <div class="link-arrow">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
+            <a href="unlock.html" class="link-btn">
+                <i class="fa-solid fa-code"></i> Script Bot WhatsApp Free
+            </a>
 
-                    <a href="#" class="link-button script-free">
-                        <div class="link-icon">
-                            <i class="fas fa-code-branch"></i>
-                        </div>
-                        <div class="link-content">
-                            <h4>Script Free</h4>
-                            <p>Open-source scripts for learning</p>
-                        </div>
-                        <div class="link-arrow">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Category: Resources -->
-                <div class="link-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-toolbox"></i>
-                        Resources
-                    </h3>
-                    
-                    <a href="#" class="link-button resource">
-                        <div class="link-icon">
-                            <i class="fas fa-book"></i>
-                        </div>
-                        <div class="link-content">
-                            <h4>Documentation</h4>
-                            <p>Complete guides and tutorials</p>
-                        </div>
-                        <div class="link-arrow">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
-
-                    <a href="#" class="link-button resource">
-                        <div class="link-icon">
-                            <i class="fas fa-download"></i>
-                        </div>
-                        <div class="link-content">
-                            <h4>Templates</h4>
-                            <p>Free templates and resources</p>
-                            <span class="badge free">FREE</span>
-                        </div>
-                        <div class="link-arrow">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
-
-                    <a href="#" class="link-button resource">
-                        <div class="link-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <div class="link-content">
-                            <h4>Tutorials</h4>
-                            <p>Video tutorials and guides</p>
-                        </div>
-                        <div class="link-arrow">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Category: Contact -->
-                <div class="link-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-envelope"></i>
-                        Get in Touch
-                    </h3>
-                    
-                    <a href="mailto:contact@nandski.dev" class="link-button contact">
-                        <div class="link-icon">
-                            <i class="fas fa-envelope-open-text"></i>
-                        </div>
-                        <div class="link-content">
-                            <h4>Email Contact</h4>
-                            <p>Business inquiries and support</p>
-                        </div>
-                        <div class="link-arrow">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
-
-                    <a href="#" class="link-button contact">
-                        <div class="link-icon">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <div class="link-content">
-                            <h4>Support Chat</h4>
-                            <p>Live support via Discord</p>
-                        </div>
-                        <div class="link-arrow">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Featured Badge -->
-            <div class="featured-badge">
-                <i class="fas fa-bolt"></i>
-                <span>Featured Links Updated Weekly</span>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <div class="footer-glow"></div>
-                    <span class="footer-username">@NandSki</span>
-                </div>
-                
-                <p class="footer-text">
-                    Digital creator and developer specializing in automation scripts and web solutions
-                </p>
-                
-                <div class="footer-links">
-                    <a href="#" class="footer-link">Privacy Policy</a>
-                    <span class="footer-separator">•</span>
-                    <a href="#" class="footer-link">Terms of Service</a>
-                    <span class="footer-separator">•</span>
-                    <a href="#" class="footer-link">Status</a>
-                </div>
-                
-                <p class="copyright">
-                    <i class="far fa-copyright"></i>
-                    NandSki <span id="currentYear">2025</span> • All rights reserved
-                </p>
-                
-                <div class="footer-bottom">
-                    <div class="theme-toggle" id="themeToggle">
-                        <i class="fas fa-moon"></i>
-                        <span>Dark Mode</span>
-                    </div>
-                    <div class="visitor-count">
-                        <i class="fas fa-eye"></i>
-                        <span>Visitors: <span id="visitorCount">1,247</span></span>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-content">
-            <div class="loading-spinner">
-                <div class="spinner-circle"></div>
-                <div class="spinner-glow"></div>
-            </div>
-            <div class="loading-text">
-                <span class="loading-username">@NandSki</span>
-                <span class="loading-subtitle">Loading Digital Hub</span>
+            <div class="flex-container">
+                <a href="https://whatsapp.com/channel/0029Vb6m6X29Gv7W4NNcil3l" target="_blank" class="link-btn">
+                    <i class="fa-solid fa-bullhorn"></i> Saluran
+                </a>
+                <a href="https://chat.whatsapp.com/BGBiDGwMDkCIii3UtaiSKf" target="_blank" class="link-btn">
+                    <i class="fa-solid fa-users"></i> Group Free Bot
+                </a>
             </div>
         </div>
+
+        <footer>
+            NandSki ©️ 2025
+            <div class="credit">
+                Website dibuat oleh <strong>NandSki</strong>
+            </div>
+        </footer>
     </div>
 
     <script src="script.js"></script>

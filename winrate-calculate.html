@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Win Rate Calculator - Nand Ski</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="winrate-style.css">
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-btn" aria-label="Kembali ke halaman utama">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1><i class="fas fa-calculator"></i> WIN RATE CALCULATOR</h1>
+            <p>Hitung win rate gaming Anda dengan akurat</p>
+        </div>
+
+        <div class="input-group">
+            <label for="totalMatch">Total Match Dimainkan</label>
+            <div class="input-wrapper">
+                <i class="fas fa-gamepad"></i>
+                <input type="number" id="totalMatch" placeholder="Masukkan jumlah match" min="1" value="100">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="matchWin">Match Menang</label>
+            <div class="input-wrapper">
+                <i class="fas fa-trophy"></i>
+                <input type="number" id="matchWin" placeholder="Masukkan jumlah win" min="0" value="60">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="matchLose">Match Kalah</label>
+            <div class="input-wrapper">
+                <i class="fas fa-skull"></i>
+                <input type="number" id="matchLose" placeholder="Masukkan jumlah lose" min="0" value="40">
+            </div>
+        </div>
+
+        <button class="calculate-btn" onclick="calculateWinRate()" aria-label="Hitung win rate">
+            <i class="fas fa-calculator"></i> HITUNG WIN RATE
+        </button>
+
+        <div class="result-container" id="resultContainer">
+            <div class="result-header">
+                <i class="fas fa-chart-line"></i>
+                <h2>HASIL WIN RATE</h2>
+            </div>
+            
+            <div class="win-rate" id="winRateResult">0%</div>
+            
+            <div id="levelBadge" class="level-badge badge-pro">PRO PLAYER</div>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="totalMatchResult">0</div>
+                    <div class="stat-label">Total Match</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="matchWinResult">0</div>
+                    <div class="stat-label">Match Menang</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="matchLoseResult">0</div>
+                    <div class="stat-label">Match Kalah</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="winRateDecimal">0.00</div>
+                    <div class="stat-label">Win Rate (Decimal)</div>
+                </div>
+            </div>
+
+            <div class="recommendation" id="recommendation">
+                <h3><i class="fas fa-lightbulb"></i> REKOMENDASI</h3>
+                <p>Mainkan lebih banyak match untuk meningkatkan win rate Anda!</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            NandSki ©️ 2025
+            <div class="credit">
+                Win Rate Calculator dibuat oleh <strong>NandSki</strong>
+            </div>
+        </div>
+    </div>
+
+    <script src="winrate-script.js"></script>
+</body>
+</html>
