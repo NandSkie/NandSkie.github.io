@@ -6,7 +6,8 @@
 }
 
 body {
-    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    background: url('./image/bground.png') no-repeat center center fixed;
+    background-size: cover;
     color: #1e3a8a;
     min-height: 100vh;
     padding: 20px;
@@ -15,7 +16,8 @@ body {
     align-items: center;
 }
 
-.bg-overlay {
+/* Hapus .bg-overlay karena sudah menggunakan background image */
+/* .bg-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -23,18 +25,19 @@ body {
     height: 100%;
     background: linear-gradient(135deg, rgba(186, 230, 253, 0.9) 0%, rgba(224, 242, 254, 0.9) 100%);
     z-index: -1;
-}
+} */
 
 .container {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(30, 58, 138, 0.15);
+    box-shadow: 0 15px 35px rgba(30, 58, 138, 0.25);
     width: 100%;
     max-width: 600px;
     padding: 30px;
     position: relative;
     overflow: hidden;
     border: 1px solid rgba(59, 130, 246, 0.2);
+    backdrop-filter: blur(5px);
 }
 
 .header {
@@ -310,6 +313,11 @@ body {
 
 /* Responsive Styles */
 @media (max-width: 600px) {
+    body {
+        padding: 10px;
+        background-attachment: scroll;
+    }
+    
     .container {
         padding: 20px;
     }

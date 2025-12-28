@@ -1,20 +1,23 @@
-// Fungsi untuk menghitung win rate
+// Fungsi untuk menghitung win rate tanpa alert/notifikasi
 function calculateWinRate() {
     // Ambil nilai dari input
     const totalMatch = parseInt(document.getElementById('totalMatch').value);
     const currentWR = parseFloat(document.getElementById('currentWR').value);
     const targetWR = document.getElementById('targetWR').value;
     
-    // Validasi input
+    // Validasi input tanpa alert
     if (isNaN(totalMatch) || totalMatch <= 0) {
-        alert("Masukkan jumlah match yang valid (lebih dari 0)");
+        showValidationError("Jumlah match harus lebih dari 0");
         return;
     }
     
     if (isNaN(currentWR) || currentWR < 0 || currentWR > 100) {
-        alert("Masukkan win rate yang valid (0-100%)");
+        showValidationError("Win rate harus antara 0-100%");
         return;
     }
+    
+    // Reset validation error jika ada
+    clearValidationErrors();
     
     // Hitung jumlah menang dan kalah saat ini
     const currentWins = Math.round((currentWR / 100) * totalMatch);
@@ -32,9 +35,9 @@ function calculateWinRate() {
     if (targetWR !== "" && !isNaN(parseFloat(targetWR))) {
         const targetWRValue = parseFloat(targetWR);
         
-        // Validasi target WR
+        // Validasi target WR tanpa alert
         if (targetWRValue < 0 || targetWRValue > 100) {
-            alert("Masukkan target win rate yang valid (0-100%)");
+            showValidationError("Target win rate harus antara 0-100%");
             return;
         }
         
@@ -108,6 +111,55 @@ function calculateWinRate() {
     // Tampilkan hasil
     document.getElementById('resultContainer').style.display = 'block';
 }
+
+// Fungsi untuk menampilkan error tanpa alert (inline validation)
+function showValidationError(message) {
+    // Hapus error yang lama
+    clearValidationErrors();
+    
+    // Tambahkan pesan error di bawah tombol calculate
+    const calculateBtn = document.querySelector('.calculate-btn');
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'validation-error';
+    errorDiv.innerHTML = `
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>${message}</span>
+    `;
+    errorDiv.style.cssText = `
+        background: #fee2e2;
+        color: #dc2626;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-top: 10px;
+        border-left: 4px solid #dc2626;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        animation: fadeIn 0.3s ease;
+    `;
+    
+    // Tambahkan error setelah tombol
+    calculateBtn.parentNode.insertBefore(errorDiv, calculateBtn.nextSibling);
+    
+    // Sembunyikan hasil jika ada
+    document.getElementById('resultContainer').style.display = 'none';
+}
+
+// Fungsi untuk menghapus error messages
+function clearValidationErrors() {
+    const errors = document.querySelectorAll('.validation-error');
+    errors.forEach(error => error.remove());
+}
+
+// Tambahkan style untuk animasi fadeIn
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+`;
+document.head.appendChild(style);
 
 // Fungsi untuk menghitung match yang dibutuhkan untuk mencapai target
 function calculateMatchesToTarget(totalMatches, currentWins, targetWR) {
@@ -184,29 +236,12 @@ function updateRecommendation(currentWR) {
     }
 }
 
-// Fungsi untuk reset form
-function resetCalculator() {
-    document.getElementById('totalMatch').value = '80';
-    document.getElementById('currentWR').value = '90.1';
-    document.getElementById('targetWR').value = '95';
-    document.getElementById('resultContainer').style.display = 'none';
-}
-
-// Fungsi untuk menghitung win streak yang dibutuhkan
-function calculateWinStreakNeeded(totalMatches, currentWins, currentLosses, targetMatches) {
-    const remainingMatches = targetMatches - totalMatches;
-    if (remainingMatches <= 0) return 0;
-    
-    // Untuk mencapai target, kita perlu menang semua match yang tersisa
-    return remainingMatches;
-}
-
 // Event listener untuk input otomatis
 document.addEventListener('DOMContentLoaded', function() {
     // Hitung otomatis saat halaman dimuat
     calculateWinRate();
     
-    // Tambahkan event listener untuk input
+    // Tambahkan event listener untuk input (perhitungan real-time)
     const inputs = ['totalMatch', 'currentWR', 'targetWR'];
     inputs.forEach(inputId => {
         const input = document.getElementById(inputId);
@@ -215,24 +250,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Tambahkan tombol reset jika diperlukan
-    const calculateBtn = document.querySelector('.calculate-btn');
-    if (calculateBtn) {
-        // Tambahkan tooltip
-        calculateBtn.title = "Klik untuk menghitung win rate";
-        
-        // Tambahkan event listener untuk Enter key
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                calculateWinRate();
-            }
-        });
-    }
+    // Tambahkan event listener untuk Enter key
+    document.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            calculateWinRate();
+        }
+    });
 });
 
-// Fungsi untuk menghitung dengan contoh
+// Fungsi untuk reset form
+function resetCalculator() {
+    document.getElementById('totalMatch').value = '80';
+    document.getElementById('currentWR').value = '90.1';
+    document.getElementById('targetWR').value = '95';
+    document.getElementById('resultContainer').style.display = 'none';
+    clearValidationErrors();
+}
+
+// Fungsi untuk contoh perhitungan
 function calculateExample() {
-    // Contoh 1: Player dengan 100 match, WR 50%, target 60%
     document.getElementById('totalMatch').value = '100';
     document.getElementById('currentWR').value = '50';
     document.getElementById('targetWR').value = '60';
