@@ -1,4 +1,4 @@
-/* style.css - MODAL SYSTEM */
+/* style.css - MODAL SYSTEM dengan TEMPLATE PERSEGI PANJANG */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
 
 :root {
@@ -9,9 +9,10 @@
     --purple-light: #ba68c8;
     --orange-light: #ffb74d;
     --red-light: #ff6b6b;
+    --yellow-light: #ffd700;
     --glass: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(79, 195, 247, 0.2);
-    --modal-bg: rgba(10, 10, 10, 0.95);
+    --modal-bg: rgba(10, 10, 10, 0.97);
 }
 
 * {
@@ -238,12 +239,13 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
     z-index: 1000;
     justify-content: center;
     align-items: center;
     animation: fadeInModal 0.3s ease;
+    padding: 20px;
 }
 
 .modal.active {
@@ -255,10 +257,10 @@ body {
     border-radius: 20px;
     width: 90%;
     max-width: 500px;
-    max-height: 80vh;
+    max-height: 85vh;
     overflow: hidden;
     border: 2px solid var(--glass-border);
-    box-shadow: 0 0 50px rgba(79, 195, 247, 0.3);
+    box-shadow: 0 0 60px rgba(79, 195, 247, 0.4);
     animation: slideUpModal 0.4s ease;
 }
 
@@ -266,9 +268,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 25px;
+    background: rgba(0, 0, 0, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .modal-header h3 {
@@ -277,7 +279,7 @@ body {
     color: var(--blue-light);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .close-btn {
@@ -293,6 +295,7 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    line-height: 1;
 }
 
 .close-btn:hover {
@@ -304,81 +307,118 @@ body {
 .modal-body {
     padding: 25px;
     overflow-y: auto;
-    max-height: calc(80vh - 80px);
+    max-height: calc(85vh - 80px);
 }
 
-/* Template Grid in Modal */
+/* Template Grid - PERSEGI PANJANG HORIZONTAL */
 .template-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
+/* Template Button - PERSEGI PANJANG */
 .template-btn {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    padding: 20px 15px;
+    padding: 18px 25px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
+    gap: 20px;
     text-decoration: none;
     color: #fff;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 1rem;
     transition: all 0.3s ease;
-    min-height: 100px;
-}
-
-.template-btn:hover {
-    transform: translateY(-5px);
-    border-color: var(--blue-light);
-    background: rgba(79, 195, 247, 0.1);
-    box-shadow: 0 10px 20px rgba(79, 195, 247, 0.2);
-}
-
-.template-btn i {
-    font-size: 1.8rem;
-    transition: all 0.3s ease;
-}
-
-.template-btn:hover i {
-    transform: scale(1.2);
-}
-
-/* Special button for WR CALCULATE */
-.wr-calculate-btn {
-    border-color: rgba(255, 183, 77, 0.4) !important;
-    background: rgba(255, 183, 77, 0.1) !important;
+    min-height: 70px;
+    width: 100%;
+    text-align: left;
     position: relative;
     overflow: hidden;
 }
 
-.wr-calculate-btn::before {
+.template-btn::before {
     content: '';
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, 
-        transparent, 
-        rgba(255, 183, 77, 0.2), 
-        transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
     transition: 0.5s;
 }
 
-.wr-calculate-btn:hover::before {
+.template-btn:hover::before {
     left: 100%;
+}
+
+.template-btn:hover {
+    transform: translateY(-3px);
+    border-color: var(--blue-light);
+    background: rgba(79, 195, 247, 0.1);
+    box-shadow: 0 8px 20px rgba(79, 195, 247, 0.25);
+}
+
+.template-btn i {
+    font-size: 1.8rem;
+    transition: all 0.3s ease;
+    min-width: 40px;
+    text-align: center;
+}
+
+.template-btn:hover i {
+    transform: scale(1.15);
+}
+
+.template-btn span {
+    flex: 1;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Arrow indicator */
+.template-btn::after {
+    content: '→';
+    position: absolute;
+    right: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.template-btn:hover::after {
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+/* Special button for WR CALCULATE */
+.wr-calculate-btn {
+    border-color: rgba(255, 183, 77, 0.4) !important;
+    background: rgba(255, 183, 77, 0.08) !important;
+    position: relative;
+}
+
+.wr-calculate-btn::after {
+    content: '🔥';
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.wr-calculate-btn:hover::after {
+    opacity: 1;
 }
 
 .wr-calculate-btn:hover {
     border-color: var(--orange-light) !important;
-    background: rgba(255, 183, 77, 0.2) !important;
-    box-shadow: 0 10px 20px rgba(255, 183, 77, 0.3) !important;
-    transform: translateY(-5px) scale(1.05);
+    background: rgba(255, 183, 77, 0.15) !important;
+    box-shadow: 0 8px 20px rgba(255, 183, 77, 0.3) !important;
 }
 
 .wr-calculate-btn i {
@@ -386,18 +426,52 @@ body {
     animation: pulse 2s infinite;
 }
 
-.wr-calculate-btn::after {
-    content: '🔥';
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 0.8rem;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+/* WhatsApp specific buttons */
+.template-btn[href*="whatsapp"] {
+    border-color: rgba(37, 211, 102, 0.3);
+    background: rgba(37, 211, 102, 0.05);
 }
 
-.wr-calculate-btn:hover::after {
-    opacity: 1;
+.template-btn[href*="whatsapp"]:hover {
+    border-color: #25D366;
+    background: rgba(37, 211, 102, 0.1);
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25);
+}
+
+.template-btn[href*="whatsapp"] i {
+    color: #25D366;
+}
+
+/* Instagram specific button */
+.template-btn[href*="instagram"] {
+    border-color: rgba(225, 48, 108, 0.3);
+    background: rgba(225, 48, 108, 0.05);
+}
+
+.template-btn[href*="instagram"]:hover {
+    border-color: #E1306C;
+    background: rgba(225, 48, 108, 0.1);
+    box-shadow: 0 8px 20px rgba(225, 48, 108, 0.25);
+}
+
+.template-btn[href*="instagram"] i {
+    color: #E1306C;
+}
+
+/* GitHub specific button */
+.template-btn[href*="github"] {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.template-btn[href*="github"]:hover {
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.25);
+}
+
+.template-btn[href*="github"] i {
+    color: #ffffff;
 }
 
 /* Footer */
@@ -560,25 +634,36 @@ footer {
     
     .modal-content {
         width: 95%;
-    }
-    
-    .template-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        max-width: 95%;
     }
     
     .template-btn {
-        padding: 18px 12px;
-        min-height: 90px;
-        font-size: 0.85rem;
+        padding: 16px 20px;
+        min-height: 65px;
+        font-size: 0.95rem;
+        gap: 15px;
     }
     
     .template-btn i {
         font-size: 1.6rem;
+        min-width: 35px;
+    }
+    
+    .template-btn::after {
+        right: 15px;
+        font-size: 1.1rem;
+    }
+    
+    .modal-header {
+        padding: 18px 20px;
     }
     
     .modal-header h3 {
         font-size: 1.2rem;
+    }
+    
+    .modal-body {
+        padding: 20px;
     }
 }
 
@@ -593,30 +678,50 @@ footer {
     }
     
     .template-btn {
-        padding: 15px 10px;
-        min-height: 85px;
-        font-size: 0.8rem;
+        padding: 14px 18px;
+        min-height: 60px;
+        font-size: 0.9rem;
+        gap: 12px;
     }
     
     .template-btn i {
         font-size: 1.4rem;
+        min-width: 30px;
+    }
+    
+    .template-btn::after {
+        right: 12px;
+        font-size: 1rem;
+    }
+    
+    .wr-calculate-btn::after {
+        top: 8px;
+        right: 15px;
+        font-size: 0.8rem;
     }
 }
 
 /* Tablet */
 @media (min-width: 768px) and (max-width: 1024px) {
-    .template-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
     .modal-content {
         max-width: 600px;
+    }
+    
+    .template-btn {
+        padding: 20px 30px;
+        min-height: 75px;
+        font-size: 1.1rem;
+        gap: 25px;
+    }
+    
+    .template-btn i {
+        font-size: 2rem;
     }
 }
 
 /* Desktop Large */
 @media (min-width: 1025px) {
-    .template-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .modal-content {
+        max-width: 550px;
     }
 }
