@@ -21,6 +21,39 @@
             position: relative;
         }
 
+        /* Tombol Back */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(45deg, #4fc3f7, #2979ff);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(41, 121, 255, 0.4);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(41, 121, 255, 0.6);
+            background: linear-gradient(45deg, #2979ff, #4fc3f7);
+        }
+
+        .back-button:active {
+            transform: translateY(0) scale(1);
+        }
+
         /* Meteor Background */
         .meteor-container {
             position: fixed;
@@ -67,6 +100,7 @@
             border-bottom: 3px solid #ff4081;
             box-shadow: 0 5px 20px rgba(255, 64, 129, 0.3);
             backdrop-filter: blur(10px);
+            margin-top: 60px;
         }
 
         .logo {
@@ -398,6 +432,7 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             border: 2px solid rgba(79, 195, 247, 0.3);
             background: #000;
+            display: none; /* Sembunyikan dulu */
         }
 
         .image-container {
@@ -419,6 +454,49 @@
             position: relative;
             max-width: 720px;
             margin: 0 auto;
+        }
+
+        /* Video Fallback */
+        .video-fallback {
+            display: none;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            border: 2px dashed #4fc3f7;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .video-fallback i {
+            font-size: 3rem;
+            color: #ff4081;
+            margin-bottom: 15px;
+        }
+
+        .video-fallback p {
+            color: #b3e5fc;
+            margin-bottom: 10px;
+        }
+
+        .preview-placeholder {
+            width: 100%;
+            max-width: 720px;
+            height: 400px;
+            background: linear-gradient(45deg, #0a0a2a, #1a1a4a);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            margin: 0 auto;
+            color: #4fc3f7;
+        }
+
+        .preview-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ff4081;
         }
 
         /* Statistics */
@@ -511,12 +589,12 @@
             box-shadow: 0 8px 20px rgba(255, 64, 129, 0.6);
         }
 
-        .media-btn.audio {
+        .media-btn.all {
             background: linear-gradient(45deg, #00e676, #00c853);
             box-shadow: 0 5px 15px rgba(0, 230, 118, 0.4);
         }
 
-        .media-btn.audio:hover {
+        .media-btn.all:hover {
             box-shadow: 0 8px 20px rgba(0, 230, 118, 0.6);
         }
 
@@ -625,6 +703,18 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .header {
+                margin-top: 50px;
+                padding: 15px;
+            }
+            
             .input-group {
                 flex-direction: column;
             }
@@ -662,9 +752,18 @@
             .quality-btn {
                 width: 100%;
             }
+            
+            .preview-placeholder {
+                height: 300px;
+            }
         }
 
         @media (max-width: 480px) {
+            .back-button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
             .statistics {
                 grid-template-columns: 1fr;
             }
@@ -674,11 +773,15 @@
             }
             
             .header {
-                padding: 15px;
+                margin-top: 45px;
             }
             
             .input-section, .result-section, .info-section {
                 padding: 20px;
+            }
+            
+            .preview-placeholder {
+                height: 250px;
             }
         }
 
@@ -714,6 +817,11 @@
     </style>
 </head>
 <body>
+    <!-- Tombol Back -->
+    <button class="back-button" id="backButton">
+        <i class="fas fa-arrow-left"></i> Kembali
+    </button>
+
     <!-- Meteor Background -->
     <div class="meteor-container" id="meteorContainer"></div>
 
@@ -773,14 +881,14 @@ https://www.instagram.com/stories/...
                     <p>Download video Instagram dalam kualitas HD langsung dari server Instagram</p>
                 </div>
                 <div class="feature">
-                    <i class="fas fa-music"></i>
-                    <h4>Download Audio</h4>
-                    <p>Ekstrak audio dari video Instagram (gunakan converter online)</p>
+                    <i class="fas fa-images"></i>
+                    <h4>Download Foto</h4>
+                    <p>Download foto Instagram dalam kualitas asli, termasuk multiple photos</p>
                 </div>
                 <div class="feature">
-                    <i class="fas fa-image"></i>
-                    <h4>Download Foto</h4>
-                    <p>Download foto Instagram dalam kualitas asli</p>
+                    <i class="fas fa-file-archive"></i>
+                    <h4>Download Semua</h4>
+                    <p>Download semua media dalam satu paket (jika tersedia)</p>
                 </div>
             </div>
         </section>
@@ -802,13 +910,32 @@ https://www.instagram.com/stories/...
             <!-- Media Preview -->
             <div class="media-preview">
                 <h3><i class="fas fa-play-circle"></i> Preview Konten</h3>
+                
+                <!-- Video Preview (akan ditampilkan jika video bisa diputar) -->
                 <div class="video-container">
-                    <video controls class="video-preview" id="videoPreview" poster="">
+                    <video controls class="video-preview" id="videoPreview" poster="" preload="metadata">
                         Browser Anda tidak mendukung tag video.
                     </video>
                 </div>
+                
+                <!-- Placeholder saat loading atau jika video tidak bisa diputar -->
+                <div class="preview-placeholder" id="previewPlaceholder">
+                    <i class="fas fa-play-circle"></i>
+                    <p>Preview akan ditampilkan di sini</p>
+                    <p style="font-size: 0.9rem; color: #b3e5fc;">Video dapat didownload meskipun preview tidak tersedia</p>
+                </div>
+                
+                <!-- Image Container untuk gambar -->
                 <div class="image-container" id="imageContainer">
                     <!-- Gambar akan ditampilkan di sini -->
+                </div>
+                
+                <!-- Video Fallback Message -->
+                <div class="video-fallback" id="videoFallback">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p><strong>Video tidak dapat diputar di preview</strong></p>
+                    <p>Ini biasanya karena pembatasan CORS dari Instagram, namun video masih bisa didownload.</p>
+                    <p>Klik tombol "Download Video" di bawah untuk mendapatkan video.</p>
                 </div>
             </div>
 
@@ -841,13 +968,13 @@ https://www.instagram.com/stories/...
                 <h3><i class="fas fa-download"></i> Opsi Download</h3>
                 <div class="download-buttons">
                     <button class="media-btn video" id="downloadVideoBtn">
-                        <i class="fas fa-video"></i> Download Video (HD)
-                    </button>
-                    <button class="media-btn audio" id="downloadAudioBtn">
-                        <i class="fas fa-music"></i> Download Audio (MP3)
+                        <i class="fas fa-video"></i> Download Video
                     </button>
                     <button class="media-btn" id="downloadThumbBtn">
                         <i class="fas fa-image"></i> Download Thumbnail
+                    </button>
+                    <button class="media-btn all" id="downloadAllBtn">
+                        <i class="fas fa-download"></i> Download Semua Media
                     </button>
                 </div>
             </div>
@@ -892,14 +1019,22 @@ https://www.instagram.com/stories/...
             // Buat efek meteor
             createMeteorEffect();
             
+            // Event listener untuk tombol back
+            document.getElementById('backButton').addEventListener('click', function() {
+                // Scroll ke input section
+                document.querySelector('.input-section').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            });
+            
             // Event listener untuk tombol proses
             document.getElementById('downloadBtn').addEventListener('click', processInstagramUrl);
             
             // Event listener untuk tombol download video
             document.getElementById('downloadVideoBtn').addEventListener('click', downloadVideo);
             
-            // Event listener untuk tombol download audio
-            document.getElementById('downloadAudioBtn').addEventListener('click', downloadAudio);
+            // Event listener untuk tombol download all
+            document.getElementById('downloadAllBtn').addEventListener('click', downloadAllMedia);
             
             // Event listener untuk tombol download thumbnail
             document.getElementById('downloadThumbBtn').addEventListener('click', downloadThumbnail);
@@ -958,6 +1093,9 @@ https://www.instagram.com/stories/...
             const errorMessage = document.getElementById('errorMessage');
             const resultSection = document.getElementById('resultSection');
             
+            // Reset preview
+            resetPreview();
+            
             // Validasi URL
             if (!urlInput) {
                 showError('Silakan masukkan URL Instagram');
@@ -1001,6 +1139,15 @@ https://www.instagram.com/stories/...
             }
         }
 
+        // Reset preview elements
+        function resetPreview() {
+            document.getElementById('videoPreview').style.display = 'none';
+            document.getElementById('imageContainer').style.display = 'none';
+            document.getElementById('videoFallback').style.display = 'none';
+            document.getElementById('previewPlaceholder').style.display = 'flex';
+            document.getElementById('videoPreview').src = '';
+        }
+
         // Validasi URL Instagram
         function isValidInstagramUrl(url) {
             const patterns = [
@@ -1012,20 +1159,28 @@ https://www.instagram.com/stories/...
             return patterns.some(pattern => pattern.test(url));
         }
 
-        // Fetch data Instagram dari API
+        // Fetch data Instagram dari API dengan timeout
         async function fetchInstagramData(url) {
             const fullApiUrl = apiUrl + encodeURIComponent(url);
             
+            // Timeout setelah 30 detik
+            const timeout = 30000;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            
             try {
-                // Gunakan CORS proxy
+                // Coba proxy dulu
                 const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(fullApiUrl)}`;
                 
                 const response = await fetch(proxyUrl, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
-                    }
+                    },
+                    signal: controller.signal
                 });
+                
+                clearTimeout(timeoutId);
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error: ${response.status}`);
@@ -1037,17 +1192,24 @@ https://www.instagram.com/stories/...
                 return data;
                 
             } catch (proxyError) {
+                clearTimeout(timeoutId);
                 console.log('Proxy failed, trying direct fetch...');
                 
-                // Coba fetch langsung
+                // Coba fetch langsung dengan timeout baru
+                const controller2 = new AbortController();
+                const timeoutId2 = setTimeout(() => controller2.abort(), timeout);
+                
                 try {
                     const response = await fetch(fullApiUrl, {
                         method: 'GET',
                         mode: 'cors',
                         headers: {
                             'Accept': 'application/json',
-                        }
+                        },
+                        signal: controller2.signal
                     });
+                    
+                    clearTimeout(timeoutId2);
                     
                     if (!response.ok) {
                         throw new Error(`Direct fetch failed: ${response.status}`);
@@ -1056,6 +1218,7 @@ https://www.instagram.com/stories/...
                     return await response.json();
                     
                 } catch (directError) {
+                    clearTimeout(timeoutId2);
                     console.error('All fetch methods failed:', directError);
                     throw new Error('Tidak dapat terhubung ke server. Silakan coba lagi nanti.');
                 }
@@ -1086,43 +1249,21 @@ https://www.instagram.com/stories/...
             }
             
             // Update media preview
-            const videoPreview = document.getElementById('videoPreview');
-            const imageContainer = document.getElementById('imageContainer');
-            
             if (data.data && data.data.length > 0) {
                 const media = data.data[0];
                 
                 if (media.type === 'video') {
-                    // Tampilkan video
-                    videoPreview.style.display = 'block';
-                    imageContainer.style.display = 'none';
-                    imageContainer.innerHTML = '';
-                    
-                    // Set video source dengan cache buster
-                    videoPreview.src = media.url + '?t=' + Date.now();
-                    videoPreview.poster = media.thumb;
-                    videoPreview.load();
-                    
-                    // Error handling untuk video
-                    videoPreview.onerror = function() {
-                        console.log('Video load error, showing thumbnail instead');
-                        videoPreview.style.display = 'none';
-                        imageContainer.style.display = 'flex';
-                        imageContainer.innerHTML = `
-                            <img src="${media.thumb}" alt="Video Thumbnail" class="image-preview">
-                            <p style="color:#ff4081; margin-top:10px;">Video tidak dapat diputar, tetapi masih bisa didownload</p>
-                        `;
-                    };
-                    
+                    displayVideoPreview(media);
                 } else if (media.type === 'image') {
-                    // Tampilkan gambar
-                    videoPreview.style.display = 'none';
-                    imageContainer.style.display = 'flex';
-                    imageContainer.innerHTML = `
-                        <img src="${media.url}" alt="Instagram Image" class="image-preview"
-                             onerror="this.src='https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80'">
-                    `;
+                    displayImagePreview(media);
                 }
+            } else {
+                // Jika tidak ada data media
+                document.getElementById('previewPlaceholder').innerHTML = `
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>Tidak ada media yang tersedia untuk preview</p>
+                    <p style="font-size: 0.9rem; color: #b3e5fc;">Coba URL yang berbeda</p>
+                `;
             }
             
             // Update statistics
@@ -1166,8 +1307,95 @@ https://www.instagram.com/stories/...
             }
             
             // Update tombol download
+            updateDownloadButtons(data);
+            
+            // Tampilkan result section
+            resultSection.style.display = 'block';
+            
+            // Scroll ke hasil
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Tampilkan video preview dengan error handling
+        function displayVideoPreview(media) {
+            const videoPreview = document.getElementById('videoPreview');
+            const previewPlaceholder = document.getElementById('previewPlaceholder');
+            const videoFallback = document.getElementById('videoFallback');
+            
+            // Sembunyikan placeholder
+            previewPlaceholder.style.display = 'none';
+            
+            // Cek jika video URL valid
+            if (media.url && (media.url.includes('.mp4') || media.url.includes('video'))) {
+                videoPreview.style.display = 'block';
+                videoFallback.style.display = 'none';
+                
+                // Set video source dengan cache buster dan CORS proxy jika perlu
+                const videoUrl = getVideoUrlWithProxy(media.url);
+                videoPreview.src = videoUrl;
+                videoPreview.poster = media.thumb || '';
+                videoPreview.load();
+                
+                // Coba play video untuk test
+                const playPromise = videoPreview.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log('Video autoplay failed, showing controls instead');
+                        videoPreview.controls = true;
+                    });
+                }
+                
+                // Error handling untuk video load
+                videoPreview.onerror = function() {
+                    console.log('Video load error, showing fallback');
+                    videoPreview.style.display = 'none';
+                    videoFallback.style.display = 'block';
+                };
+                
+                // Event ketika video berhasil dimuat
+                videoPreview.onloadeddata = function() {
+                    console.log('Video loaded successfully');
+                    videoFallback.style.display = 'none';
+                };
+                
+            } else {
+                // Jika URL video tidak valid, tampilkan fallback
+                videoPreview.style.display = 'none';
+                videoFallback.style.display = 'block';
+            }
+        }
+
+        // Dapatkan video URL dengan proxy jika diperlukan
+        function getVideoUrlWithProxy(url) {
+            // Cek jika URL perlu proxy (biasanya dari Instagram)
+            if (url.includes('instagram.com') || url.includes('cdninstagram.com')) {
+                // Gunakan CORS proxy untuk video
+                return `https://corsproxy.io/?${encodeURIComponent(url)}`;
+            }
+            return url + '?t=' + Date.now(); // Cache buster
+        }
+
+        // Tampilkan image preview
+        function displayImagePreview(media) {
+            const imageContainer = document.getElementById('imageContainer');
+            const previewPlaceholder = document.getElementById('previewPlaceholder');
+            
+            // Sembunyikan placeholder
+            previewPlaceholder.style.display = 'none';
+            
+            // Tampilkan gambar
+            imageContainer.style.display = 'flex';
+            imageContainer.innerHTML = `
+                <img src="${media.url}" alt="Instagram Image" class="image-preview"
+                     onerror="this.src='https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80'">
+            `;
+        }
+
+        // Update tombol download
+        function updateDownloadButtons(data) {
             const downloadVideoBtn = document.getElementById('downloadVideoBtn');
-            const downloadAudioBtn = document.getElementById('downloadAudioBtn');
+            const downloadAllBtn = document.getElementById('downloadAllBtn');
             const downloadThumbBtn = document.getElementById('downloadThumbBtn');
             
             if (data.data && data.data.length > 0) {
@@ -1177,12 +1405,12 @@ https://www.instagram.com/stories/...
                     // Video content
                     downloadVideoBtn.innerHTML = '<i class="fas fa-video"></i> Download Video';
                     downloadVideoBtn.style.display = 'flex';
-                    downloadAudioBtn.style.display = 'flex';
+                    downloadAllBtn.style.display = 'flex';
                     downloadThumbBtn.style.display = 'flex';
                     
                     // Set data untuk download
                     downloadVideoBtn.setAttribute('data-url', media.url);
-                    downloadAudioBtn.setAttribute('data-url', media.url);
+                    downloadAllBtn.setAttribute('data-url', media.url);
                     downloadThumbBtn.setAttribute('data-url', media.thumb);
                     
                     // Generate quality options
@@ -1192,23 +1420,18 @@ https://www.instagram.com/stories/...
                     // Image content
                     downloadVideoBtn.innerHTML = '<i class="fas fa-image"></i> Download Gambar';
                     downloadVideoBtn.style.display = 'flex';
-                    downloadAudioBtn.style.display = 'none';
+                    downloadAllBtn.style.display = 'flex';
                     downloadThumbBtn.style.display = 'flex';
                     
                     // Set data untuk download
                     downloadVideoBtn.setAttribute('data-url', media.url);
+                    downloadAllBtn.setAttribute('data-url', media.url);
                     downloadThumbBtn.setAttribute('data-url', media.thumb || media.url);
                     
                     // Hide quality options
                     document.getElementById('qualityOptions').style.display = 'none';
                 }
             }
-            
-            // Tampilkan result section
-            resultSection.style.display = 'block';
-            
-            // Scroll ke hasil
-            resultSection.scrollIntoView({ behavior: 'smooth' });
         }
 
         // Generate quality options
@@ -1301,38 +1524,38 @@ https://www.instagram.com/stories/...
             
             showSuccess(`Mendownload video ${quality}p...`);
             
-            // Download file
-            startDownload(videoUrl, filename);
+            // Download file dengan URL asli (bukan proxy)
+            const originalUrl = videoUrl.replace('https://corsproxy.io/?', '');
+            startDownload(originalUrl, filename);
         }
 
-        // Download audio
-        function downloadAudio() {
-            if (!currentInstagramData) {
+        // Download semua media
+        function downloadAllMedia() {
+            if (!currentInstagramData || !currentInstagramData.result) {
                 showError('Silakan proses URL terlebih dahulu');
                 return;
             }
             
-            const videoUrl = this.getAttribute('data-url');
+            const data = currentInstagramData.result;
             
-            if (!videoUrl) {
-                showError('URL video tidak tersedia');
-                return;
-            }
-            
-            const filename = `instagram_audio_${Date.now()}.mp3`;
-            
-            showSuccess('Mengekstrak audio...');
-            
-            // Untuk ekstrak audio, kita bisa:
-            // 1. Redirect ke service online
-            // 2. Atau beri pesan manual
-            setTimeout(() => {
-                showSuccess('Untuk ekstrak audio, silakan gunakan: onlinevideoconverter.com');
+            if (data.data && data.data.length > 0) {
+                showSuccess('Mempersiapkan semua media untuk didownload...');
                 
-                // Buka converter online di tab baru
-                const converterUrl = `https://onlinevideoconverter.com/video-converter?url=${encodeURIComponent(videoUrl)}`;
-                window.open(converterUrl, '_blank');
-            }, 1000);
+                // Download setiap media
+                data.data.forEach((media, index) => {
+                    setTimeout(() => {
+                        const extension = media.type === 'video' ? 'mp4' : 'jpg';
+                        const filename = `instagram_${media.type}_${Date.now()}_${index+1}.${extension}`;
+                        startDownload(media.url, filename);
+                    }, index * 1000);
+                });
+                
+                setTimeout(() => {
+                    showSuccess('Semua media telah diproses untuk download!');
+                }, data.data.length * 1000);
+            } else {
+                showError('Tidak ada media yang tersedia untuk didownload');
+            }
         }
 
         // Download thumbnail
