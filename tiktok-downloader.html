@@ -21,7 +21,6 @@
             position: relative;
         }
 
-        /* Meteor Background */
         .meteor-container {
             position: fixed;
             top: 0;
@@ -59,7 +58,6 @@
             }
         }
 
-        /* Header */
         .header {
             background: linear-gradient(135deg, rgba(0, 242, 254, 0.15) 0%, rgba(255, 0, 80, 0.15) 100%);
             padding: 20px;
@@ -67,25 +65,6 @@
             border-bottom: 3px solid #00f2fe;
             box-shadow: 0 5px 20px rgba(0, 242, 254, 0.3);
             backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(0, 242, 254, 0.1) 50%, transparent 70%);
-            animation: shine 3s infinite linear;
-            pointer-events: none;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
 
         .logo {
@@ -102,12 +81,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
 
         .logo h1 {
@@ -117,7 +90,6 @@
             background-clip: text;
             color: transparent;
             font-weight: 800;
-            text-shadow: 0 5px 15px rgba(0, 242, 254, 0.3);
         }
 
         .subtitle {
@@ -130,22 +102,14 @@
         .creator {
             color: #00f2fe;
             font-weight: 600;
-            animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        /* Main Container */
         .container {
             max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
         }
 
-        /* Input Section */
         .input-section {
             background: rgba(0, 242, 254, 0.1);
             border-radius: 15px;
@@ -154,12 +118,6 @@
             border: 2px solid rgba(0, 242, 254, 0.3);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            transition: transform 0.3s;
-        }
-
-        .input-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 242, 254, 0.4);
         }
 
         .input-section h2 {
@@ -192,7 +150,6 @@
             outline: none;
             border-color: #ff0050;
             box-shadow: 0 0 15px rgba(255, 0, 80, 0.5);
-            transform: scale(1.02);
         }
 
         .url-input::placeholder {
@@ -213,32 +170,15 @@
             align-items: center;
             gap: 10px;
             box-shadow: 0 5px 15px rgba(255, 0, 80, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .download-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .download-btn:hover::before {
-            left: 100%;
         }
 
         .download-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 0, 80, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 80, 0.6);
         }
 
         .download-btn:active {
-            transform: translateY(0) scale(0.98);
+            transform: translateY(0);
         }
 
         .example {
@@ -249,21 +189,8 @@
             background: rgba(0, 242, 254, 0.1);
             border-radius: 8px;
             border-left: 3px solid #ff0050;
-            animation: slideIn 0.5s ease-out;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Info Section */
         .info-section {
             background: rgba(0, 242, 254, 0.1);
             border-radius: 15px;
@@ -283,12 +210,6 @@
             border-radius: 10px;
             margin-bottom: 20px;
             border-left: 4px solid #ff0050;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .info-box i {
@@ -314,18 +235,11 @@
             text-align: center;
             border: 1px solid rgba(0, 242, 254, 0.2);
             transition: all 0.3s;
-            animation: fadeIn 0.8s ease-out;
-            animation-fill-mode: both;
         }
 
-        .feature:nth-child(1) { animation-delay: 0.1s; }
-        .feature:nth-child(2) { animation-delay: 0.2s; }
-        .feature:nth-child(3) { animation-delay: 0.3s; }
-
         .feature:hover {
-            transform: translateY(-10px) scale(1.05);
+            transform: translateY(-5px);
             border-color: #ff0050;
-            box-shadow: 0 10px 25px rgba(255, 0, 80, 0.3);
         }
 
         .feature i {
@@ -345,12 +259,10 @@
             font-size: 0.9rem;
         }
 
-        /* Loading Animation */
         .loading {
             display: none;
             text-align: center;
             margin: 20px 0;
-            animation: fadeIn 0.3s ease-out;
         }
 
         .spinner {
@@ -368,7 +280,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Error Message */
         .error-message {
             display: none;
             background: rgba(244, 67, 54, 0.2);
@@ -378,7 +289,6 @@
             margin: 20px 0;
             border: 1px solid rgba(244, 67, 54, 0.5);
             text-align: center;
-            animation: slideIn 0.5s ease-out;
         }
 
         .success-message {
@@ -387,7 +297,6 @@
             border: 1px solid rgba(76, 175, 80, 0.5) !important;
         }
 
-        /* Error Animation */
         .error-animation {
             animation: shake 0.5s ease-in-out;
         }
@@ -398,7 +307,6 @@
             20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
-        /* Result Section */
         .result-section {
             display: none;
             background: rgba(0, 242, 254, 0.1);
@@ -408,7 +316,6 @@
             border: 2px solid rgba(255, 0, 80, 0.3);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            animation: fadeIn 0.8s ease-out;
         }
 
         .result-section h2 {
@@ -420,7 +327,6 @@
             gap: 10px;
         }
 
-        /* Profile Info */
         .profile-info {
             display: flex;
             align-items: center;
@@ -430,7 +336,6 @@
             background: rgba(10, 10, 42, 0.8);
             border-radius: 12px;
             border: 1px solid rgba(0, 242, 254, 0.2);
-            animation: slideIn 0.5s ease-out;
         }
 
         .profile-img {
@@ -440,11 +345,6 @@
             object-fit: cover;
             border: 3px solid #00f2fe;
             box-shadow: 0 5px 15px rgba(0, 242, 254, 0.5);
-            transition: transform 0.3s;
-        }
-
-        .profile-img:hover {
-            transform: scale(1.1) rotate(5deg);
         }
 
         .profile-details h3 {
@@ -459,11 +359,9 @@
             font-size: 0.95rem;
         }
 
-        /* Media Preview */
         .media-preview {
             text-align: center;
             margin-bottom: 25px;
-            animation: fadeIn 0.8s ease-out;
         }
 
         .media-preview h3 {
@@ -480,31 +378,6 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             border: 2px solid rgba(0, 242, 254, 0.3);
             background: #000;
-            transition: transform 0.3s;
-        }
-
-        .video-preview:hover {
-            transform: scale(1.02);
-        }
-
-        .image-container {
-            display: none;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .image-preview {
-            flex: 1;
-            min-width: 200px;
-            max-width: 100%;
-            border-radius: 10px;
-            border: 2px solid rgba(0, 242, 254, 0.3);
-            transition: transform 0.3s;
-        }
-
-        .image-preview:hover {
-            transform: scale(1.05);
         }
 
         .video-container {
@@ -513,10 +386,9 @@
             margin: 0 auto;
         }
 
-        /* Statistics */
         .statistics {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
         }
@@ -528,20 +400,11 @@
             text-align: center;
             border: 1px solid rgba(0, 242, 254, 0.2);
             transition: transform 0.3s;
-            animation: fadeIn 0.8s ease-out;
-            animation-fill-mode: both;
         }
 
-        .stat-item:nth-child(1) { animation-delay: 0.1s; }
-        .stat-item:nth-child(2) { animation-delay: 0.2s; }
-        .stat-item:nth-child(3) { animation-delay: 0.3s; }
-        .stat-item:nth-child(4) { animation-delay: 0.4s; }
-        .stat-item:nth-child(5) { animation-delay: 0.5s; }
-
         .stat-item:hover {
-            transform: translateY(-5px) scale(1.05);
+            transform: translateY(-5px);
             border-color: #ff0050;
-            box-shadow: 0 5px 20px rgba(255, 0, 80, 0.3);
         }
 
         .stat-item i {
@@ -562,10 +425,8 @@
             font-size: 0.9rem;
         }
 
-        /* Download Options */
         .download-options {
             margin-top: 25px;
-            animation: fadeIn 0.8s ease-out;
         }
 
         .download-options h3 {
@@ -597,32 +458,15 @@
             justify-content: center;
             gap: 10px;
             box-shadow: 0 5px 15px rgba(0, 153, 255, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .media-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .media-btn:hover::before {
-            left: 100%;
         }
 
         .media-btn:hover {
-            transform: translateY(-3px) scale(1.05);
+            transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 153, 255, 0.6);
         }
 
         .media-btn.video {
-            background: linear-gradient(45deg, #ff0050, #ff3366);
+            background: linear-gradient(45deg, #ff0050, #f50057);
             box-shadow: 0 5px 15px rgba(255, 0, 80, 0.4);
         }
 
@@ -639,59 +483,12 @@
             box-shadow: 0 8px 20px rgba(0, 230, 118, 0.6);
         }
 
-        /* Quality Options */
-        .quality-options {
-            margin-top: 25px;
-            display: none;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .quality-options h3 {
-            color: #00f2fe;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-
-        .quality-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .quality-btn {
-            padding: 10px 20px;
-            background: rgba(10, 10, 42, 0.8);
-            border: 2px solid #00f2fe;
-            border-radius: 8px;
-            color: #00f2fe;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .quality-btn:hover {
-            background: #00f2fe;
-            color: #0a0a2a;
-            transform: translateY(-2px) scale(1.05);
-        }
-
-        .quality-btn.active {
-            background: #ff0050;
-            border-color: #ff0050;
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(255, 0, 80, 0.4);
-        }
-
-        /* Caption & Hashtags */
         .caption-section {
             margin-top: 25px;
             padding: 20px;
             background: rgba(10, 10, 42, 0.8);
             border-radius: 12px;
             border: 1px solid rgba(0, 242, 254, 0.2);
-            animation: fadeIn 0.8s ease-out;
         }
 
         .caption-section h3 {
@@ -712,20 +509,6 @@
             overflow-y: auto;
         }
 
-        .caption-text::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .caption-text::-webkit-scrollbar-track {
-            background: rgba(0, 242, 254, 0.1);
-            border-radius: 10px;
-        }
-
-        .caption-text::-webkit-scrollbar-thumb {
-            background: #ff0050;
-            border-radius: 10px;
-        }
-
         .hashtags {
             display: flex;
             flex-wrap: wrap;
@@ -740,45 +523,27 @@
             border-radius: 20px;
             font-size: 0.85rem;
             transition: all 0.3s;
-            cursor: pointer;
         }
 
         .hashtag:hover {
             background: rgba(255, 0, 80, 0.3);
             color: #ff0050;
-            transform: translateY(-2px) scale(1.1);
-            box-shadow: 0 3px 10px rgba(255, 0, 80, 0.3);
+            transform: translateY(-2px);
         }
 
-        /* Footer */
         .footer {
             text-align: center;
             padding: 20px;
             background: rgba(0, 242, 254, 0.1);
             border-top: 2px solid #ff0050;
             margin-top: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00f2fe, transparent);
         }
 
         .footer p {
             color: #a0f2fe;
             margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .input-group {
                 flex-direction: column;
@@ -809,14 +574,6 @@
             .features {
                 grid-template-columns: 1fr;
             }
-            
-            .quality-buttons {
-                flex-direction: column;
-            }
-            
-            .quality-btn {
-                width: 100%;
-            }
         }
 
         @media (max-width: 480px) {
@@ -837,7 +594,6 @@
             }
         }
 
-        /* Tambahan untuk API Vreden */
         .size-tag {
             font-size: 0.7rem;
             background: rgba(255, 255, 255, 0.1);
@@ -846,7 +602,6 @@
             margin-left: 5px;
         }
 
-        /* API info */
         .api-info {
             font-size: 0.8rem;
             color: #a0f2fe;
@@ -855,26 +610,12 @@
             opacity: 0.8;
         }
 
-        /* Media type indicator */
-        .media-type-badge {
-            display: inline-block;
-            padding: 3px 8px;
-            background: rgba(255, 0, 80, 0.2);
-            color: #ff0050;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-
-        /* Music Info */
         .music-info {
             background: rgba(0, 242, 254, 0.1);
             padding: 15px;
             border-radius: 10px;
             margin: 20px 0;
             border-left: 4px solid #ff0050;
-            animation: slideIn 0.5s ease-out;
         }
 
         .music-info h4 {
@@ -892,24 +633,6 @@
 
         .music-details p {
             margin-bottom: 5px;
-        }
-
-        /* Progress Bar */
-        .progress-bar {
-            height: 4px;
-            background: rgba(0, 242, 254, 0.2);
-            border-radius: 2px;
-            margin: 20px 0;
-            overflow: hidden;
-            display: none;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00f2fe, #ff0050);
-            width: 0%;
-            transition: width 0.3s;
-            border-radius: 2px;
         }
     </style>
 </head>
@@ -948,9 +671,6 @@
             </div>
             <div class="api-info">
                 Terimakasih Telah Menggunakan Website Ini | Jangan Lupa Untuk Subscribe Youtube NandSki
-            </div>
-            <div class="progress-bar" id="progressBar">
-                <div class="progress-fill" id="progressFill"></div>
             </div>
         </section>
 
@@ -1057,9 +777,6 @@
                     <button class="media-btn video" id="downloadVideoBtn">
                         <i class="fas fa-video"></i> Download Video (No Watermark)
                     </button>
-                    <button class="media-btn video" id="downloadVideoHDBtn">
-                        <i class="fas fa-hd"></i> Download Video (HD)
-                    </button>
                     <button class="media-btn audio" id="downloadAudioBtn">
                         <i class="fas fa-music"></i> Download Audio (MP3)
                     </button>
@@ -1090,8 +807,6 @@
 
     <script>
         // TikTok Downloader Script - NandSki
-        // Menggunakan API api.vreden.my.id untuk TikTok
-
         document.addEventListener('DOMContentLoaded', function() {
             // Inisialisasi tahun
             document.getElementById('currentYear').textContent = new Date().getFullYear();
@@ -1104,7 +819,6 @@
             
             // Event listener untuk tombol download
             document.getElementById('downloadVideoBtn').addEventListener('click', downloadVideo);
-            document.getElementById('downloadVideoHDBtn').addEventListener('click', downloadVideoHD);
             document.getElementById('downloadAudioBtn').addEventListener('click', downloadAudio);
             document.getElementById('downloadCoverBtn').addEventListener('click', downloadCover);
             
@@ -1115,16 +829,12 @@
                 }
             });
             
-            // Tampilkan contoh URL saat load
-            showExampleUrl();
-            
-            // Auto-focus input
-            document.getElementById('urlInput').focus();
+            // Test URL contoh untuk debugging
+            document.getElementById('urlInput').value = 'https://www.tiktok.com/@tiktok/video/7106675948081556779';
         });
 
         // Variabel global untuk menyimpan data
         let currentTikTokData = null;
-        const apiUrl = 'https://api.vreden.my.id/api/v1/download/tiktok?url=';
 
         // Fungsi untuk membuat efek meteor
         function createMeteorEffect() {
@@ -1146,26 +856,12 @@
             }
         }
 
-        // Tampilkan contoh URL
-        function showExampleUrl() {
-            const exampleUrls = [
-                "https://www.tiktok.com/@example/video/1234567890123456789",
-                "https://vm.tiktok.com/ZMJw8KQxE/",
-                "https://vt.tiktok.com/ZMJw8KPvT/"
-            ];
-            
-            const randomUrl = exampleUrls[Math.floor(Math.random() * exampleUrls.length)];
-            document.getElementById('urlInput').placeholder = `Contoh: ${randomUrl}`;
-        }
-
         // Fungsi untuk memproses URL TikTok
         async function processTikTokUrl() {
             const urlInput = document.getElementById('urlInput').value.trim();
             const loading = document.getElementById('loading');
             const errorMessage = document.getElementById('errorMessage');
             const resultSection = document.getElementById('resultSection');
-            const progressBar = document.getElementById('progressBar');
-            const progressFill = document.getElementById('progressFill');
             
             // Validasi URL
             if (!urlInput) {
@@ -1178,38 +874,27 @@
                 return;
             }
             
-            // Reset progress
-            progressBar.style.display = 'block';
-            progressFill.style.width = '0%';
-            
             // Tampilkan loading
             loading.style.display = 'block';
             errorMessage.style.display = 'none';
             resultSection.style.display = 'none';
             
             try {
-                // Simulasi progress
-                simulateProgress(progressFill);
+                // Fetch data dari multiple APIs (fallback system)
+                const data = await fetchTikTokDataWithFallback(urlInput);
                 
-                // Fetch data dari API Vreden
-                const data = await fetchTikTokData(urlInput);
-                
-                // Sembunyikan loading dan progress
+                // Sembunyikan loading
                 loading.style.display = 'none';
-                progressBar.style.display = 'none';
                 
-                if (data && data.status && data.result) {
+                if (data) {
                     // Simpan data global
                     currentTikTokData = data;
                     
                     // Tampilkan hasil
-                    displayTikTokData(data.result);
+                    displayTikTokData(data);
                     
                     // Tampilkan pesan sukses
                     showSuccess('Data TikTok berhasil diambil!');
-                    
-                    // Scroll ke hasil
-                    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 } else {
                     showError('Gagal mengambil data TikTok. Silakan coba URL lain.');
                 }
@@ -1217,23 +902,8 @@
             } catch (error) {
                 console.error('Error:', error);
                 loading.style.display = 'none';
-                progressBar.style.display = 'none';
-                showError(`Terjadi kesalahan: ${error.message || 'Tidak dapat mengambil data'}`);
+                showError(`Terjadi kesalahan: ${error.message || 'Coba gunakan URL TikTok yang berbeda'}`);
             }
-        }
-
-        // Simulasi progress bar
-        function simulateProgress(progressFill) {
-            let width = 0;
-            const interval = setInterval(() => {
-                if (width >= 90) {
-                    clearInterval(interval);
-                    return;
-                }
-                width += Math.random() * 10 + 5;
-                if (width > 90) width = 90;
-                progressFill.style.width = width + '%';
-            }, 300);
         }
 
         // Validasi URL TikTok
@@ -1248,57 +918,107 @@
             return patterns.some(pattern => pattern.test(url));
         }
 
-        // Fetch data TikTok dari API
-        async function fetchTikTokData(url) {
-            const fullApiUrl = apiUrl + encodeURIComponent(url);
+        // Fetch data dengan multiple fallback APIs
+        async function fetchTikTokDataWithFallback(url) {
+            const apis = [
+                {
+                    name: 'API 1',
+                    url: `https://api.tiklydown.eu.org/api/download?url=${encodeURIComponent(url)}`
+                },
+                {
+                    name: 'API 2', 
+                    url: `https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`
+                },
+                {
+                    name: 'API 3',
+                    url: `https://tikwm.com/api/?url=${encodeURIComponent(url)}`
+                }
+            ];
             
+            for (let api of apis) {
+                try {
+                    console.log(`Mencoba ${api.name}...`);
+                    const data = await fetchTikTokData(api.url);
+                    if (data) {
+                        console.log(`Berhasil menggunakan ${api.name}`);
+                        return data;
+                    }
+                } catch (error) {
+                    console.log(`${api.name} gagal:`, error.message);
+                    continue;
+                }
+            }
+            
+            throw new Error('Semua API gagal. Coba lagi nanti.');
+        }
+
+        // Fetch data TikTok dari API
+        async function fetchTikTokData(apiUrl) {
             try {
-                // Coba fetch langsung dengan timeout
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 15000);
-                
-                const response = await fetch(fullApiUrl, {
+                const response = await fetch(apiUrl, {
                     method: 'GET',
-                    mode: 'cors',
                     headers: {
                         'Accept': 'application/json',
-                    },
-                    signal: controller.signal
+                    }
                 });
-                
-                clearTimeout(timeoutId);
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error: ${response.status}`);
                 }
                 
-                return await response.json();
+                const data = await response.json();
+                
+                // Normalisasi data dari berbagai API
+                return normalizeTikTokData(data);
                 
             } catch (error) {
                 console.error('Fetch error:', error);
-                
-                // Fallback: gunakan CORS proxy
-                try {
-                    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(fullApiUrl)}`;
-                    
-                    const response = await fetch(proxyUrl, {
-                        method: 'GET',
-                        headers: {
-                            'Accept': 'application/json',
-                        }
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`Proxy fetch failed: ${response.status}`);
-                    }
-                    
-                    return await response.json();
-                    
-                } catch (proxyError) {
-                    console.error('Proxy error:', proxyError);
-                    throw new Error('Tidak dapat terhubung ke server. Silakan coba lagi nanti.');
-                }
+                throw error;
             }
+        }
+
+        // Normalisasi data dari berbagai API
+        function normalizeTikTokData(data) {
+            // Cek struktur data dari berbagai API
+            if (data.data) {
+                // Format API 1
+                return {
+                    title: data.data.title || '',
+                    cover: data.data.cover || '',
+                    play: data.data.play || '',
+                    music: data.data.music || '',
+                    author: {
+                        nickname: data.data.author?.nickname || 'Unknown',
+                        avatar: data.data.author?.avatar || ''
+                    },
+                    stats: {
+                        playCount: data.data.play_count || '0',
+                        diggCount: data.data.digg_count || '0',
+                        commentCount: data.data.comment_count || '0',
+                        shareCount: data.data.share_count || '0'
+                    }
+                };
+            } else if (data.video_data) {
+                // Format API 2/3
+                return {
+                    title: data.video_data.title || '',
+                    cover: data.video_data.cover || '',
+                    play: data.video_data.play || '',
+                    music: data.video_data.music || '',
+                    author: {
+                        nickname: data.video_data.author?.nickname || 'Unknown',
+                        avatar: data.video_data.author?.avatar || ''
+                    },
+                    stats: {
+                        playCount: data.video_data.play_count || '0',
+                        diggCount: data.video_data.digg_count || '0',
+                        commentCount: data.video_data.comment_count || '0',
+                        shareCount: data.video_data.share_count || '0'
+                    }
+                };
+            }
+            
+            return null;
         }
 
         // Fungsi untuk menampilkan data TikTok
@@ -1307,57 +1027,39 @@
             
             // Update profile info
             const profileImg = document.getElementById('profileImg');
-            profileImg.src = data.author.avatar;
-            profileImg.onerror = function() {
-                this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.author.nickname) + '&background=00f2fe&color=fff&size=80';
-            };
+            profileImg.src = data.author.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.author.nickname) + '&background=00f2fe&color=fff&size=80';
             
-            document.getElementById('profileName').textContent = data.author.nickname;
-            document.getElementById('profileUsername').textContent = `@${data.author.fullname || data.author.nickname}`;
-            document.getElementById('profileId').textContent = `ID: ${data.author.id}`;
+            document.getElementById('profileName').textContent = data.author.nickname || 'Unknown';
+            document.getElementById('profileUsername').textContent = `@${data.author.nickname || 'unknown'}`;
             
             // Update music info
-            document.getElementById('musicTitle').textContent = data.music_info.title || 'Tidak diketahui';
-            document.getElementById('musicAuthor').textContent = data.music_info.author || 'Tidak diketahui';
+            document.getElementById('musicTitle').textContent = data.music?.title || data.title || 'Tidak diketahui';
+            document.getElementById('musicAuthor').textContent = data.music?.author || data.author?.nickname || 'Tidak diketahui';
             
             // Update media preview
             const videoPreview = document.getElementById('videoPreview');
             
-            // Cari URL video tanpa watermark
-            let videoUrl = '';
-            if (data.data && data.data.length > 0) {
-                // Prioritaskan HD
-                const hdVideo = data.data.find(item => item.type === 'nowatermark_hd');
-                const normalVideo = data.data.find(item => item.type === 'nowatermark');
-                
-                videoUrl = hdVideo ? hdVideo.url : (normalVideo ? normalVideo.url : '');
-            }
-            
-            if (videoUrl) {
+            if (data.play) {
                 videoPreview.style.display = 'block';
-                videoPreview.src = videoUrl + '?t=' + Date.now();
+                videoPreview.src = data.play;
                 videoPreview.poster = data.cover;
                 videoPreview.load();
                 
-                // Error handling untuk video
-                videoPreview.onerror = function() {
-                    console.log('Video load error');
-                    this.style.display = 'none';
-                    const container = this.parentElement;
-                    const errorMsg = document.createElement('p');
-                    errorMsg.style.color = '#ff0050';
-                    errorMsg.style.marginTop = '10px';
-                    errorMsg.textContent = 'Video tidak dapat diputar, tetapi masih bisa didownload';
-                    container.appendChild(errorMsg);
-                };
+                // Set data untuk download
+                document.getElementById('downloadVideoBtn').setAttribute('data-url', data.play);
+                document.getElementById('downloadCoverBtn').setAttribute('data-url', data.cover);
+                
+                if (data.music) {
+                    document.getElementById('downloadAudioBtn').setAttribute('data-url', data.music);
+                }
             }
             
             // Update statistics
-            document.getElementById('viewCount').textContent = data.stats.views || '0';
-            document.getElementById('likeCount').textContent = data.stats.likes || '0';
-            document.getElementById('commentCount').textContent = data.stats.comment || '0';
-            document.getElementById('shareCount').textContent = data.stats.share || '0';
-            document.getElementById('downloadCount').textContent = data.stats.download || '0';
+            document.getElementById('viewCount').textContent = formatNumber(data.stats.playCount) || '0';
+            document.getElementById('likeCount').textContent = formatNumber(data.stats.diggCount) || '0';
+            document.getElementById('commentCount').textContent = formatNumber(data.stats.commentCount) || '0';
+            document.getElementById('shareCount').textContent = formatNumber(data.stats.shareCount) || '0';
+            document.getElementById('downloadCount').textContent = '0';
             
             // Update caption/description
             const captionText = document.getElementById('captionText');
@@ -1388,36 +1090,14 @@
                 }
             }
             
-            // Set data untuk tombol download
-            if (data.data && data.data.length > 0) {
-                const normalVideo = data.data.find(item => item.type === 'nowatermark');
-                const hdVideo = data.data.find(item => item.type === 'nowatermark_hd');
-                
-                if (normalVideo) {
-                    document.getElementById('downloadVideoBtn').setAttribute('data-url', normalVideo.url);
-                    document.getElementById('downloadVideoBtn').setAttribute('data-size', formatBytes(data.size_nowm || 0));
-                }
-                
-                if (hdVideo) {
-                    document.getElementById('downloadVideoHDBtn').setAttribute('data-url', hdVideo.url);
-                    document.getElementById('downloadVideoHDBtn').setAttribute('data-size', formatBytes(data.size_nowm_hd || 0));
-                }
-                
-                // Audio download
-                if (data.music_info && data.music_info.url) {
-                    document.getElementById('downloadAudioBtn').setAttribute('data-url', data.music_info.url);
-                }
-                
-                // Cover download
-                document.getElementById('downloadCoverBtn').setAttribute('data-url', data.cover);
-            }
-            
-            // Tampilkan result section dengan animasi
+            // Tampilkan result section
             resultSection.style.display = 'block';
-            resultSection.style.animation = 'fadeIn 0.8s ease-out';
+            
+            // Scroll ke hasil
+            resultSection.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Download video tanpa watermark
+        // Download video
         function downloadVideo() {
             if (!currentTikTokData) {
                 showError('Silakan proses URL terlebih dahulu');
@@ -1425,41 +1105,16 @@
             }
             
             const videoUrl = this.getAttribute('data-url');
-            const videoSize = this.getAttribute('data-size') || '';
             
             if (!videoUrl) {
                 showError('URL video tidak tersedia');
                 return;
             }
             
-            const username = currentTikTokData.result.author.nickname || 'tiktok';
-            const videoId = currentTikTokData.result.id || Date.now();
-            const filename = `tiktok_${username}_${videoId}_nowm.mp4`;
+            const username = currentTikTokData.author?.nickname || 'tiktok';
+            const filename = `tiktok_${username}_${Date.now()}.mp4`;
             
-            showSuccess(`Mendownload video ${videoSize ? '(' + videoSize + ')' : ''}...`);
-            startDownload(videoUrl, filename);
-        }
-
-        // Download video HD
-        function downloadVideoHD() {
-            if (!currentTikTokData) {
-                showError('Silakan proses URL terlebih dahulu');
-                return;
-            }
-            
-            const videoUrl = this.getAttribute('data-url');
-            const videoSize = this.getAttribute('data-size') || '';
-            
-            if (!videoUrl) {
-                showError('URL video HD tidak tersedia');
-                return;
-            }
-            
-            const username = currentTikTokData.result.author.nickname || 'tiktok';
-            const videoId = currentTikTokData.result.id || Date.now();
-            const filename = `tiktok_${username}_${videoId}_hd.mp4`;
-            
-            showSuccess(`Mendownload video HD ${videoSize ? '(' + videoSize + ')' : ''}...`);
+            showSuccess('Mendownload video...');
             startDownload(videoUrl, filename);
         }
 
@@ -1477,7 +1132,7 @@
                 return;
             }
             
-            const musicTitle = currentTikTokData.result.music_info.title || 'audio';
+            const musicTitle = currentTikTokData.music?.title || 'audio';
             const cleanTitle = musicTitle.replace(/[^\w\s]/gi, '').substring(0, 30);
             const filename = `tiktok_audio_${cleanTitle}_${Date.now()}.mp3`;
             
@@ -1499,7 +1154,7 @@
                 return;
             }
             
-            const username = currentTikTokData.result.author.nickname || 'tiktok';
+            const username = currentTikTokData.author?.nickname || 'tiktok';
             const filename = `tiktok_cover_${username}_${Date.now()}.jpg`;
             
             showSuccess('Mendownload cover...');
@@ -1536,7 +1191,7 @@
             errorMessage.className = 'error-message error-animation';
             errorMessage.style.display = 'block';
             
-            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            errorMessage.scrollIntoView({ behavior: 'smooth' });
             
             setTimeout(() => {
                 errorMessage.classList.remove('error-animation');
@@ -1555,13 +1210,16 @@
             }, 3000);
         }
 
-        // Format bytes untuk ukuran file
-        function formatBytes(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        // Format angka
+        function formatNumber(num) {
+            const n = parseInt(num) || 0;
+            
+            if (n >= 1000000) {
+                return (n / 1000000).toFixed(1) + 'M';
+            } else if (n >= 1000) {
+                return (n / 1000).toFixed(1) + 'K';
+            }
+            return n.toString();
         }
     </script>
 </body>
