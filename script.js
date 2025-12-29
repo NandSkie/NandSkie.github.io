@@ -1,10 +1,7 @@
-// script.js - DENGAN GENERATE TEMPLATE & WARNA OTOMATIS
+// script.js
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize
     initializePage();
-    
-    // Generate template otomatis
-    generateAllTemplates();
     
     // Add floating particles
     createFloatingParticles();
@@ -31,67 +28,6 @@ function initializePage() {
     
     // Modal event listeners
     setupModalEvents();
-}
-
-function generateAllTemplates() {
-    // Warna yang tersedia
-    const colorClasses = [
-        'btn-blue', 'btn-green', 'btn-purple', 'btn-orange', 
-        'btn-red', 'btn-yellow', 'btn-cyan', 'btn-pink', 
-        'btn-teal', 'btn-gray'
-    ];
-    
-    // Generate untuk Download APK (100 template)
-    const downloadGrid = document.querySelector('#downloadModal .template-grid');
-    if (downloadGrid && downloadGrid.children.length <= 10) {
-        // Kosongkan dulu
-        downloadGrid.innerHTML = '';
-        
-        // Generate 100 template dengan warna bergantian
-        for (let i = 1; i <= 100; i++) {
-            const colorIndex = (i - 1) % colorClasses.length;
-            const templateBtn = document.createElement('a');
-            templateBtn.className = `template-btn ${colorClasses[colorIndex]}`;
-            templateBtn.href = `template${i}-apk.html`;
-            templateBtn.innerHTML = `
-                <i class="fas fa-mobile-alt"></i>
-                <span>TEMPLATE ${i}</span>
-            `;
-            downloadGrid.appendChild(templateBtn);
-        }
-    }
-    
-    // Generate untuk Other Tools (100 template)
-    const toolsGrid = document.querySelector('#toolsModal .template-grid');
-    if (toolsGrid && toolsGrid.children.length <= 10) {
-        toolsGrid.innerHTML = '';
-        
-        // WR CALCULATE sebagai pertama (special orange)
-        const wrBtn = document.createElement('a');
-        wrBtn.className = 'template-btn wr-calculate-btn';
-        wrBtn.href = 'winrate-calculate.html';
-        wrBtn.innerHTML = `
-            <i class="fas fa-chart-line"></i>
-            <span>WINRATE CALCULATE</span>
-        `;
-        toolsGrid.appendChild(wrBtn);
-        
-        // Generate 99 template lainnya dengan warna bergantian
-        for (let i = 1; i <= 99; i++) {
-            const colorIndex = (i - 1) % colorClasses.length;
-            const templateBtn = document.createElement('a');
-            templateBtn.className = `template-btn ${colorClasses[colorIndex]}`;
-            templateBtn.href = `template${i}-tools.html`;
-            templateBtn.innerHTML = `
-                <i class="fas fa-wrench"></i>
-                <span>TEMPLATE ${i}</span>
-            `;
-            toolsGrid.appendChild(templateBtn);
-        }
-    }
-    
-    // Add event listeners untuk template yang baru digenerate
-    addRippleEffects();
 }
 
 function addRippleEffects() {
