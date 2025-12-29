@@ -9,11 +9,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -22,364 +22,496 @@
         }
 
         .container {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
             width: 100%;
-            max-width: 500px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            max-width: 550px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         h1 {
-            color: #1a2980;
+            color: #0f3460;
             margin-bottom: 10px;
-            font-size: 28px;
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #0f3460, #533483);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
             color: #666;
-            margin-bottom: 25px;
-            font-size: 14px;
-            line-height: 1.5;
+            margin-bottom: 30px;
+            font-size: 15px;
+            line-height: 1.6;
         }
 
-        .service-badge {
-            background: #26d0ce;
+        .badge {
+            background: linear-gradient(90deg, #533483, #e94560);
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
             display: inline-block;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(83, 52, 131, 0.4);
         }
 
         .upload-area {
-            border: 3px dashed #1a2980;
-            border-radius: 15px;
-            padding: 50px 20px;
-            margin-bottom: 25px;
+            border: 3px dashed #533483;
+            border-radius: 18px;
+            padding: 60px 30px;
+            margin-bottom: 30px;
             cursor: pointer;
-            transition: all 0.3s;
-            background: #f8fdff;
-        }
-
-        .upload-area:hover {
-            background: #e8f7ff;
-            border-color: #26d0ce;
-            transform: translateY(-3px);
-        }
-
-        .upload-icon {
-            font-size: 60px;
-            color: #1a2980;
-            margin-bottom: 15px;
-            opacity: 0.8;
-        }
-
-        .upload-text {
-            color: #444;
-            margin-bottom: 10px;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .upload-info {
-            color: #777;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        .upload-btn {
-            background: linear-gradient(to right, #1a2980, #26d0ce);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 15px;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .upload-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(26, 41, 128, 0.3);
-        }
-
-        .progress-container {
-            margin: 25px 0;
-            display: none;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 12px;
-            background: #e0e0e0;
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(to right, #1a2980, #26d0ce);
-            width: 0%;
-            transition: width 0.3s ease-out;
-            border-radius: 6px;
-        }
-
-        .progress-text {
-            color: #555;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .result-container {
-            display: none;
-            margin-top: 25px;
-            padding: 25px;
-            background: linear-gradient(135deg, #f8fdff 0%, #e8f7ff 100%);
-            border-radius: 15px;
-            border-left: 5px solid #1a2980;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .result-title {
-            color: #1a2980;
-            margin-bottom: 15px;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .code-box {
-            background: #1a2980;
-            color: white;
-            padding: 18px;
-            border-radius: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 20px;
-            margin: 20px 0;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
+            transition: all 0.4s;
+            background: rgba(83, 52, 131, 0.05);
             position: relative;
             overflow: hidden;
         }
 
-        .code-box:hover {
-            background: #0f1c5a;
-            transform: scale(1.02);
-            border-color: #26d0ce;
+        .upload-area:hover {
+            background: rgba(83, 52, 131, 0.1);
+            border-color: #e94560;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(83, 52, 131, 0.2);
         }
 
-        .code-box::after {
-            content: '📋 Klik untuk copy';
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #26d0ce;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 11px;
-            opacity: 0;
+        .upload-area.active {
+            border-color: #00b894;
+            background: rgba(0, 184, 148, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 80px;
+            color: #533483;
+            margin-bottom: 25px;
+            opacity: 0.9;
             transition: all 0.3s;
         }
 
-        .code-box:hover::after {
-            opacity: 1;
+        .upload-area:hover .upload-icon {
+            transform: scale(1.1);
+            color: #e94560;
+        }
+
+        .upload-text {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .upload-info {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .upload-btn {
+            background: linear-gradient(90deg, #533483, #e94560);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 17px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 8px 25px rgba(83, 52, 131, 0.5);
+        }
+
+        .upload-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(83, 52, 131, 0.6);
+        }
+
+        .upload-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .file-info {
+            background: rgba(83, 52, 131, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: left;
+            display: none;
+            border-left: 5px solid #533483;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .file-info p {
+            margin: 15px 0;
+            color: #555;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-info strong {
+            color: #0f3460;
+            min-width: 100px;
+            font-weight: 700;
+        }
+
+        .progress-container {
+            margin: 30px 0;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 16px;
+            background: rgba(83, 52, 131, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #533483, #e94560);
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            color: #666;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-container {
+            display: none;
+            margin-top: 35px;
+            padding: 35px;
+            background: linear-gradient(135deg, rgba(83, 52, 131, 0.08) 0%, rgba(233, 69, 96, 0.08) 100%);
+            border-radius: 20px;
+            border: 2px solid rgba(83, 52, 131, 0.3);
+            animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .result-title {
+            color: #0f3460;
+            margin-bottom: 25px;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .code-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            font-family: 'Cascadia Code', 'JetBrains Mono', monospace;
+            font-size: 24px;
+            margin: 30px 0;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(26, 26, 46, 0.4);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-box:hover {
+            transform: translateY(-5px);
+            border-color: #e94560;
+            box-shadow: 0 20px 40px rgba(26, 26, 46, 0.5);
+        }
+
+        .code-box::before {
+            content: '📋 KLIK UNTUK COPY';
+            position: absolute;
             top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e94560;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            opacity: 0;
+            transition: all 0.3s;
+            white-space: nowrap;
+            letter-spacing: 1px;
+        }
+
+        .code-box:hover::before {
+            opacity: 1;
+            top: -45px;
         }
 
         .whatsapp-btn {
-            background: #25D366;
+            background: linear-gradient(90deg, #25D366, #1DA851);
             color: white;
             text-decoration: none;
-            padding: 16px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 12px;
             display: block;
-            font-weight: bold;
-            font-size: 16px;
-            margin-top: 20px;
+            font-weight: 800;
+            font-size: 18px;
+            margin-top: 30px;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 18px;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
         }
 
         .whatsapp-btn:hover {
-            background: #1DA851;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.5);
+        }
+
+        .expiry-info {
+            background: rgba(255, 193, 7, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin: 25px 0;
+            border-left: 5px solid #FFC107;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            font-weight: 600;
         }
 
         .error {
-            color: #ff4444;
-            background: #fff0f0;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 15px 0;
+            background: rgba(244, 67, 54, 0.15);
+            color: #F44336;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
             display: none;
-            border-left: 4px solid #ff4444;
+            border-left: 5px solid #F44336;
+            text-align: left;
+            font-weight: 600;
         }
 
-        .warning {
-            color: #ff8800;
-            background: #fff8f0;
-            padding: 10px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-size: 13px;
-            border-left: 4px solid #ff8800;
+        .success {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4CAF50;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            display: none;
+            border-left: 5px solid #4CAF50;
+            font-weight: 600;
         }
 
         .footer {
-            margin-top: 25px;
+            margin-top: 35px;
             color: #777;
-            font-size: 12px;
-            line-height: 1.5;
+            font-size: 13px;
+            line-height: 1.6;
+            padding-top: 25px;
+            border-top: 1px solid rgba(83, 52, 131, 0.15);
         }
 
         input[type="file"] {
             display: none;
         }
 
-        .file-info {
-            background: #f0f8ff;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 15px 0;
-            text-align: left;
-            display: none;
-        }
-
-        .file-info p {
-            margin: 8px 0;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .file-info strong {
-            color: #1a2980;
-            min-width: 80px;
-            display: inline-block;
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 25px;
+                margin: 15px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .code-box {
+                font-size: 20px;
+                padding: 20px;
+                letter-spacing: 2px;
+            }
+            
+            .upload-area {
+                padding: 50px 25px;
+            }
+            
+            .upload-text {
+                font-size: 18px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Upload SW HD</h1>
+        <h1><i class="fas fa-cloud-upload-alt"></i> Upload SW HD</h1>
         <p class="subtitle">
-            Upload media ke Uguu.se & terima via WhatsApp Bot
+            Upload file ke Uguu.se & dapatkan kode unik untuk dikirim ke WhatsApp Bot
         </p>
         
-        <div class="service-badge">
-            <i class="fas fa-cloud"></i> Uguu.se • Max 128MB • 3 Hours
+        <div class="badge">
+            <i class="fas fa-bolt"></i> Uguu.se • Max 128MB • 3 Jam Expire
         </div>
         
         <div class="upload-area" id="dropArea">
             <div class="upload-icon">
-                <i class="fas fa-cloud-upload-alt"></i>
+                <i class="fas fa-file-upload"></i>
             </div>
-            <p class="upload-text">Klik atau drop file disini</p>
-            <p class="upload-info">Maksimal 128MB • File expires dalam 3 jam</p>
+            <p class="upload-text">Drag & Drop atau Klik untuk Upload</p>
+            <p class="upload-info">
+                <i class="fas fa-check-circle"></i> Support: Gambar, Video, Audio, Dokumen<br>
+                <i class="fas fa-shield-alt"></i> File aman • Auto delete setelah 3 jam
+            </p>
             <input type="file" id="fileInput">
-            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+            <button class="upload-btn" id="uploadBtn" onclick="document.getElementById('fileInput').click()">
                 <i class="fas fa-folder-open"></i> Pilih File
             </button>
         </div>
 
         <div class="file-info" id="fileInfo">
-            <p><strong>File:</strong> <span id="fileName">-</span></p>
-            <p><strong>Ukuran:</strong> <span id="fileSize">-</span></p>
-            <p><strong>Tipe:</strong> <span id="fileType">-</span></p>
+            <p><strong><i class="fas fa-file"></i> File:</strong> <span id="fileName">-</span></p>
+            <p><strong><i class="fas fa-weight-hanging"></i> Ukuran:</strong> <span id="fileSize">-</span></p>
+            <p><strong><i class="fas fa-tag"></i> Tipe:</strong> <span id="fileType">-</span></p>
         </div>
 
-        <div class="warning" id="warningMessage" style="display: none;">
-            <i class="fas fa-exclamation-triangle"></i>
-            <span id="warningText"></span>
+        <div class="error" id="errorMessage">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorText">Error message will appear here</span>
         </div>
 
-        <div class="error" id="errorMessage"></div>
+        <div class="success" id="successMessage">
+            <i class="fas fa-check-circle"></i>
+            <span id="successText">Success message</span>
+        </div>
 
         <div class="progress-container" id="progressContainer">
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <p class="progress-text" id="progressText">Mengupload...</p>
+            <div class="progress-text">
+                <span id="progressStatus">Menyiapkan upload...</span>
+                <span id="progressPercent">0%</span>
+            </div>
         </div>
 
         <div class="result-container" id="resultContainer">
             <h3 class="result-title">
-                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-rocket"></i>
                 Upload Berhasil!
             </h3>
-            <p style="color: #666; margin-bottom: 15px;">Kode Anda:</p>
             
-            <div class="code-box" id="codeBox">
-                <span id="codeText">UGU-XXXXXXX</span>
-            </div>
-            
-            <p style="color: #888; font-size: 13px; margin: 10px 0;">
-                <i class="fas fa-clock"></i> File akan expire dalam 3 jam
+            <p style="color: #666; margin-bottom: 20px; font-size: 16px;">
+                Salin kode berikut dan kirim ke WhatsApp Bot:
             </p>
             
+            <div class="code-box" id="codeBox">
+                <span id="codeText">UGU-XXXXXXXX</span>
+            </div>
+            
+            <div class="expiry-info">
+                <i class="fas fa-clock"></i>
+                <span>File akan otomatis dihapus dalam <strong>3 jam</strong></span>
+            </div>
+            
             <a href="#" class="whatsapp-btn" id="whatsappLink" target="_blank">
-                <i class="fab fa-whatsapp"></i> Kirim Kode ke WhatsApp Bot
+                <i class="fab fa-whatsapp"></i> Kirim ke WhatsApp Bot
             </a>
             
-            <p style="color: #777; font-size: 12px; margin-top: 15px;">
-                Klik tombol diatas untuk otomatis buka WhatsApp dengan kode
+            <p style="color: #888; font-size: 14px; margin-top: 25px; line-height: 1.6;">
+                <i class="fas fa-info-circle"></i> 
+                Bot akan otomatis mengirim file saat menerima kode ini.<br>
+                Format: <code style="background: #f1f1f1; padding: 3px 8px; border-radius: 4px;">UGU-XXXXXXXX.xxx</code>
             </p>
         </div>
 
         <div class="footer">
-            <p>Powered by Uguu.se • File expires dalam 3 jam • WhatsApp Bot ready</p>
-            <p>Supported formats: Images, Videos, Audio, Documents</p>
+            <p><i class="fas fa-code"></i> Powered by Uguu.se API • WhatsApp Bot Integration</p>
+            <p><i class="fas fa-history"></i> File expires dalam 3 jam • Max upload 128MB • All formats supported</p>
         </div>
     </div>
 
     <script>
         // ===== KONFIGURASI =====
         const CONFIG = {
-            botNumber: "+6285126839864",
+            botNumber: "+6285126839864",  // Ganti dengan nomor bot Anda
+            apiUrl: "https://uguu.se/upload.php",
             maxSizeMB: 128,
-            serviceName: "Uguu.se",
-            serviceUrl: "https://uguu.se/upload.php",
-            fileExpiry: "3 hours"
+            expireHours: 3
         };
 
         // ===== ELEMENTS =====
         const elements = {
             fileInput: document.getElementById('fileInput'),
+            uploadBtn: document.getElementById('uploadBtn'),
             dropArea: document.getElementById('dropArea'),
             fileInfo: document.getElementById('fileInfo'),
             fileName: document.getElementById('fileName'),
             fileSize: document.getElementById('fileSize'),
             fileType: document.getElementById('fileType'),
-            warningMessage: document.getElementById('warningMessage'),
-            warningText: document.getElementById('warningText'),
             errorMessage: document.getElementById('errorMessage'),
+            errorText: document.getElementById('errorText'),
+            successMessage: document.getElementById('successMessage'),
+            successText: document.getElementById('successText'),
             progressContainer: document.getElementById('progressContainer'),
             progressFill: document.getElementById('progressFill'),
-            progressText: document.getElementById('progressText'),
+            progressStatus: document.getElementById('progressStatus'),
+            progressPercent: document.getElementById('progressPercent'),
             resultContainer: document.getElementById('resultContainer'),
             codeBox: document.getElementById('codeBox'),
             codeText: document.getElementById('codeText'),
@@ -390,31 +522,30 @@
         let currentFile = null;
         let isUploading = false;
 
-        // ===== INIT =====
+        // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', () => {
             setupEventListeners();
+            showMessage('🟢 Sistem siap! Drag & drop atau klik untuk upload file.', 'success');
         });
 
         function setupEventListeners() {
-            // File input
+            // File input change
             elements.fileInput.addEventListener('change', handleFileSelect);
             
-            // Drag & Drop
+            // Drag & Drop events
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                 elements.dropArea.addEventListener(eventName, preventDefaults, false);
             });
             
             ['dragenter', 'dragover'].forEach(eventName => {
                 elements.dropArea.addEventListener(eventName, () => {
-                    elements.dropArea.style.borderColor = '#26d0ce';
-                    elements.dropArea.style.background = '#e8f7ff';
+                    elements.dropArea.classList.add('active');
                 }, false);
             });
             
             ['dragleave', 'drop'].forEach(eventName => {
                 elements.dropArea.addEventListener(eventName, () => {
-                    elements.dropArea.style.borderColor = '#1a2980';
-                    elements.dropArea.style.background = '#f8fdff';
+                    elements.dropArea.classList.remove('active');
                 }, false);
             });
             
@@ -424,6 +555,7 @@
             elements.codeBox.addEventListener('click', copyCodeToClipboard);
         }
 
+        // ===== FILE HANDLING =====
         function preventDefaults(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -434,6 +566,7 @@
             if (files.length > 0) {
                 processFile(files[0]);
             }
+            elements.dropArea.classList.remove('active');
         }
 
         function handleFileSelect(e) {
@@ -443,26 +576,26 @@
             }
         }
 
-        // ===== PROCESS FILE =====
         function processFile(file) {
             // Reset state
-            hideError();
-            hideWarning();
+            hideMessage('error');
+            hideMessage('success');
             elements.resultContainer.style.display = 'none';
             elements.fileInfo.style.display = 'none';
+            elements.progressContainer.style.display = 'none';
             
-            // Validasi ukuran
+            // Validation
             if (file.size > CONFIG.maxSizeMB * 1024 * 1024) {
-                showError(`File terlalu besar! Maksimal ${CONFIG.maxSizeMB}MB untuk ${CONFIG.serviceName}`);
+                showMessage(`❌ File terlalu besar! Maksimal ${CONFIG.maxSizeMB}MB`, 'error');
                 return;
             }
             
-            // Tampilkan info file
+            // Show file info
             currentFile = file;
             showFileInfo(file);
             
-            // Mulai upload otomatis
-            startUpload();
+            // Auto start upload setelah 1 detik
+            setTimeout(() => startUpload(), 1000);
         }
 
         function showFileInfo(file) {
@@ -472,154 +605,134 @@
             elements.fileInfo.style.display = 'block';
         }
 
-        // ===== UPLOAD PROCESS =====
+        // ===== UPLOAD TO UGUU.SE =====
         async function startUpload() {
             if (!currentFile || isUploading) return;
             
             isUploading = true;
+            elements.uploadBtn.disabled = true;
             showProgress(true);
+            updateProgress(10, 'Menyiapkan file...');
             
             try {
-                // Upload ke Uguu.se
-                elements.progressText.textContent = 'Menyiapkan upload...';
-                elements.progressFill.style.width = '10%';
+                // Create FormData - FORMAT YANG BENAR!
+                const formData = new FormData();
+                formData.append('files[]', currentFile); // INI YANG BENAR: files[] (array)
                 
-                const shortUrl = await uploadToUguu(currentFile);
+                // Upload menggunakan XMLHttpRequest untuk progress tracking
+                updateProgress(30, 'Mengupload ke Uguu.se...');
                 
-                // Generate kode
-                const fileName = shortUrl.split('/').pop();
-                const code = `UGU-${fileName}`;
+                const response = await uploadWithXHR(CONFIG.apiUrl, formData);
                 
-                // Tampilkan hasil
-                showResult(code);
-                elements.progressFill.style.width = '100%';
-                elements.progressText.textContent = 'Upload selesai!';
-                
-            } catch (error) {
-                console.error('Upload error:', error);
-                showError(`Upload gagal: ${error.message || 'Coba lagi atau gunakan file lain'}`);
-            } finally {
-                isUploading = false;
-                setTimeout(() => showProgress(false), 1000);
-            }
-        }
-
-        // ===== UGUU.SE UPLOAD FUNCTION =====
-        async function uploadToUguu(file) {
-            // Create FormData
-            const formData = new FormData();
-            formData.append('files[]', file);
-            
-            // Update progress
-            elements.progressFill.style.width = '30%';
-            elements.progressText.textContent = 'Mengupload ke Uguu.se...';
-            
-            try {
-                // Upload dengan fetch
-                const response = await fetch(CONFIG.serviceUrl, {
-                    method: 'POST',
-                    body: formData,
-                    // NO headers untuk FormData, browser akan set otomatis
-                });
-                
-                // Update progress
-                elements.progressFill.style.width = '70%';
-                elements.progressText.textContent = 'Memproses respon...';
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                if (!response.success) {
+                    throw new Error(response.message || 'Upload gagal');
                 }
                 
-                const result = await response.json();
-                
-                // Cek jika ada error
-                if (!result.success) {
-                    throw new Error(result.message || 'Upload gagal');
-                }
-                
-                if (!result.files || !result.files[0] || !result.files[0].url) {
+                if (!response.files || !response.files[0] || !response.files[0].url) {
                     throw new Error('Respon tidak valid dari server');
                 }
                 
-                return result.files[0].url;
+                // Get uploaded file info
+                const uploadedFile = response.files[0];
+                const fileUrl = uploadedFile.url.replace(/\\\//g, '/'); // Fix escape slashes
+                const fileName = uploadedFile.filename || uploadedFile.hash + getFileExtension(currentFile.name);
                 
-            } catch (error) {
-                // Jika gagal, coba method alternatif
-                console.log('Method 1 gagal, coba method 2:', error.message);
-                return await uploadToUguuAlt(file);
-            }
-        }
-
-        // ===== ALTERNATIVE UPLOAD METHOD =====
-        async function uploadToUguuAlt(file) {
-            elements.progressText.textContent = 'Menggunakan metode alternatif...';
-            elements.progressFill.style.width = '50%';
-            
-            try {
-                // Coba dengan XMLHttpRequest (lebih compatible)
-                return await new Promise((resolve, reject) => {
-                    const xhr = new XMLHttpRequest();
-                    const formData = new FormData();
-                    formData.append('files[]', file);
-                    
-                    xhr.upload.addEventListener('progress', (e) => {
-                        if (e.lengthComputable) {
-                            const percent = Math.round((e.loaded / e.total) * 100);
-                            elements.progressFill.style.width = `${30 + (percent * 0.4)}%`;
-                            elements.progressText.textContent = `Uploading... ${percent}%`;
-                        }
-                    });
-                    
-                    xhr.addEventListener('load', () => {
-                        if (xhr.status === 200) {
-                            try {
-                                const result = JSON.parse(xhr.responseText);
-                                if (result.success && result.files[0]) {
-                                    resolve(result.files[0].url);
-                                } else {
-                                    reject(new Error('Upload gagal'));
-                                }
-                            } catch (e) {
-                                reject(new Error('Respon tidak valid'));
-                            }
-                        } else {
-                            reject(new Error(`HTTP ${xhr.status}`));
-                        }
-                    });
-                    
-                    xhr.addEventListener('error', () => {
-                        reject(new Error('Network error'));
-                    });
-                    
-                    xhr.open('POST', CONFIG.serviceUrl);
-                    xhr.send(formData);
+                // Generate UGU- code
+                const code = `UGU-${fileName}`;
+                
+                // Show result
+                showResult(code);
+                updateProgress(100, 'Upload selesai!');
+                
+                showMessage('✅ Upload berhasil! Kode telah dibuat.', 'success');
+                
+                // Log untuk debugging
+                console.log('Upload success:', {
+                    original: currentFile.name,
+                    uploaded: fileName,
+                    url: fileUrl,
+                    code: code,
+                    size: uploadedFile.size
                 });
                 
             } catch (error) {
-                throw new Error(`Metode alternatif gagal: ${error.message}`);
+                console.error('Upload error:', error);
+                showMessage(`❌ Upload gagal: ${error.message}`, 'error');
+                updateProgress(0, 'Upload gagal');
+            } finally {
+                isUploading = false;
+                elements.uploadBtn.disabled = false;
+                setTimeout(() => showProgress(false), 2000);
             }
+        }
+
+        // Upload menggunakan XMLHttpRequest untuk progress tracking
+        function uploadWithXHR(url, formData) {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                
+                xhr.upload.addEventListener('progress', (e) => {
+                    if (e.lengthComputable) {
+                        const percent = Math.round((e.loaded / e.total) * 100);
+                        const currentProgress = 30 + (percent * 0.5); // 30-80% range
+                        updateProgress(currentProgress, `Uploading... ${percent}%`);
+                    }
+                });
+                
+                xhr.addEventListener('load', () => {
+                    try {
+                        if (xhr.status === 200) {
+                            const response = JSON.parse(xhr.responseText);
+                            if (response.success) {
+                                resolve(response);
+                            } else {
+                                reject(new Error(response.message || 'Upload failed'));
+                            }
+                        } else {
+                            reject(new Error(`HTTP ${xhr.status}: ${xhr.statusText}`));
+                        }
+                    } catch (e) {
+                        reject(new Error('Invalid JSON response'));
+                    }
+                });
+                
+                xhr.addEventListener('error', () => {
+                    reject(new Error('Network error. Cek koneksi internet.'));
+                });
+                
+                xhr.addEventListener('timeout', () => {
+                    reject(new Error('Timeout. File terlalu besar atau server lambat.'));
+                });
+                
+                xhr.timeout = 300000; // 5 minutes timeout
+                xhr.open('POST', url);
+                xhr.send(formData);
+            });
+        }
+
+        // Get file extension
+        function getFileExtension(filename) {
+            const match = filename.match(/\.([a-zA-Z0-9]+)$/);
+            return match ? '.' + match[1] : '';
         }
 
         // ===== RESULT DISPLAY =====
         function showResult(code) {
-            // Set kode
+            // Set code
             elements.codeText.textContent = code;
             
             // Set WhatsApp link
             const encodedCode = encodeURIComponent(code);
             elements.whatsappLink.href = `https://wa.me/${CONFIG.botNumber}?text=${encodedCode}`;
             
-            // Tampilkan container
+            // Show container
             elements.resultContainer.style.display = 'block';
             
-            // Scroll ke hasil
+            // Scroll to result
             elements.resultContainer.scrollIntoView({ 
                 behavior: 'smooth',
-                block: 'nearest'
+                block: 'center'
             });
-            
-            // Show expiry warning
-            showWarning(`⚠️ File akan expire dalam ${CONFIG.fileExpiry}`);
         }
 
         // ===== UTILITY FUNCTIONS =====
@@ -631,14 +744,19 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
         }
 
+        function updateProgress(percent, status) {
+            const safePercent = Math.min(100, Math.max(0, percent));
+            elements.progressFill.style.width = `${safePercent}%`;
+            elements.progressPercent.textContent = `${Math.round(safePercent)}%`;
+            elements.progressStatus.textContent = status;
+        }
+
         function showProgress(show) {
             elements.progressContainer.style.display = show ? 'block' : 'none';
             if (!show) {
-                // Reset progress
                 setTimeout(() => {
-                    elements.progressFill.style.width = '0%';
-                    elements.progressText.textContent = 'Mengupload...';
-                }, 500);
+                    updateProgress(0, 'Menyiapkan upload...');
+                }, 1000);
             }
         }
 
@@ -646,34 +764,43 @@
             const code = elements.codeText.textContent;
             navigator.clipboard.writeText(code).then(() => {
                 const original = elements.codeText.textContent;
-                elements.codeText.textContent = '✓ COPIED!';
-                elements.codeBox.style.background = '#26d0ce';
+                elements.codeText.textContent = '✅ COPIED!';
+                elements.codeBox.style.background = 'linear-gradient(135deg, #00b894, #00a085)';
                 
                 setTimeout(() => {
                     elements.codeText.textContent = original;
-                    elements.codeBox.style.background = '#1a2980';
+                    elements.codeBox.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
                 }, 2000);
             }).catch(err => {
-                showError('Gagal menyalin kode');
+                showMessage('❌ Gagal menyalin kode', 'error');
             });
         }
 
-        function showError(message) {
-            elements.errorMessage.textContent = message;
-            elements.errorMessage.style.display = 'block';
+        function showMessage(message, type) {
+            if (type === 'error') {
+                elements.errorText.textContent = message;
+                elements.errorMessage.style.display = 'block';
+                elements.successMessage.style.display = 'none';
+            } else {
+                elements.successText.textContent = message;
+                elements.successMessage.style.display = 'block';
+                elements.errorMessage.style.display = 'none';
+            }
+            
+            // Auto hide success messages
+            if (type === 'success') {
+                setTimeout(() => {
+                    hideMessage('success');
+                }, 4000);
+            }
         }
 
-        function hideError() {
-            elements.errorMessage.style.display = 'none';
-        }
-
-        function showWarning(message) {
-            elements.warningText.textContent = message;
-            elements.warningMessage.style.display = 'block';
-        }
-
-        function hideWarning() {
-            elements.warningMessage.style.display = 'none';
+        function hideMessage(type) {
+            if (type === 'error') {
+                elements.errorMessage.style.display = 'none';
+            } else {
+                elements.successMessage.style.display = 'none';
+            }
         }
     </script>
 </body>
