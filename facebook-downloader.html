@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Video Downloader - NandSki</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1877f2 0%, #0a3d91 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Stars Background */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(24, 119, 242, 0.9) 0%, rgba(10, 61, 145, 0.9) 100%);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #42b72a;
+            box-shadow: 0 5px 20px rgba(66, 183, 42, 0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: #1877f2;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(45deg, #fff, #42b72a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #e4f2ff;
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .creator {
+            color: #42b72a;
+            font-weight: 600;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Input Section */
+        .input-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(66, 183, 42, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+
+        .input-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .input-section h2 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #42b72a;
+            border-radius: 10px;
+            background: rgba(10, 61, 145, 0.5);
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: #1877f2;
+            box-shadow: 0 0 15px rgba(24, 119, 242, 0.5);
+        }
+
+        .url-input::placeholder {
+            color: #a0c8ff;
+        }
+
+        .download-btn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #1877f2, #42b72a);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(66, 183, 42, 0.4);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(66, 183, 42, 0.6);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .example {
+            color: #e4f2ff;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(24, 119, 242, 0.2);
+            border-radius: 8px;
+            border-left: 3px solid #42b72a;
+        }
+
+        /* Info Section */
+        .info-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(66, 183, 42, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .info-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(24, 119, 242, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #42b72a;
+        }
+
+        .info-box i {
+            color: #42b72a;
+            font-size: 1.5rem;
+        }
+
+        .info-box p {
+            color: #e4f2ff;
+            line-height: 1.6;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature {
+            background: rgba(10, 61, 145, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(66, 183, 42, 0.2);
+            transition: all 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            border-color: #1877f2;
+        }
+
+        .feature i {
+            font-size: 2rem;
+            color: #1877f2;
+            margin-bottom: 15px;
+        }
+
+        .feature h4 {
+            color: #42b72a;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .feature p {
+            color: #e4f2ff;
+            font-size: 0.9rem;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(24, 119, 242, 0.3);
+            border-top: 5px solid #42b72a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error Message */
+        .error-message {
+            display: none;
+            background: rgba(244, 67, 54, 0.2);
+            color: #ff8a80;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid rgba(244, 67, 54, 0.5);
+            text-align: center;
+        }
+
+        .success-message {
+            background: rgba(76, 175, 80, 0.2) !important;
+            color: #69f0ae !important;
+            border: 1px solid rgba(76, 175, 80, 0.5) !important;
+        }
+
+        /* Error Animation */
+        .error-animation {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* Result Section */
+        .result-section {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(24, 119, 242, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .result-section h2 {
+            color: #42b72a;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Video Info */
+        .video-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(10, 61, 145, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(66, 183, 42, 0.2);
+        }
+
+        .thumbnail {
+            width: 200px;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 3px solid #1877f2;
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.5);
+        }
+
+        .video-details {
+            flex: 1;
+        }
+
+        .video-details h3 {
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .video-details p {
+            color: #e4f2ff;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .duration {
+            display: inline-block;
+            background: rgba(66, 183, 42, 0.2);
+            color: #42b72a;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Media Preview */
+        .media-preview {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .media-preview h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            text-align: left;
+            font-size: 1.3rem;
+        }
+
+        .video-preview {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(24, 119, 242, 0.3);
+            background: #000;
+        }
+
+        .video-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Download Options */
+        .download-options {
+            margin-top: 25px;
+        }
+
+        .download-options h3 {
+            color: #42b72a;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .media-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            background: linear-gradient(45deg, #1877f2, #0a3d91);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.4);
+        }
+
+        .media-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.6);
+        }
+
+        .media-btn.hd {
+            background: linear-gradient(45deg, #42b72a, #2d8c20);
+            box-shadow: 0 5px 15px rgba(66, 183, 42, 0.4);
+        }
+
+        .media-btn.hd:hover {
+            box-shadow: 0 8px 20px rgba(66, 183, 42, 0.6);
+        }
+
+        .media-btn.sd {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+        }
+
+        .media-btn.sd:hover {
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.6);
+        }
+
+        .media-btn.thumb {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
+        }
+
+        .media-btn.thumb:hover {
+            box-shadow: 0 8px 20px rgba(155, 89, 182, 0.6);
+        }
+
+        /* Quality Info */
+        .quality-info {
+            margin-top: 15px;
+            color: #e4f2ff;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(24, 119, 242, 0.1);
+            border-top: 2px solid #42b72a;
+            margin-top: 30px;
+        }
+
+        .footer p {
+            color: #e4f2ff;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .download-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+            }
+            
+            .media-btn {
+                min-width: 100%;
+            }
+            
+            .video-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .thumbnail {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .back-btn {
+                position: relative;
+                left: 0;
+                top: 0;
+                transform: none;
+                margin-bottom: 15px;
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header {
+                padding: 15px;
+            }
+            
+            .input-section, .result-section, .info-section {
+                padding: 20px;
+            }
+        }
+
+        /* API info */
+        .api-info {
+            font-size: 0.8rem;
+            color: #e4f2ff;
+            text-align: center;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        /* Size tag */
+        .size-tag {
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin: 20px 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1877f2, #42b72a);
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Stars Background -->
+    <div class="stars-container" id="starsContainer"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="https://nandski.github.io" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+        <div class="logo">
+            <i class="fab fa-facebook"></i>
+            <h1>Facebook Video Downloader</h1>
+        </div>
+        <p class="subtitle">Download video Facebook dengan kualitas HD & SD</p>
+        <p class="subtitle">Created by <span class="creator">NandSki</span></p>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Input Section -->
+        <section class="input-section">
+            <h2><i class="fas fa-link"></i> Masukkan URL Facebook</h2>
+            <div class="input-group">
+                <input type="url" class="url-input" id="urlInput" 
+                       placeholder="Contoh: https://www.facebook.com/username/videos/123456789012345/" 
+                       value="">
+                <button class="download-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i> Proses
+                </button>
+            </div>
+            <div class="example">
+                <strong>Contoh URL Facebook Video:</strong><br>
+                https://www.facebook.com/username/videos/123456789012345/<br>
+                https://fb.watch/abcdefghijk/<br>
+                https://web.facebook.com/watch/?v=123456789012345
+            </div>
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="api-info">
+                Terimakasih Telah Menggunakan Website Ini | Jangan Lupa Untuk Subscribe Youtube NandSki
+            </div>
+        </section>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Memproses video Facebook...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="errorMessage"></div>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <div class="info-box">
+                <i class="fas fa-info-circle"></i>
+                <p>Masukkan URL video Facebook di atas, lalu klik tombol "Proses" untuk mendownload video.</p>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-hd"></i>
+                    <h4>Kualitas HD</h4>
+                    <p>Download video Facebook dalam kualitas High Definition (HD)</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-film"></i>
+                    <h4>Kualitas SD</h4>
+                    <p>Download video Facebook dalam kualitas Standard Definition (SD)</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-image"></i>
+                    <h4>Thumbnail</h4>
+                    <p>Download thumbnail/gambar sampul video Facebook</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Result Section -->
+        <section class="result-section" id="resultSection">
+            <h2><i class="fas fa-download"></i> Hasil Download</h2>
+
+            <!-- Video Info -->
+            <div class="video-info" id="videoInfo">
+                <img src="" alt="Video Thumbnail" class="thumbnail" id="thumbnailImg">
+                <div class="video-details">
+                    <h3 id="videoTitle">Facebook Video</h3>
+                    <p><strong>Durasi:</strong> <span class="duration" id="videoDuration">0:00</span></p>
+                    <p id="videoDescription">Video Facebook siap untuk didownload</p>
+                </div>
+            </div>
+
+            <!-- Media Preview -->
+            <div class="media-preview">
+                <h3><i class="fas fa-play-circle"></i> Preview Video</h3>
+                <div class="video-container">
+                    <video controls class="video-preview" id="videoPreview" poster="">
+                        Browser Anda tidak mendukung tag video.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Download Options -->
+            <div class="download-options">
+                <h3><i class="fas fa-download"></i> Opsi Download</h3>
+                <div class="download-buttons">
+                    <button class="media-btn hd" id="downloadHDBtn">
+                        <i class="fas fa-hd"></i> Download Video (HD)
+                    </button>
+                    <button class="media-btn sd" id="downloadSDBtn">
+                        <i class="fas fa-film"></i> Download Video (SD)
+                    </button>
+                    <button class="media-btn thumb" id="downloadThumbBtn">
+                        <i class="fas fa-image"></i> Download Thumbnail
+                    </button>
+                </div>
+                <div class="quality-info" id="qualityInfo">
+                    Pilih kualitas video yang diinginkan
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© <span id="currentYear">2024</span> Facebook Video Downloader | Made with ❤️ by <span class="creator">NandSki</span></p>
+        <p>Tool gratis untuk mendownload video Facebook</p>
+    </footer>
+
+    <script>
+        // Facebook Video Downloader Script - NandSki
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi tahun
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Buat efek bintang
+            createStarsEffect();
+            
+            // Event listener untuk tombol proses
+            document.getElementById('downloadBtn').addEventListener('click', processFacebookUrl);
+            
+            // Event listener untuk tombol download
+            document.getElementById('downloadHDBtn').addEventListener('click', downloadHD);
+            document.getElementById('downloadSDBtn').addEventListener('click', downloadSD);
+            document.getElementById('downloadThumbBtn').addEventListener('click', downloadThumbnail);
+            
+            // Enter key untuk trigger proses
+            document.getElementById('urlInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    processFacebookUrl();
+                }
+            });
+            
+            // Test URL contoh untuk debugging
+            document.getElementById('urlInput').value = 'https://www.facebook.com/facebook/videos/10153231379946729/';
+        });
+
+        // Variabel global untuk menyimpan data
+        let currentFacebookData = null;
+        const apiUrl = 'https://api.vreden.my.id/api/v1/download/facebook?url=';
+
+        // Fungsi untuk membuat efek bintang
+        function createStarsEffect() {
+            const container = document.getElementById('starsContainer');
+            
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 3 + 1;
+                
+                star.style.left = `${left}%`;
+                star.style.top = `${top}%`;
+                star.style.animation = `twinkle ${duration}s linear ${delay}s infinite`;
+                
+                container.appendChild(star);
+            }
+        }
+
+        // Fungsi untuk memproses URL Facebook
+        async function processFacebookUrl() {
+            const urlInput = document.getElementById('urlInput').value.trim();
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('errorMessage');
+            const resultSection = document.getElementById('resultSection');
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = document.getElementById('progressFill');
+            
+            // Validasi URL
+            if (!urlInput) {
+                showError('Silakan masukkan URL video Facebook');
+                return;
+            }
+            
+            if (!isValidFacebookUrl(urlInput)) {
+                showError('URL tidak valid. Pastikan URL video dari Facebook');
+                return;
+            }
+            
+            // Reset progress
+            progressBar.style.display = 'block';
+            progressFill.style.width = '0%';
+            
+            // Tampilkan loading
+            loading.style.display = 'block';
+            errorMessage.style.display = 'none';
+            resultSection.style.display = 'none';
+            
+            try {
+                // Simulasi progress
+                simulateProgress(progressFill);
+                
+                // Fetch data dari API
+                const data = await fetchFacebookData(urlInput);
+                
+                // Sembunyikan loading dan progress
+                loading.style.display = 'none';
+                progressBar.style.display = 'none';
+                
+                if (data && data.status && data.result) {
+                    // Simpan data global
+                    currentFacebookData = data;
+                    
+                    // Tampilkan hasil
+                    displayFacebookData(data.result);
+                    
+                    // Tampilkan pesan sukses
+                    showSuccess('Video Facebook berhasil diambil!');
+                    
+                    // Scroll ke hasil
+                    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    showError('Gagal mengambil data video. Silakan coba URL lain.');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                loading.style.display = 'none';
+                progressBar.style.display = 'none';
+                showError(`Terjadi kesalahan: ${error.message || 'Tidak dapat mengambil data'}`);
+            }
+        }
+
+        // Simulasi progress bar
+        function simulateProgress(progressFill) {
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 90) {
+                    clearInterval(interval);
+                    return;
+                }
+                width += Math.random() * 10 + 5;
+                if (width > 90) width = 90;
+                progressFill.style.width = width + '%';
+            }, 300);
+        }
+
+        // Validasi URL Facebook
+        function isValidFacebookUrl(url) {
+            const patterns = [
+                /https?:\/\/(www\.|web\.|m\.)?facebook\.com\/.+\/videos\/\d+/,
+                /https?:\/\/(www\.|web\.|m\.)?facebook\.com\/watch\/?\?v=\d+/,
+                /https?:\/\/(www\.|web\.|m\.)?facebook\.com\/.+\/video\/\d+/,
+                /https?:\/\/fb\.watch\/[A-Za-z0-9_-]+/,
+                /https?:\/\/(www\.|web\.|m\.)?facebook\.com\/video\.php\?.*v=\d+/,
+                /facebook\.com\/.+\/videos\/\d+/
+            ];
+            
+            return patterns.some(pattern => pattern.test(url));
+        }
+
+        // Fetch data Facebook dari API
+        async function fetchFacebookData(url) {
+            const fullApiUrl = apiUrl + encodeURIComponent(url);
+            
+            try {
+                // Gunakan CORS proxy
+                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(fullApiUrl)}`;
+                
+                const response = await fetch(proxyUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error: ${response.status}`);
+                }
+                
+                return await response.json();
+                
+            } catch (proxyError) {
+                console.log('Proxy failed, trying direct fetch...');
+                
+                // Coba fetch langsung
+                try {
+                    const response = await fetch(fullApiUrl, {
+                        method: 'GET',
+                        mode: 'cors',
+                        headers: {
+                            'Accept': 'application/json',
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Direct fetch failed: ${response.status}`);
+                    }
+                    
+                    return await response.json();
+                    
+                } catch (directError) {
+                    console.error('All fetch methods failed:', directError);
+                    throw new Error('Tidak dapat terhubung ke server. Silakan coba lagi nanti.');
+                }
+            }
+        }
+
+        // Fungsi untuk menampilkan data Facebook
+        function displayFacebookData(data) {
+            const resultSection = document.getElementById('resultSection');
+            
+            // Update video info
+            const thumbnailImg = document.getElementById('thumbnailImg');
+            thumbnailImg.src = data.thumbnail || 'https://via.placeholder.com/300x200/1877f2/ffffff?text=Facebook+Video';
+            
+            document.getElementById('videoTitle').textContent = data.title || 'Facebook Video';
+            document.getElementById('videoDuration').textContent = data.durasi || '0:00';
+            
+            // Update video preview
+            const videoPreview = document.getElementById('videoPreview');
+            
+            // Gunakan thumbnail sebagai poster
+            videoPreview.poster = data.thumbnail;
+            
+            // Set data untuk download
+            if (data.download) {
+                if (data.download.hd) {
+                    document.getElementById('downloadHDBtn').setAttribute('data-url', data.download.hd);
+                    document.getElementById('downloadHDBtn').innerHTML = '<i class="fas fa-hd"></i> Download Video (HD)';
+                } else {
+                    document.getElementById('downloadHDBtn').style.display = 'none';
+                }
+                
+                if (data.download.sd) {
+                    document.getElementById('downloadSDBtn').setAttribute('data-url', data.download.sd);
+                    document.getElementById('downloadSDBtn').innerHTML = '<i class="fas fa-film"></i> Download Video (SD)';
+                } else {
+                    document.getElementById('downloadSDBtn').style.display = 'none';
+                }
+                
+                // Set thumbnail download
+                document.getElementById('downloadThumbBtn').setAttribute('data-url', data.thumbnail);
+                
+                // Update quality info
+                const qualityInfo = document.getElementById('qualityInfo');
+                if (data.download.hd && data.download.sd) {
+                    qualityInfo.innerHTML = '<i class="fas fa-info-circle"></i> Tersedia dalam 2 kualitas: HD dan SD';
+                } else if (data.download.hd) {
+                    qualityInfo.innerHTML = '<i class="fas fa-info-circle"></i> Tersedia dalam kualitas HD';
+                } else if (data.download.sd) {
+                    qualityInfo.innerHTML = '<i class="fas fa-info-circle"></i> Tersedia dalam kualitas SD';
+                }
+                
+                // Coba set video preview dengan URL SD jika ada
+                if (data.download.sd) {
+                    videoPreview.src = data.download.sd;
+                    videoPreview.load();
+                    
+                    // Error handling untuk video
+                    videoPreview.onerror = function() {
+                        console.log('Video preview tidak dapat dimuat');
+                        const container = this.parentElement;
+                        const errorMsg = document.createElement('p');
+                        errorMsg.style.color = '#42b72a';
+                        errorMsg.style.marginTop = '10px';
+                        errorMsg.innerHTML = '<i class="fas fa-info-circle"></i> Video preview tidak tersedia, tetapi download masih bisa dilakukan';
+                        container.appendChild(errorMsg);
+                    };
+                }
+            }
+            
+            // Tampilkan result section
+            resultSection.style.display = 'block';
+        }
+
+        // Download HD
+        function downloadHD() {
+            if (!currentFacebookData) {
+                showError('Silakan proses URL terlebih dahulu');
+                return;
+            }
+            
+            const videoUrl = this.getAttribute('data-url');
+            
+            if (!videoUrl) {
+                showError('URL video HD tidak tersedia');
+                return;
+            }
+            
+            const title = currentFacebookData.result.title || 'facebook_video';
+            const cleanTitle = title.replace(/[^\w\s]/gi, '').substring(0, 50);
+            const filename = `facebook_${cleanTitle}_hd_${Date.now()}.mp4`;
+            
+            showSuccess('Mendownload video HD...');
+            startDownload(videoUrl, filename);
+        }
+
+        // Download SD
+        function downloadSD() {
+            if (!currentFacebookData) {
+                showError('Silakan proses URL terlebih dahulu');
+                return;
+            }
+            
+            const videoUrl = this.getAttribute('data-url');
+            
+            if (!videoUrl) {
+                showError('URL video SD tidak tersedia');
+                return;
+            }
+            
+            const title = currentFacebookData.result.title || 'facebook_video';
+            const cleanTitle = title.replace(/[^\w\s]/gi, '').substring(0, 50);
+            const filename = `facebook_${cleanTitle}_sd_${Date.now()}.mp4`;
+            
+            showSuccess('Mendownload video SD...');
+            startDownload(videoUrl, filename);
+        }
+
+        // Download thumbnail
+        function downloadThumbnail() {
+            if (!currentFacebookData) {
+                showError('Silakan proses URL terlebih dahulu');
+                return;
+            }
+            
+            const thumbUrl = this.getAttribute('data-url');
+            
+            if (!thumbUrl) {
+                showError('URL thumbnail tidak tersedia');
+                return;
+            }
+            
+            const filename = `facebook_thumbnail_${Date.now()}.jpg`;
+            
+            showSuccess('Mendownload thumbnail...');
+            startDownload(thumbUrl, filename);
+        }
+
+        // Fungsi untuk memulai download
+        function startDownload(url, filename) {
+            try {
+                // Buat link sementara
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                link.target = '_blank';
+                
+                // Tambah ke body, klik, hapus
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+            } catch (error) {
+                console.error('Download error:', error);
+                showError('Gagal memulai download. Silakan coba manual: ' + url);
+                
+                // Fallback: Buka di tab baru
+                window.open(url, '_blank');
+            }
+        }
+
+        // Fungsi untuk menampilkan error
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.className = 'error-message error-animation';
+            errorMessage.style.display = 'block';
+            
+            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            setTimeout(() => {
+                errorMessage.classList.remove('error-animation');
+            }, 1000);
+        }
+
+        // Fungsi untuk menampilkan success
+        function showSuccess(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.className = 'error-message success-message';
+            errorMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
