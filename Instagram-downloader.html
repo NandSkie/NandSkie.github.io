@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Downloader - NandSki</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="Instagram-style.css">
+</head>
+<body>
+    <!-- Meteor Background -->
+    <div class="meteor-container" id="meteorContainer"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <i class="fab fa-instagram"></i>
+            <h1>Instagram Downloader</h1>
+        </div>
+        <p class="subtitle">Download video, foto, dan reel Instagram dengan kualitas tinggi</p>
+        <p class="subtitle">Creator: <span class="creator">NandSki</span></p>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Input Section -->
+        <section class="input-section">
+            <h2><i class="fas fa-link"></i> Masukkan URL Instagram</h2>
+            <div class="input-group">
+                <input type="url" class="url-input" id="urlInput" 
+                       placeholder="https://www.instagram.com/p/Cxample..." 
+                       value="https://www.instagram.com/reel/DPy818YDjVI/?igsh=MXhkNGZsNmhwcWRw">
+                <button class="download-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+            <p class="example">Contoh: https://www.instagram.com/p/Cxample..., https://www.instagram.com/reel/Cxample..., https://www.instagram.com/stories/Cxample...</p>
+        </section>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Memproses permintaan Anda...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="errorMessage"></div>
+
+        <!-- Result Section -->
+        <section class="result-section" id="resultSection">
+            <h2><i class="fas fa-download"></i> Hasil Download</h2>
+
+            <!-- Profile Info -->
+            <div class="profile-info" id="profileInfo">
+                <img src="" alt="Profile Picture" class="profile-img" id="profileImg">
+                <div class="profile-details">
+                    <h3 id="profileName">Jake</h3>
+                    <p id="profileUsername">@mycustomgokart</p>
+                    <p class="verified" id="profileVerified">Akun Terverifikasi</p>
+                </div>
+            </div>
+
+            <!-- Media Preview -->
+            <div class="media-preview">
+                <h3><i class="fas fa-play-circle"></i> Preview Video</h3>
+                <div class="video-container">
+                    <video controls class="video-preview" id="videoPreview" poster="">
+                        Browser Anda tidak mendukung tag video.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="statistics">
+                <div class="stat-item">
+                    <i class="fas fa-play"></i>
+                    <div class="stat-value" id="playCount">3,731,395</div>
+                    <div class="stat-label">Total Putaran</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-heart"></i>
+                    <div class="stat-value" id="likeCount">244,175</div>
+                    <div class="stat-label">Suka</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-comment"></i>
+                    <div class="stat-value" id="commentCount">223</div>
+                    <div class="stat-label">Komentar</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-share"></i>
+                    <div class="stat-value" id="shareCount">12,222</div>
+                    <div class="stat-label">Bagikan</div>
+                </div>
+            </div>
+
+            <!-- Download Options -->
+            <div class="download-options">
+                <h3><i class="fas fa-download"></i> Opsi Download</h3>
+                <div class="download-buttons">
+                    <button class="media-btn video" id="downloadVideoBtn">
+                        <i class="fas fa-video"></i> Download Video
+                    </button>
+                    <button class="media-btn" id="downloadThumbBtn">
+                        <i class="fas fa-image"></i> Download Thumbnail
+                    </button>
+                </div>
+            </div>
+
+            <!-- Caption & Hashtags -->
+            <div class="caption-section">
+                <h3><i class="fas fa-align-left"></i> Caption</h3>
+                <div class="caption-text" id="captionText">
+                    FOR FREE??<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>#custom #drift #drifting #summer #minibike #racing #gokarting #motorsport #race #speed #gokartracing #karts #racecar #sport #fun #driftkart #diy #fabrication #hoonigan #gokart #gokarts #gocarts #gocart #ticktok #comedy #fyp #cars #carsofinstagram #auto #project
+                </div>
+                <div class="hashtags" id="hashtags">
+                    <!-- Hashtags akan diisi oleh JavaScript -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© <span id="currentYear">2024</span> Instagram Downloader | Made with ❤️ by <span class="creator">NandSki</span></p>
+        <p>API oleh: <span class="creator">api.vreden.my.id</span></p>
+    </footer>
+
+    <script src="Instagram-script.js"></script>
+</body>
+</html>
