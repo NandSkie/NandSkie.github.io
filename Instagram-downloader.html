@@ -5,7 +5,713 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram Downloader - NandSki</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="Instagram-style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #0a0a2a;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Meteor Background */
+        .meteor-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .meteor {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, #4fc3f7, #ff4081);
+            border-radius: 50%;
+            opacity: 0;
+            filter: blur(1px);
+        }
+
+        @keyframes meteorFall {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(20, 30, 80, 0.9) 0%, rgba(40, 10, 50, 0.9) 100%);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #ff4081;
+            box-shadow: 0 5px 20px rgba(255, 64, 129, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #4fc3f7, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(45deg, #4fc3f7, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #b3e5fc;
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .creator {
+            color: #4fc3f7;
+            font-weight: 600;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Input Section */
+        .input-section {
+            background: rgba(20, 30, 80, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .input-section h2 {
+            color: #4fc3f7;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #4fc3f7;
+            border-radius: 10px;
+            background: rgba(10, 15, 40, 0.8);
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: #ff4081;
+            box-shadow: 0 0 15px rgba(255, 64, 129, 0.5);
+        }
+
+        .url-input::placeholder {
+            color: #a0d2ff;
+        }
+
+        .download-btn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #4fc3f7, #ff4081);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 64, 129, 0.6);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .example {
+            color: #b3e5fc;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(79, 195, 247, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #ff4081;
+        }
+
+        /* Info Section */
+        .info-section {
+            background: rgba(20, 30, 80, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .info-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(79, 195, 247, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ff4081;
+        }
+
+        .info-box i {
+            color: #4fc3f7;
+            font-size: 1.5rem;
+        }
+
+        .info-box p {
+            color: #b3e5fc;
+            line-height: 1.6;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature {
+            background: rgba(10, 15, 40, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(79, 195, 247, 0.2);
+            transition: all 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            border-color: #ff4081;
+        }
+
+        .feature i {
+            font-size: 2rem;
+            color: #ff4081;
+            margin-bottom: 15px;
+        }
+
+        .feature h4 {
+            color: #4fc3f7;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .feature p {
+            color: #b3e5fc;
+            font-size: 0.9rem;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(79, 195, 247, 0.3);
+            border-top: 5px solid #ff4081;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error Message */
+        .error-message {
+            display: none;
+            background: rgba(244, 67, 54, 0.2);
+            color: #ff8a80;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid rgba(244, 67, 54, 0.5);
+            text-align: center;
+        }
+
+        .success-message {
+            background: rgba(76, 175, 80, 0.2) !important;
+            color: #69f0ae !important;
+            border: 1px solid rgba(76, 175, 80, 0.5) !important;
+        }
+
+        /* Error Animation */
+        .error-animation {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* Result Section */
+        .result-section {
+            display: none;
+            background: rgba(20, 30, 80, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(255, 64, 129, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .result-section h2 {
+            color: #ff4081;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Profile Info */
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(10, 15, 40, 0.8);
+            border-radius: 12px;
+            border: 1px solid rgba(79, 195, 247, 0.2);
+        }
+
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4fc3f7;
+            box-shadow: 0 5px 15px rgba(79, 195, 247, 0.5);
+        }
+
+        .profile-details h3 {
+            color: #4fc3f7;
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        .profile-details p {
+            color: #b3e5fc;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .verified {
+            color: #4fc3f7;
+            font-size: 0.9rem;
+        }
+
+        .not-verified {
+            color: #ff8a80;
+        }
+
+        /* Media Preview */
+        .media-preview {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .media-preview h3 {
+            color: #ff4081;
+            margin-bottom: 15px;
+            text-align: left;
+            font-size: 1.3rem;
+        }
+
+        .video-preview {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            background: #000;
+        }
+
+        .image-container {
+            display: none;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .image-preview {
+            flex: 1;
+            min-width: 200px;
+            max-width: 100%;
+            border-radius: 10px;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+        }
+
+        .video-container {
+            position: relative;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* Statistics */
+        .statistics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-item {
+            background: rgba(10, 15, 40, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(79, 195, 247, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: #ff4081;
+        }
+
+        .stat-item i {
+            font-size: 1.5rem;
+            color: #ff4081;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4fc3f7;
+            margin: 5px 0;
+        }
+
+        .stat-label {
+            color: #b3e5fc;
+            font-size: 0.9rem;
+        }
+
+        /* Download Options */
+        .download-options {
+            margin-top: 25px;
+        }
+
+        .download-options h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .media-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            background: linear-gradient(45deg, #4fc3f7, #2979ff);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(41, 121, 255, 0.4);
+        }
+
+        .media-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(41, 121, 255, 0.6);
+        }
+
+        .media-btn.video {
+            background: linear-gradient(45deg, #ff4081, #f50057);
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+        }
+
+        .media-btn.video:hover {
+            box-shadow: 0 8px 20px rgba(255, 64, 129, 0.6);
+        }
+
+        .media-btn.audio {
+            background: linear-gradient(45deg, #00e676, #00c853);
+            box-shadow: 0 5px 15px rgba(0, 230, 118, 0.4);
+        }
+
+        .media-btn.audio:hover {
+            box-shadow: 0 8px 20px rgba(0, 230, 118, 0.6);
+        }
+
+        /* Quality Options */
+        .quality-options {
+            margin-top: 25px;
+            display: none;
+        }
+
+        .quality-options h3 {
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .quality-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quality-btn {
+            padding: 10px 20px;
+            background: rgba(10, 15, 40, 0.8);
+            border: 2px solid #4fc3f7;
+            border-radius: 8px;
+            color: #4fc3f7;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quality-btn:hover {
+            background: #4fc3f7;
+            color: #0a0a2a;
+            transform: translateY(-2px);
+        }
+
+        .quality-btn.active {
+            background: #ff4081;
+            border-color: #ff4081;
+            color: white;
+        }
+
+        /* Caption & Hashtags */
+        .caption-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(10, 15, 40, 0.8);
+            border-radius: 12px;
+            border: 1px solid rgba(79, 195, 247, 0.2);
+        }
+
+        .caption-section h3 {
+            color: #ff4081;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .caption-text {
+            color: #e3f2fd;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            white-space: pre-line;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .hashtag {
+            background: rgba(79, 195, 247, 0.2);
+            color: #4fc3f7;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .hashtag:hover {
+            background: rgba(255, 64, 129, 0.3);
+            color: #ff4081;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(20, 30, 80, 0.9);
+            border-top: 2px solid #ff4081;
+            margin-top: 30px;
+        }
+
+        .footer p {
+            color: #b3e5fc;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .download-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .statistics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+            }
+            
+            .media-btn {
+                min-width: 100%;
+            }
+            
+            .profile-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .quality-buttons {
+                flex-direction: column;
+            }
+            
+            .quality-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .statistics {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header {
+                padding: 15px;
+            }
+            
+            .input-section, .result-section, .info-section {
+                padding: 20px;
+            }
+        }
+
+        /* Tambahan untuk API Vreden */
+        .size-tag {
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+
+        /* API info */
+        .api-info {
+            font-size: 0.8rem;
+            color: #b3e5fc;
+            text-align: center;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        /* Media type indicator */
+        .media-type-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: rgba(255, 64, 129, 0.2);
+            color: #ff4081;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body>
     <!-- Meteor Background -->
@@ -17,8 +723,8 @@
             <i class="fab fa-instagram"></i>
             <h1>Instagram Downloader</h1>
         </div>
-        <p class="subtitle">Download video, foto, dan reel Instagram dengan kualitas tinggi</p>
-        <p class="subtitle">Creator: <span class="creator">NandSki</span></p>
+        <p class="subtitle">Download video, audio, dan foto Instagram dengan kualitas tinggi</p>
+        <p class="subtitle">Created by <span class="creator">NandSki</span> | API: <span class="creator">api.vreden.my.id</span></p>
     </header>
 
     <!-- Main Container -->
@@ -28,13 +734,16 @@
             <h2><i class="fas fa-link"></i> Masukkan URL Instagram</h2>
             <div class="input-group">
                 <input type="url" class="url-input" id="urlInput" 
-                       placeholder="https://www.instagram.com/p/Cxample..." 
-                       value="https://www.instagram.com/reel/DPy818YDjVI/?igsh=MXhkNGZsNmhwcWRw">
+                       placeholder="Contoh: https://www.instagram.com/reel/DQwhpRpDpIB/" 
+                       value="">
                 <button class="download-btn" id="downloadBtn">
-                    <i class="fas fa-download"></i> Download
+                    <i class="fas fa-download"></i> Proses
                 </button>
             </div>
-            <p class="example">Contoh: https://www.instagram.com/p/Cxample..., https://www.instagram.com/reel/Cxample..., https://www.instagram.com/stories/Cxample...</p>
+            <p class="example">Contoh: https://www.instagram.com/p/..., https://www.instagram.com/reel/..., https://www.instagram.com/stories/...</p>
+            <div class="api-info">
+                Menggunakan API: api.vreden.my.id | Download video, audio, dan thumbnail langsung dari Instagram
+            </div>
         </section>
 
         <!-- Loading -->
@@ -46,6 +755,31 @@
         <!-- Error Message -->
         <div class="error-message" id="errorMessage"></div>
 
+        <!-- Info Section -->
+        <section class="info-section">
+            <div class="info-box">
+                <i class="fas fa-info-circle"></i>
+                <p>Masukkan URL Instagram (Post/Reel/Story) di atas, lalu klik tombol "Proses" untuk mendownload konten.</p>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-video"></i>
+                    <h4>Download Video</h4>
+                    <p>Download video Instagram dalam kualitas HD langsung dari server Instagram</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-music"></i>
+                    <h4>Download Audio</h4>
+                    <p>Ekstrak audio dari video Instagram (gunakan converter online)</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-image"></i>
+                    <h4>Download Foto</h4>
+                    <p>Download foto Instagram dalam kualitas asli</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Result Section -->
         <section class="result-section" id="resultSection">
             <h2><i class="fas fa-download"></i> Hasil Download</h2>
@@ -54,42 +788,45 @@
             <div class="profile-info" id="profileInfo">
                 <img src="" alt="Profile Picture" class="profile-img" id="profileImg">
                 <div class="profile-details">
-                    <h3 id="profileName">Jake</h3>
-                    <p id="profileUsername">@mycustomgokart</p>
-                    <p class="verified" id="profileVerified">Akun Terverifikasi</p>
+                    <h3 id="profileName">Username</h3>
+                    <p id="profileUsername">@username</p>
+                    <p class="verified" id="profileVerified">Akun Tidak Terverifikasi</p>
                 </div>
             </div>
 
             <!-- Media Preview -->
             <div class="media-preview">
-                <h3><i class="fas fa-play-circle"></i> Preview Video</h3>
+                <h3><i class="fas fa-play-circle"></i> Preview Konten</h3>
                 <div class="video-container">
                     <video controls class="video-preview" id="videoPreview" poster="">
                         Browser Anda tidak mendukung tag video.
                     </video>
+                </div>
+                <div class="image-container" id="imageContainer">
+                    <!-- Gambar akan ditampilkan di sini -->
                 </div>
             </div>
 
             <!-- Statistics -->
             <div class="statistics">
                 <div class="stat-item">
-                    <i class="fas fa-play"></i>
-                    <div class="stat-value" id="playCount">3,731,395</div>
-                    <div class="stat-label">Total Putaran</div>
+                    <i class="fas fa-eye"></i>
+                    <div class="stat-value" id="viewCount">0</div>
+                    <div class="stat-label">Views</div>
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-heart"></i>
-                    <div class="stat-value" id="likeCount">244,175</div>
+                    <div class="stat-value" id="likeCount">0</div>
                     <div class="stat-label">Suka</div>
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-comment"></i>
-                    <div class="stat-value" id="commentCount">223</div>
+                    <div class="stat-value" id="commentCount">0</div>
                     <div class="stat-label">Komentar</div>
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-share"></i>
-                    <div class="stat-value" id="shareCount">12,222</div>
+                    <div class="stat-value" id="shareCount">0</div>
                     <div class="stat-label">Bagikan</div>
                 </div>
             </div>
@@ -99,7 +836,10 @@
                 <h3><i class="fas fa-download"></i> Opsi Download</h3>
                 <div class="download-buttons">
                     <button class="media-btn video" id="downloadVideoBtn">
-                        <i class="fas fa-video"></i> Download Video
+                        <i class="fas fa-video"></i> Download Video (HD)
+                    </button>
+                    <button class="media-btn audio" id="downloadAudioBtn">
+                        <i class="fas fa-music"></i> Download Audio (MP3)
                     </button>
                     <button class="media-btn" id="downloadThumbBtn">
                         <i class="fas fa-image"></i> Download Thumbnail
@@ -107,14 +847,24 @@
                 </div>
             </div>
 
+            <!-- Quality Options -->
+            <div class="quality-options" id="qualityOptions">
+                <h3><i class="fas fa-tachometer-alt"></i> Kualitas Video</h3>
+                <div class="quality-buttons" id="qualityButtons">
+                    <!-- Kualitas akan di-generate otomatis -->
+                </div>
+            </div>
+
             <!-- Caption & Hashtags -->
             <div class="caption-section">
                 <h3><i class="fas fa-align-left"></i> Caption</h3>
                 <div class="caption-text" id="captionText">
-                    FOR FREE??<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>•<br>#custom #drift #drifting #summer #minibike #racing #gokarting #motorsport #race #speed #gokartracing #karts #racecar #sport #fun #driftkart #diy #fabrication #hoonigan #gokart #gokarts #gocarts #gocart #ticktok #comedy #fyp #cars #carsofinstagram #auto #project
+                    Caption akan muncul di sini...
                 </div>
                 <div class="hashtags" id="hashtags">
-                    <!-- Hashtags akan diisi oleh JavaScript -->
+                    <span class="hashtag">#instagram</span>
+                    <span class="hashtag">#downloader</span>
+                    <span class="hashtag">#video</span>
                 </div>
             </div>
         </section>
@@ -123,9 +873,547 @@
     <!-- Footer -->
     <footer class="footer">
         <p>© <span id="currentYear">2024</span> Instagram Downloader | Made with ❤️ by <span class="creator">NandSki</span></p>
-        <p>API oleh: <span class="creator">api.vreden.my.id</span></p>
+        <p>Tool gratis untuk mendownload konten Instagram | API oleh: <span class="creator">api.vreden.my.id</span></p>
     </footer>
 
-    <script src="Instagram-script.js"></script>
+    <script>
+        // Instagram Downloader Script - NandSki
+        // Menggunakan API api.vreden.my.id yang terbukti bekerja
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi tahun
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Buat efek meteor
+            createMeteorEffect();
+            
+            // Event listener untuk tombol proses
+            document.getElementById('downloadBtn').addEventListener('click', processInstagramUrl);
+            
+            // Event listener untuk tombol download video
+            document.getElementById('downloadVideoBtn').addEventListener('click', downloadVideo);
+            
+            // Event listener untuk tombol download audio
+            document.getElementById('downloadAudioBtn').addEventListener('click', downloadAudio);
+            
+            // Event listener untuk tombol download thumbnail
+            document.getElementById('downloadThumbBtn').addEventListener('click', downloadThumbnail);
+            
+            // Enter key untuk trigger proses
+            document.getElementById('urlInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    processInstagramUrl();
+                }
+            });
+            
+            // Tampilkan contoh URL saat load
+            showExampleUrl();
+        });
+
+        // Variabel global untuk menyimpan data
+        let currentInstagramData = null;
+        let apiUrl = 'https://api.vreden.my.id/api/v1/download/instagram?url=';
+
+        // Fungsi untuk membuat efek meteor
+        function createMeteorEffect() {
+            const container = document.getElementById('meteorContainer');
+            
+            for (let i = 0; i < 15; i++) {
+                const meteor = document.createElement('div');
+                meteor.className = 'meteor';
+                
+                const left = Math.random() * 100;
+                const delay = Math.random() * 10;
+                const duration = Math.random() * 3 + 2;
+                
+                meteor.style.left = `${left}%`;
+                meteor.style.top = `-100px`;
+                meteor.style.animation = `meteorFall ${duration}s linear ${delay}s infinite`;
+                
+                container.appendChild(meteor);
+            }
+        }
+
+        // Tampilkan contoh URL
+        function showExampleUrl() {
+            const exampleUrls = [
+                "https://www.instagram.com/reel/DQwhpRpDpIB/",
+                "https://www.instagram.com/reel/Cz6JhWNNKcC/",
+                "https://www.instagram.com/p/Cy5OJMzNTwq/"
+            ];
+            
+            const randomUrl = exampleUrls[Math.floor(Math.random() * exampleUrls.length)];
+            document.getElementById('urlInput').placeholder = `Contoh: ${randomUrl}`;
+        }
+
+        // Fungsi untuk memproses URL Instagram
+        async function processInstagramUrl() {
+            const urlInput = document.getElementById('urlInput').value.trim();
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('errorMessage');
+            const resultSection = document.getElementById('resultSection');
+            
+            // Validasi URL
+            if (!urlInput) {
+                showError('Silakan masukkan URL Instagram');
+                return;
+            }
+            
+            if (!isValidInstagramUrl(urlInput)) {
+                showError('URL tidak valid. Pastikan URL berasal dari Instagram (p/reel/tv)');
+                return;
+            }
+            
+            // Tampilkan loading
+            loading.style.display = 'block';
+            errorMessage.style.display = 'none';
+            resultSection.style.display = 'none';
+            
+            try {
+                // Fetch data dari API Vreden
+                const data = await fetchInstagramData(urlInput);
+                
+                // Sembunyikan loading
+                loading.style.display = 'none';
+                
+                if (data && data.status && data.result) {
+                    // Simpan data global
+                    currentInstagramData = data;
+                    
+                    // Tampilkan hasil
+                    displayInstagramData(data.result);
+                    
+                    // Tampilkan pesan sukses
+                    showSuccess('Data Instagram berhasil diambil!');
+                } else {
+                    showError('Gagal mengambil data Instagram. Silakan coba URL lain.');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                loading.style.display = 'none';
+                showError(`Terjadi kesalahan: ${error.message}`);
+            }
+        }
+
+        // Validasi URL Instagram
+        function isValidInstagramUrl(url) {
+            const patterns = [
+                /https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_-]+\/?/,
+                /https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_-]+\/\?.*/,
+                /instagram\.com\/(p|reel|tv)\/[A-Za-z0-9_-]+/
+            ];
+            
+            return patterns.some(pattern => pattern.test(url));
+        }
+
+        // Fetch data Instagram dari API
+        async function fetchInstagramData(url) {
+            const fullApiUrl = apiUrl + encodeURIComponent(url);
+            
+            try {
+                // Gunakan CORS proxy
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(fullApiUrl)}`;
+                
+                const response = await fetch(proxyUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error: ${response.status}`);
+                }
+                
+                const proxyData = await response.json();
+                const data = JSON.parse(proxyData.contents);
+                
+                return data;
+                
+            } catch (proxyError) {
+                console.log('Proxy failed, trying direct fetch...');
+                
+                // Coba fetch langsung
+                try {
+                    const response = await fetch(fullApiUrl, {
+                        method: 'GET',
+                        mode: 'cors',
+                        headers: {
+                            'Accept': 'application/json',
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Direct fetch failed: ${response.status}`);
+                    }
+                    
+                    return await response.json();
+                    
+                } catch (directError) {
+                    console.error('All fetch methods failed:', directError);
+                    throw new Error('Tidak dapat terhubung ke server. Silakan coba lagi nanti.');
+                }
+            }
+        }
+
+        // Fungsi untuk menampilkan data Instagram
+        function displayInstagramData(data) {
+            const resultSection = document.getElementById('resultSection');
+            
+            // Update profile info
+            const profileImg = document.getElementById('profileImg');
+            profileImg.src = data.profile.profile_pic_url;
+            profileImg.onerror = function() {
+                this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.profile.full_name) + '&background=4fc3f7&color=fff&size=80';
+            };
+            
+            document.getElementById('profileName').textContent = data.profile.full_name;
+            document.getElementById('profileUsername').textContent = `@${data.profile.username}`;
+            
+            const verifiedElement = document.getElementById('profileVerified');
+            if (data.profile.is_verified && data.profile.is_verified !== '-') {
+                verifiedElement.textContent = '✓ Akun Terverifikasi';
+                verifiedElement.className = 'verified';
+            } else {
+                verifiedElement.textContent = 'Akun Tidak Terverifikasi';
+                verifiedElement.className = 'verified not-verified';
+            }
+            
+            // Update media preview
+            const videoPreview = document.getElementById('videoPreview');
+            const imageContainer = document.getElementById('imageContainer');
+            
+            if (data.data && data.data.length > 0) {
+                const media = data.data[0];
+                
+                if (media.type === 'video') {
+                    // Tampilkan video
+                    videoPreview.style.display = 'block';
+                    imageContainer.style.display = 'none';
+                    imageContainer.innerHTML = '';
+                    
+                    // Set video source dengan cache buster
+                    videoPreview.src = media.url + '?t=' + Date.now();
+                    videoPreview.poster = media.thumb;
+                    videoPreview.load();
+                    
+                    // Error handling untuk video
+                    videoPreview.onerror = function() {
+                        console.log('Video load error, showing thumbnail instead');
+                        videoPreview.style.display = 'none';
+                        imageContainer.style.display = 'flex';
+                        imageContainer.innerHTML = `
+                            <img src="${media.thumb}" alt="Video Thumbnail" class="image-preview">
+                            <p style="color:#ff4081; margin-top:10px;">Video tidak dapat diputar, tetapi masih bisa didownload</p>
+                        `;
+                    };
+                    
+                } else if (media.type === 'image') {
+                    // Tampilkan gambar
+                    videoPreview.style.display = 'none';
+                    imageContainer.style.display = 'flex';
+                    imageContainer.innerHTML = `
+                        <img src="${media.url}" alt="Instagram Image" class="image-preview"
+                             onerror="this.src='https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&auto=format&fit=crop&w=720&q=80'">
+                    `;
+                }
+            }
+            
+            // Update statistics
+            document.getElementById('viewCount').textContent = 
+                formatNumber(data.statistics.play_count || data.statistics.view_count || 0);
+            document.getElementById('likeCount').textContent = 
+                formatNumber(data.statistics.like_count || 0);
+            document.getElementById('commentCount').textContent = 
+                formatNumber(data.statistics.comment_count || 0);
+            document.getElementById('shareCount').textContent = 
+                formatNumber(data.statistics.share_count || 0);
+            
+            // Update caption
+            const captionText = document.getElementById('captionText');
+            captionText.textContent = data.caption.text || 'Tidak ada caption';
+            
+            // Update hashtags
+            const hashtagsContainer = document.getElementById('hashtags');
+            hashtagsContainer.innerHTML = '';
+            
+            if (data.caption.hashtags && data.caption.hashtags.length > 0) {
+                data.caption.hashtags.forEach(hashtag => {
+                    if (hashtag && hashtag.trim()) {
+                        const tagElement = document.createElement('span');
+                        tagElement.className = 'hashtag';
+                        tagElement.textContent = `#${hashtag.replace('#', '')}`;
+                        hashtagsContainer.appendChild(tagElement);
+                    }
+                });
+            }
+            
+            // Jika tidak ada hashtag, tambahkan default
+            if (hashtagsContainer.children.length === 0) {
+                const defaultTags = ['instagram', 'reel', 'video'];
+                defaultTags.forEach(tag => {
+                    const tagElement = document.createElement('span');
+                    tagElement.className = 'hashtag';
+                    tagElement.textContent = `#${tag}`;
+                    hashtagsContainer.appendChild(tagElement);
+                });
+            }
+            
+            // Update tombol download
+            const downloadVideoBtn = document.getElementById('downloadVideoBtn');
+            const downloadAudioBtn = document.getElementById('downloadAudioBtn');
+            const downloadThumbBtn = document.getElementById('downloadThumbBtn');
+            
+            if (data.data && data.data.length > 0) {
+                const media = data.data[0];
+                
+                if (media.type === 'video') {
+                    // Video content
+                    downloadVideoBtn.innerHTML = '<i class="fas fa-video"></i> Download Video';
+                    downloadVideoBtn.style.display = 'flex';
+                    downloadAudioBtn.style.display = 'flex';
+                    downloadThumbBtn.style.display = 'flex';
+                    
+                    // Set data untuk download
+                    downloadVideoBtn.setAttribute('data-url', media.url);
+                    downloadAudioBtn.setAttribute('data-url', media.url);
+                    downloadThumbBtn.setAttribute('data-url', media.thumb);
+                    
+                    // Generate quality options
+                    generateQualityOptions(media);
+                    
+                } else {
+                    // Image content
+                    downloadVideoBtn.innerHTML = '<i class="fas fa-image"></i> Download Gambar';
+                    downloadVideoBtn.style.display = 'flex';
+                    downloadAudioBtn.style.display = 'none';
+                    downloadThumbBtn.style.display = 'flex';
+                    
+                    // Set data untuk download
+                    downloadVideoBtn.setAttribute('data-url', media.url);
+                    downloadThumbBtn.setAttribute('data-url', media.thumb || media.url);
+                    
+                    // Hide quality options
+                    document.getElementById('qualityOptions').style.display = 'none';
+                }
+            }
+            
+            // Tampilkan result section
+            resultSection.style.display = 'block';
+            
+            // Scroll ke hasil
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Generate quality options
+        function generateQualityOptions(media) {
+            const qualityButtons = document.getElementById('qualityButtons');
+            const qualityOptions = document.getElementById('qualityOptions');
+            
+            qualityButtons.innerHTML = '';
+            
+            // Buat kualitas berdasarkan data video
+            const qualities = [];
+            
+            if (media.height) {
+                qualities.push({
+                    label: `${media.height}p`,
+                    value: media.height,
+                    size: getSizeLabel(media.height),
+                    url: media.url,
+                    active: true
+                });
+            }
+            
+            // Tambahkan kualitas default jika tidak ada
+            if (qualities.length === 0) {
+                qualities.push(
+                    { label: 'SD', value: 480, size: 'Standard', url: media.url, active: true },
+                    { label: 'HD', value: 720, size: 'High', url: media.url },
+                    { label: 'FHD', value: 1080, size: 'Full HD', url: media.url }
+                );
+            }
+            
+            qualities.forEach((quality, index) => {
+                const button = document.createElement('button');
+                button.className = `quality-btn ${index === 0 ? 'active' : ''}`;
+                button.innerHTML = `${quality.label} <span class="size-tag">${quality.size}</span>`;
+                button.setAttribute('data-quality', quality.value);
+                button.setAttribute('data-url', quality.url);
+                
+                button.addEventListener('click', function() {
+                    // Remove active dari semua
+                    document.querySelectorAll('.quality-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active ke yang diklik
+                    this.classList.add('active');
+                    
+                    // Update download button
+                    updateDownloadButton(quality.value, quality.url);
+                });
+                
+                qualityButtons.appendChild(button);
+            });
+            
+            qualityOptions.style.display = 'block';
+        }
+
+        // Helper untuk size label
+        function getSizeLabel(height) {
+            if (height <= 480) return 'SD';
+            if (height <= 720) return 'HD';
+            if (height <= 1080) return 'FHD';
+            return 'UHD';
+        }
+
+        // Update download button berdasarkan kualitas
+        function updateDownloadButton(quality, url) {
+            const downloadVideoBtn = document.getElementById('downloadVideoBtn');
+            downloadVideoBtn.innerHTML = `<i class="fas fa-video"></i> Download Video (${quality}p)`;
+            downloadVideoBtn.setAttribute('data-url', url);
+        }
+
+        // Download video
+        function downloadVideo() {
+            if (!currentInstagramData) {
+                showError('Silakan proses URL terlebih dahulu');
+                return;
+            }
+            
+            const videoUrl = this.getAttribute('data-url');
+            const qualityBtn = document.querySelector('.quality-btn.active');
+            const quality = qualityBtn ? qualityBtn.getAttribute('data-quality') : 'HD';
+            
+            if (!videoUrl) {
+                showError('URL video tidak tersedia');
+                return;
+            }
+            
+            const filename = `instagram_video_${quality}p_${Date.now()}.mp4`;
+            
+            showSuccess(`Mendownload video ${quality}p...`);
+            
+            // Download file
+            startDownload(videoUrl, filename);
+        }
+
+        // Download audio
+        function downloadAudio() {
+            if (!currentInstagramData) {
+                showError('Silakan proses URL terlebih dahulu');
+                return;
+            }
+            
+            const videoUrl = this.getAttribute('data-url');
+            
+            if (!videoUrl) {
+                showError('URL video tidak tersedia');
+                return;
+            }
+            
+            const filename = `instagram_audio_${Date.now()}.mp3`;
+            
+            showSuccess('Mengekstrak audio...');
+            
+            // Untuk ekstrak audio, kita bisa:
+            // 1. Redirect ke service online
+            // 2. Atau beri pesan manual
+            setTimeout(() => {
+                showSuccess('Untuk ekstrak audio, silakan gunakan: onlinevideoconverter.com');
+                
+                // Buka converter online di tab baru
+                const converterUrl = `https://onlinevideoconverter.com/video-converter?url=${encodeURIComponent(videoUrl)}`;
+                window.open(converterUrl, '_blank');
+            }, 1000);
+        }
+
+        // Download thumbnail
+        function downloadThumbnail() {
+            if (!currentInstagramData) {
+                showError('Silakan proses URL terlebih dahulu');
+                return;
+            }
+            
+            const imageUrl = this.getAttribute('data-url');
+            
+            if (!imageUrl) {
+                showError('URL gambar tidak tersedia');
+                return;
+            }
+            
+            const filename = `instagram_thumbnail_${Date.now()}.jpg`;
+            
+            showSuccess('Mendownload thumbnail...');
+            
+            // Download file
+            startDownload(imageUrl, filename);
+        }
+
+        // Fungsi untuk memulai download
+        function startDownload(url, filename) {
+            try {
+                // Buat link sementara
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                link.target = '_blank';
+                
+                // Tambah ke body, klik, hapus
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+            } catch (error) {
+                console.error('Download error:', error);
+                showError('Gagal memulai download. Silakan coba manual: ' + url);
+                
+                // Fallback: Buka di tab baru
+                window.open(url, '_blank');
+            }
+        }
+
+        // Fungsi untuk menampilkan error
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.className = 'error-message error-animation';
+            errorMessage.style.display = 'block';
+            
+            errorMessage.scrollIntoView({ behavior: 'smooth' });
+            
+            setTimeout(() => {
+                errorMessage.classList.remove('error-animation');
+            }, 1000);
+        }
+
+        // Fungsi untuk menampilkan success
+        function showSuccess(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.className = 'error-message success-message';
+            errorMessage.style.display = 'block';
+            
+            errorMessage.scrollIntoView({ behavior: 'smooth' });
+            
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // Format angka
+        function formatNumber(num) {
+            const n = parseInt(num) || 0;
+            
+            if (n >= 1000000) {
+                return (n / 1000000).toFixed(1) + 'M';
+            } else if (n >= 1000) {
+                return (n / 1000).toFixed(1) + 'K';
+            }
+            return n.toString();
+        }
+    </script>
 </body>
 </html>
