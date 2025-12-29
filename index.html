@@ -15,108 +15,34 @@
             <h2>@NandSki</h2>
             
             <div class="social-icons">
-                <a href="https://wa.me/6282331243615" target="_blank" aria-label="WhatsApp">
+                <a href="https://wa.me/6281559584077" target="_blank" aria-label="WhatsApp">
                     <i class="fa-brands fa-whatsapp"></i>
                 </a>
                 <a href="https://youtube.com/@NandSki" target="_blank" aria-label="YouTube">
                     <i class="fa-brands fa-youtube"></i>
                 </a>
-                <a href="https://www.tiktok.com/@nandqt" target="_blank" aria-label="TikTok">
-                    <i class="fa-brands fa-tiktok"></i>
+                <a href="https://www.instagram.com/nandz.404?igsh=Ymdjcjd5Z3RobjZq" target="_blank" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
                 </a>
             </div>
         </header>
 
-        <!-- Download APK  Section -->
-        <div class="category-section category-download">
-            <div class="category-header">
+        <!-- Main Menu Buttons -->
+        <div class="main-menu">
+            <button class="menu-btn download-btn" onclick="openModal('downloadModal')">
                 <i class="fas fa-download"></i>
-                <h3>DOWNLOAD APK</h3>
-            </div>
-            <div class="links-grid">
-                <a href="template1-apk.html" class="link-btn">
-                    <i class="fas fa-mobile-alt"></i>
-                    TEMPLATE 1
-                </a>
-                <a href="template2-apk.html" class="link-btn">
-                    <i class="fas fa-mobile-alt"></i>
-                    TEMPLATE 2
-                </a>
-                <a href="template3-apk.html" class="link-btn">
-                    <i class="fas fa-mobile-alt"></i>
-                    TEMPLATE 3
-                </a>
-                <a href="template4-apk.html" class="link-btn">
-                    <i class="fas fa-mobile-alt"></i>
-                    TEMPLATE 4
-                </a>
-                <a href="template5-apk.html" class="link-btn">
-                    <i class="fas fa-mobile-alt"></i>
-                    TEMPLATE 5
-                </a>
-            </div>
-        </div>
-
-        <!-- Other Tools Section -->
-        <div class="category-section category-tools">
-            <div class="category-header">
+                <span>DOWNLOAD APK</span>
+            </button>
+            
+            <button class="menu-btn tools-btn" onclick="openModal('toolsModal')">
                 <i class="fas fa-tools"></i>
-                <h3>OTHER TOOLS</h3>
-            </div>
-            <div class="links-grid">
-                <!-- WINRATE CALCULATE dengan class khusus -->
-                <a href="winrate-calculate.html" class="link-btn wr-calculate">
-                    <i class="fas fa-chart-line"></i>
-                    WINRATE CALCULATE
-                </a>
-                <!-- Template lainnya -->
-                <a href="template1-tools.html" class="link-btn">
-                    <i class="fas fa-wrench"></i>
-                    TEMPLATE 1
-                </a>
-                <a href="template2-tools.html" class="link-btn">
-                    <i class="fas fa-wrench"></i>
-                    TEMPLATE 2
-                </a>
-                <a href="template3-tools.html" class="link-btn">
-                    <i class="fas fa-wrench"></i>
-                    TEMPLATE 3
-                </a>
-                <a href="template4-tools.html" class="link-btn">
-                    <i class="fas fa-wrench"></i>
-                    TEMPLATE 4
-                </a>
-            </div>
-        </div>
-
-        <!-- Social Media Section -->
-        <div class="category-section category-social">
-            <div class="category-header">
+                <span>OTHER TOOLS</span>
+            </button>
+            
+            <button class="menu-btn social-btn" onclick="openModal('socialModal')">
                 <i class="fas fa-share-alt"></i>
-                <h3>SOCIAL MEDIA</h3>
-            </div>
-            <div class="links-grid">
-                <a href="https://facebook.com/nandski" target="_blank" class="link-btn">
-                    <i class="fab fa-facebook"></i>
-                    TEMPLATE 1
-                </a>
-                <a href="https://twitter.com/nandski" target="_blank" class="link-btn">
-                    <i class="fab fa-twitter"></i>
-                    TEMPLATE 2
-                </a>
-                <a href="https://instagram.com/nandski" target="_blank" class="link-btn">
-                    <i class="fab fa-instagram"></i>
-                    TEMPLATE 3
-                </a>
-                <a href="https://linkedin.com/in/nandski" target="_blank" class="link-btn">
-                    <i class="fab fa-linkedin"></i>
-                    TEMPLATE 4
-                </a>
-                <a href="https://github.com/nandski" target="_blank" class="link-btn">
-                    <i class="fab fa-github"></i>
-                    TEMPLATE 5
-                </a>
-            </div>
+                <span>SOCIAL MEDIA</span>
+            </button>
         </div>
 
         <footer>
@@ -125,6 +51,112 @@
                 Website dibuat oleh <strong>NandSki</strong>
             </div>
         </footer>
+    </div>
+
+    <!-- Modals -->
+    
+    <!-- Download APK Modal -->
+    <div id="downloadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-download"></i> DOWNLOAD APK</h3>
+                <button class="close-btn" onclick="closeModal('downloadModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="template-grid">
+                    <a href="template1-apk.html" class="template-btn">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>TEMPLATE 1</span>
+                    </a>
+                    <a href="template2-apk.html" class="template-btn">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>TEMPLATE 2</span>
+                    </a>
+                    <a href="template3-apk.html" class="template-btn">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>TEMPLATE 3</span>
+                    </a>
+                    <a href="template4-apk.html" class="template-btn">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>TEMPLATE 4</span>
+                    </a>
+                    <a href="template5-apk.html" class="template-btn">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>TEMPLATE 5</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Other Tools Modal -->
+    <div id="toolsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-tools"></i> OTHER TOOLS</h3>
+                <button class="close-btn" onclick="closeModal('toolsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="template-grid">
+                    <!-- WINRATE CALCULATE sebagai item pertama -->
+                    <a href="winrate-calculate.html" class="template-btn wr-calculate-btn">
+                        <i class="fas fa-chart-line"></i>
+                        <span>WINRATE CALCULATE</span>
+                    </a>
+                    <!-- Template lainnya -->
+                    <a href="template1-tools.html" class="template-btn">
+                        <i class="fas fa-wrench"></i>
+                        <span>TEMPLATE 1</span>
+                    </a>
+                    <a href="template2-tools.html" class="template-btn">
+                        <i class="fas fa-wrench"></i>
+                        <span>TEMPLATE 2</span>
+                    </a>
+                    <a href="template3-tools.html" class="template-btn">
+                        <i class="fas fa-wrench"></i>
+                        <span>TEMPLATE 3</span>
+                    </a>
+                    <a href="template4-tools.html" class="template-btn">
+                        <i class="fas fa-wrench"></i>
+                        <span>TEMPLATE 4</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Media Modal -->
+    <div id="socialModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-share-alt"></i> SOCIAL MEDIA</h3>
+                <button class="close-btn" onclick="closeModal('socialModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="template-grid">
+                    <a href="wa.me/6281559584077" target="_blank" class="template-btn">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WHATSAPP</span>
+                    </a>
+                    <a href="wa.me/6285126839864?text=.menu" target="_blank" class="template-btn">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WHATSAPP BOT</span>
+                    </a>
+                    <a href="https://chat.whatsapp.com/IBpzOhIM5CaE5zs71kxKtC" target="_blank" class="template-btn">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>GROUP MLBB</span>
+                    </a>
+                    <a href="https://www.instagram.com/nandz.404?igsh=Ymdjcjd5Z3RobjZq" target="_blank" class="template-btn">
+                        <i class="fab fa-instagram"></i>
+                        <span>INSTAGRAM</span>
+                    </a>
+                    <a href="https://github.com/nandski" target="_blank" class="template-btn">
+                        <i class="fab fa-github"></i>
+                        <span>GITHUB</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

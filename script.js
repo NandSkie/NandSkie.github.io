@@ -1,123 +1,148 @@
-// script.js
+// script.js - MODAL SYSTEM
 document.addEventListener('DOMContentLoaded', function() {
-    // Add ripple effect to all buttons
-    const buttons = document.querySelectorAll('.link-btn');
+    // Initialize
+    initializePage();
     
-    buttons.forEach(button => {
+    // Add floating particles
+    createFloatingParticles();
+});
+
+function initializePage() {
+    // Add ripple effect to main menu buttons
+    const menuButtons = document.querySelectorAll('.menu-btn');
+    const templateButtons = document.querySelectorAll('.template-btn');
+    
+    // Add ripple effect to menu buttons
+    menuButtons.forEach(button => {
         button.addEventListener('click', function(e) {
-            // Create ripple effect
-            const ripple = document.createElement('span');
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            
-            ripple.style.cssText = `
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(79, 195, 247, 0.3);
-                transform: scale(0);
-                animation: ripple 0.6s linear;
-                width: ${size}px;
-                height: ${size}px;
-                top: ${y}px;
-                left: ${x}px;
-                pointer-events: none;
-                z-index: 1;
-            `;
-            
-            this.appendChild(ripple);
-            
-            // Remove ripple after animation
-            setTimeout(() => ripple.remove(), 600);
+            createRippleEffect(this, e);
+            playHoverSound();
+        });
+        
+        button.addEventListener('mouseenter', function() {
+            playHoverSound();
         });
     });
     
-    // Add ripple animation CSS
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
+    // Add ripple effect to template buttons
+    templateButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            createRippleEffect(this, e);
+            playHoverSound();
+            
+            // Special effect for WR CALCULATE
+            if (this.classList.contains('wr-calculate-btn')) {
+                createWrParticles(this);
+                playWrSound();
             }
-        }
-    `;
-    document.head.appendChild(style);
+        });
+    });
     
-    // Add loading animation to profile image
+    // Profile image fallback
     const profileImg = document.querySelector('.profile img');
     if (profileImg) {
-        profileImg.addEventListener('load', function() {
-            this.style.animation = 'fadeIn 0.5s ease';
-        });
-        
-        // Fallback for image error
         profileImg.addEventListener('error', function() {
             this.src = 'https://ui-avatars.com/api/?name=NandSki&background=4fc3f7&color=fff&size=256&bold=true';
             this.alt = 'NandSki Avatar';
         });
     }
     
-    // Add current year to footer
+    // Update current year
     const footerYear = document.getElementById('currentYear');
     if (footerYear) {
         footerYear.textContent = new Date().getFullYear();
     }
     
-    // Add hover sound effect
-    buttons.forEach(button => {
-        button.addEventListener('mouseenter', function() {
-            playHoverSound();
-        });
-    });
-    
-    // Add floating particles
-    createFloatingParticles();
-    
-    // Efek khusus untuk WR CALCULATE button
-    const wrButton = document.querySelector('.link-btn.wr-calculate');
-    if (wrButton) {
-        // Add click counter animation
-        wrButton.addEventListener('click', function(e) {
-            // Create particle explosion effect
-            createWrParticles(this);
-            
-            // Play special sound
-            playWrSound();
-        });
-        
-        // Add hover glow effect
-        wrButton.addEventListener('mouseenter', function() {
-            this.style.animation = 'wrPulse 1s infinite';
-        });
-        
-        wrButton.addEventListener('mouseleave', function() {
-            this.style.animation = 'wrPulse 3s infinite';
-        });
-    }
-    
-    // Page transition effect
-    document.querySelectorAll('a[href^="http"]').forEach(link => {
-        link.addEventListener('click', function(e) {
-            // Only for internal links
-            if (this.href.includes(window.location.hostname) || !this.href.includes('http')) {
-                e.preventDefault();
-                
-                // Add fade out effect
-                document.body.style.opacity = '0.7';
-                document.body.style.transition = 'opacity 0.3s ease';
-                
-                setTimeout(() => {
-                    window.location.href = this.href;
-                }, 300);
+    // Close modal when clicking outside
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal(this.id);
             }
         });
     });
-});
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeAllModals();
+        }
+    });
+}
 
+// Modal Functions
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Add entrance animation to modal content
+        const modalContent = modal.querySelector('.modal-content');
+        modalContent.style.animation = 'slideUpModal 0.4s ease';
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        
+        // Reset animation
+        const modalContent = modal.querySelector('.modal-content');
+        modalContent.style.animation = '';
+    }
+}
+
+function closeAllModals() {
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.classList.remove('active');
+    });
+    document.body.style.overflow = 'auto';
+}
+
+// Ripple Effect
+function createRippleEffect(button, event) {
+    const ripple = document.createElement('span');
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(79, 195, 247, 0.3);
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+        width: ${size}px;
+        height: ${size}px;
+        top: ${y}px;
+        left: ${x}px;
+        pointer-events: none;
+        z-index: 1;
+    `;
+    
+    button.appendChild(ripple);
+    
+    setTimeout(() => ripple.remove(), 600);
+}
+
+// Add ripple animation CSS
+const rippleStyle = document.createElement('style');
+rippleStyle.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(rippleStyle);
+
+// Sound Effects
 function playHoverSound() {
-    // Create a subtle hover sound using Web Audio API
     try {
         if (!window.hoverSoundEnabled) {
             window.hoverSoundEnabled = true;
@@ -140,10 +165,38 @@ function playHoverSound() {
         oscillator.start(audioContext.currentTime);
         oscillator.stop(audioContext.currentTime + 0.1);
     } catch (e) {
-        // Audio not supported or user blocked
+        // Audio not supported
     }
 }
 
+function playWrSound() {
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Create chord effect
+        for (let i = 0; i < 3; i++) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            const frequencies = [523.25, 659.25, 783.99];
+            oscillator.frequency.value = frequencies[i];
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.02, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+    } catch (e) {
+        // Audio not supported
+    }
+}
+
+// Floating Particles
 function createFloatingParticles() {
     const container = document.querySelector('.container');
     const colors = ['#4fc3f7', '#ba68c8', '#66bb6a', '#ffb74d'];
@@ -169,7 +222,6 @@ function createFloatingParticles() {
             animation: floatParticle ${duration}s linear ${delay}s infinite;
         `;
         
-        // Random starting position within container
         const startX = Math.random() * 100;
         const startY = Math.random() * 100;
         
@@ -179,7 +231,6 @@ function createFloatingParticles() {
         container.appendChild(particle);
     }
     
-    // Add particle animation CSS
     const particleStyle = document.createElement('style');
     particleStyle.textContent = `
         @keyframes floatParticle {
@@ -208,7 +259,7 @@ function createFloatingParticles() {
     document.head.appendChild(particleStyle);
 }
 
-// Function untuk efek partikel WR CALCULATE
+// WR Particle Effect
 function createWrParticles(button) {
     const rect = button.getBoundingClientRect();
     const colors = ['#ffb74d', '#ff9800', '#ff5722', '#ffeb3b'];
@@ -220,7 +271,6 @@ function createWrParticles(button) {
         const size = Math.random() * 8 + 4;
         const color = colors[Math.floor(Math.random() * colors.length)];
         const angle = Math.random() * Math.PI * 2;
-        const velocity = Math.random() * 3 + 2;
         const distance = Math.random() * 100 + 50;
         
         const startX = rect.left + rect.width / 2;
@@ -235,14 +285,12 @@ function createWrParticles(button) {
             left: ${startX}px;
             top: ${startY}px;
             opacity: 0.8;
-            z-index: 1000;
+            z-index: 2000;
             pointer-events: none;
-            transform: translate(0, 0);
         `;
         
         document.body.appendChild(particle);
         
-        // Animate particle
         const endX = startX + Math.cos(angle) * distance;
         const endY = startY + Math.sin(angle) * distance;
         
@@ -264,55 +312,17 @@ function createWrParticles(button) {
     }
 }
 
-// Function untuk suara khusus WR CALCULATE
-function playWrSound() {
-    try {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        
-        // Create multiple oscillators for richer sound
-        for (let i = 0; i < 3; i++) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            // Different frequencies for chord effect
-            const frequencies = [523.25, 659.25, 783.99];
-            oscillator.frequency.value = frequencies[i];
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.02, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.5);
-        }
-    } catch (e) {
-        // Audio not supported
-    }
-}
-
 // Add CSS for WR particles
 const wrParticleStyle = document.createElement('style');
 wrParticleStyle.textContent = `
-    @keyframes wrPulse {
-        0%, 100% {
-            box-shadow: 0 0 10px rgba(255, 183, 77, 0.3);
-        }
-        50% {
-            box-shadow: 0 0 20px rgba(255, 183, 77, 0.6);
-        }
-    }
-    
     .wr-particle {
         animation: wrParticleFloat 0.8s ease-out forwards;
     }
     
     @keyframes wrParticleFloat {
         to {
-            transform: translate(var(--end-x), var(--end-y)) scale(0);
             opacity: 0;
+            transform: translate(var(--end-x), var(--end-y)) scale(0);
         }
     }
 `;
