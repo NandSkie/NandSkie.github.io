@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Status WhatsApp Bot - NandSki</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#0f172a;
+  color:white;
+  margin:0;
+  padding:0;
+}
+.container{
+  max-width:600px;
+  margin:60px auto;
+  padding:20px;
+  background:#111827;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 0 25px rgba(0,255,255,.2);
+}
+.title{
+  font-size:24px;
+  font-weight:700;
+}
+.number{
+  margin-top:8px;
+  opacity:.8;
+}
+.status{
+  margin:20px 0;
+  padding:12px;
+  border-radius:10px;
+  background:#1e293b;
+  font-size:16px;
+}
+.btn{
+  display:inline-block;
+  padding:12px 18px;
+  border-radius:10px;
+  background:#22c55e;
+  color:white;
+  text-decoration:none;
+  font-weight:600;
+}
+.footer{
+  margin-top:25px;
+  opacity:.6;
+  font-size:13px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <div class="title">🤖 WhatsApp Bot - NandSki</div>
+  <div class="number">+62 851-2683-9864</div>
+
+  <div class="status" id="statusBox">
+    Status Bot: <b id="statusText">ONLINE</b>
+  </div>
+
+  <a class="btn" href="https://wa.me/6285126839864" target="_blank">
+    Chat Bot Sekarang
+  </a>
+
+  <div class="footer">Hosted on GitHub Pages</div>
+</div>
+
+<script>
+// kalau nanti mau dinamis tinggal sambungkan API / panel
+// contoh manual:
+let status = "ONLINE" // ubah jadi OFFLINE kalau perlu
+
+document.getElementById("statusText").innerText = status
+document.getElementById("statusBox").style.background =
+  status === "ONLINE" ? "#064e3b" : "#7c2d12"
+</script>
+
+</body>
+</html>
