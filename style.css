@@ -1,4 +1,4 @@
-/* style.css - MODAL SYSTEM dengan TEMPLATE PERSEGI PANJANG */
+/* style.css - DENGAN VARIABLE CLASS UNTUK WARNA */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
 
 :root {
@@ -6,10 +6,23 @@
     --blue-medium: #29b6f6;
     --blue-dark: #0288d1;
     --green-light: #66bb6a;
+    --green-medium: #43a047;
     --purple-light: #ba68c8;
+    --purple-medium: #9c27b0;
     --orange-light: #ffb74d;
+    --orange-medium: #ff9800;
     --red-light: #ff6b6b;
+    --red-medium: #f44336;
     --yellow-light: #ffd700;
+    --yellow-medium: #ffc107;
+    --cyan-light: #26c6da;
+    --cyan-medium: #00acc1;
+    --pink-light: #f48fb1;
+    --pink-medium: #e91e63;
+    --teal-light: #26a69a;
+    --teal-medium: #009688;
+    --gray-light: #bdbdbd;
+    --gray-medium: #757575;
     --glass: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(79, 195, 247, 0.2);
     --modal-bg: rgba(10, 10, 10, 0.97);
@@ -185,50 +198,50 @@ body {
     transform: scale(1.2);
 }
 
-/* Specific button colors */
-.download-btn {
+/* Main Menu Button Colors dengan Variabel Class */
+.menu-btn.btn-blue {
+    border-color: rgba(79, 195, 247, 0.4);
+    background: rgba(79, 195, 247, 0.1);
+}
+
+.menu-btn.btn-blue i {
+    color: var(--blue-light);
+}
+
+.menu-btn.btn-blue:hover {
+    border-color: var(--blue-light);
+    background: rgba(79, 195, 247, 0.2);
+    box-shadow: 0 15px 30px rgba(79, 195, 247, 0.3);
+}
+
+.menu-btn.btn-green {
     border-color: rgba(102, 187, 106, 0.4);
     background: rgba(102, 187, 106, 0.1);
 }
 
-.download-btn i {
+.menu-btn.btn-green i {
     color: var(--green-light);
 }
 
-.download-btn:hover {
+.menu-btn.btn-green:hover {
     border-color: var(--green-light);
     background: rgba(102, 187, 106, 0.2);
     box-shadow: 0 15px 30px rgba(102, 187, 106, 0.3);
 }
 
-.tools-btn {
+.menu-btn.btn-purple {
     border-color: rgba(186, 104, 200, 0.4);
     background: rgba(186, 104, 200, 0.1);
 }
 
-.tools-btn i {
+.menu-btn.btn-purple i {
     color: var(--purple-light);
 }
 
-.tools-btn:hover {
+.menu-btn.btn-purple:hover {
     border-color: var(--purple-light);
     background: rgba(186, 104, 200, 0.2);
     box-shadow: 0 15px 30px rgba(186, 104, 200, 0.3);
-}
-
-.social-btn {
-    border-color: rgba(79, 195, 247, 0.4);
-    background: rgba(79, 195, 247, 0.1);
-}
-
-.social-btn i {
-    color: var(--blue-light);
-}
-
-.social-btn:hover {
-    border-color: var(--blue-light);
-    background: rgba(79, 195, 247, 0.2);
-    box-shadow: 0 15px 30px rgba(79, 195, 247, 0.3);
 }
 
 /* Modal Styles */
@@ -394,6 +407,168 @@ body {
     transform: translateX(5px);
 }
 
+/* ================ VARIABLE COLOR CLASSES ================ */
+
+/* Blue Button Variants */
+.template-btn.btn-blue {
+    border-color: rgba(79, 195, 247, 0.3);
+    background: rgba(79, 195, 247, 0.05);
+}
+
+.template-btn.btn-blue:hover {
+    border-color: var(--blue-light);
+    background: rgba(79, 195, 247, 0.1);
+    box-shadow: 0 8px 20px rgba(79, 195, 247, 0.25);
+}
+
+.template-btn.btn-blue i {
+    color: var(--blue-light);
+}
+
+/* Green Button Variants */
+.template-btn.btn-green {
+    border-color: rgba(102, 187, 106, 0.3);
+    background: rgba(102, 187, 106, 0.05);
+}
+
+.template-btn.btn-green:hover {
+    border-color: var(--green-light);
+    background: rgba(102, 187, 106, 0.1);
+    box-shadow: 0 8px 20px rgba(102, 187, 106, 0.25);
+}
+
+.template-btn.btn-green i {
+    color: var(--green-light);
+}
+
+/* Purple Button Variants */
+.template-btn.btn-purple {
+    border-color: rgba(186, 104, 200, 0.3);
+    background: rgba(186, 104, 200, 0.05);
+}
+
+.template-btn.btn-purple:hover {
+    border-color: var(--purple-light);
+    background: rgba(186, 104, 200, 0.1);
+    box-shadow: 0 8px 20px rgba(186, 104, 200, 0.25);
+}
+
+.template-btn.btn-purple i {
+    color: var(--purple-light);
+}
+
+/* Orange Button Variants */
+.template-btn.btn-orange {
+    border-color: rgba(255, 183, 77, 0.3);
+    background: rgba(255, 183, 77, 0.05);
+}
+
+.template-btn.btn-orange:hover {
+    border-color: var(--orange-light);
+    background: rgba(255, 183, 77, 0.1);
+    box-shadow: 0 8px 20px rgba(255, 183, 77, 0.25);
+}
+
+.template-btn.btn-orange i {
+    color: var(--orange-light);
+}
+
+/* Red Button Variants */
+.template-btn.btn-red {
+    border-color: rgba(255, 107, 107, 0.3);
+    background: rgba(255, 107, 107, 0.05);
+}
+
+.template-btn.btn-red:hover {
+    border-color: var(--red-light);
+    background: rgba(255, 107, 107, 0.1);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.25);
+}
+
+.template-btn.btn-red i {
+    color: var(--red-light);
+}
+
+/* Yellow Button Variants */
+.template-btn.btn-yellow {
+    border-color: rgba(255, 215, 0, 0.3);
+    background: rgba(255, 215, 0, 0.05);
+}
+
+.template-btn.btn-yellow:hover {
+    border-color: var(--yellow-light);
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.25);
+}
+
+.template-btn.btn-yellow i {
+    color: var(--yellow-light);
+}
+
+/* Cyan Button Variants */
+.template-btn.btn-cyan {
+    border-color: rgba(38, 198, 218, 0.3);
+    background: rgba(38, 198, 218, 0.05);
+}
+
+.template-btn.btn-cyan:hover {
+    border-color: var(--cyan-light);
+    background: rgba(38, 198, 218, 0.1);
+    box-shadow: 0 8px 20px rgba(38, 198, 218, 0.25);
+}
+
+.template-btn.btn-cyan i {
+    color: var(--cyan-light);
+}
+
+/* Pink Button Variants */
+.template-btn.btn-pink {
+    border-color: rgba(244, 143, 177, 0.3);
+    background: rgba(244, 143, 177, 0.05);
+}
+
+.template-btn.btn-pink:hover {
+    border-color: var(--pink-light);
+    background: rgba(244, 143, 177, 0.1);
+    box-shadow: 0 8px 20px rgba(244, 143, 177, 0.25);
+}
+
+.template-btn.btn-pink i {
+    color: var(--pink-light);
+}
+
+/* Teal Button Variants */
+.template-btn.btn-teal {
+    border-color: rgba(38, 166, 154, 0.3);
+    background: rgba(38, 166, 154, 0.05);
+}
+
+.template-btn.btn-teal:hover {
+    border-color: var(--teal-light);
+    background: rgba(38, 166, 154, 0.1);
+    box-shadow: 0 8px 20px rgba(38, 166, 154, 0.25);
+}
+
+.template-btn.btn-teal i {
+    color: var(--teal-light);
+}
+
+/* Gray Button Variants */
+.template-btn.btn-gray {
+    border-color: rgba(189, 189, 189, 0.3);
+    background: rgba(189, 189, 189, 0.05);
+}
+
+.template-btn.btn-gray:hover {
+    border-color: var(--gray-light);
+    background: rgba(189, 189, 189, 0.1);
+    box-shadow: 0 8px 20px rgba(189, 189, 189, 0.25);
+}
+
+.template-btn.btn-gray i {
+    color: var(--gray-light);
+}
+
 /* Special button for WR CALCULATE */
 .wr-calculate-btn {
     border-color: rgba(255, 183, 77, 0.4) !important;
@@ -426,52 +601,35 @@ body {
     animation: pulse 2s infinite;
 }
 
-/* WhatsApp specific buttons */
-.template-btn[href*="whatsapp"] {
+/* Platform-specific buttons (bisa override dengan class warna) */
+.template-btn[href*="whatsapp"]:not([class*="btn-"]) {
     border-color: rgba(37, 211, 102, 0.3);
     background: rgba(37, 211, 102, 0.05);
 }
 
-.template-btn[href*="whatsapp"]:hover {
+.template-btn[href*="whatsapp"]:not([class*="btn-"]):hover {
     border-color: #25D366;
     background: rgba(37, 211, 102, 0.1);
     box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25);
 }
 
-.template-btn[href*="whatsapp"] i {
+.template-btn[href*="whatsapp"]:not([class*="btn-"]) i {
     color: #25D366;
 }
 
-/* Instagram specific button */
-.template-btn[href*="instagram"] {
+.template-btn[href*="instagram"]:not([class*="btn-"]) {
     border-color: rgba(225, 48, 108, 0.3);
     background: rgba(225, 48, 108, 0.05);
 }
 
-.template-btn[href*="instagram"]:hover {
+.template-btn[href*="instagram"]:not([class*="btn-"]):hover {
     border-color: #E1306C;
     background: rgba(225, 48, 108, 0.1);
     box-shadow: 0 8px 20px rgba(225, 48, 108, 0.25);
 }
 
-.template-btn[href*="instagram"] i {
+.template-btn[href*="instagram"]:not([class*="btn-"]) i {
     color: #E1306C;
-}
-
-/* GitHub specific button */
-.template-btn[href*="github"] {
-    border-color: rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.template-btn[href*="github"]:hover {
-    border-color: #ffffff;
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.25);
-}
-
-.template-btn[href*="github"] i {
-    color: #ffffff;
 }
 
 /* Footer */
@@ -698,30 +856,5 @@ footer {
         top: 8px;
         right: 15px;
         font-size: 0.8rem;
-    }
-}
-
-/* Tablet */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .modal-content {
-        max-width: 600px;
-    }
-    
-    .template-btn {
-        padding: 20px 30px;
-        min-height: 75px;
-        font-size: 1.1rem;
-        gap: 25px;
-    }
-    
-    .template-btn i {
-        font-size: 2rem;
-    }
-}
-
-/* Desktop Large */
-@media (min-width: 1025px) {
-    .modal-content {
-        max-width: 550px;
     }
 }
