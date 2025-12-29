@@ -1,84 +1,1169 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Status WhatsApp Bot - NandSki</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload SW HD | Kirim Media via WhatsApp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
 
-<style>
-body{
-  font-family: Arial, sans-serif;
-  background:#0f172a;
-  color:white;
-  margin:0;
-  padding:0;
-}
-.container{
-  max-width:600px;
-  margin:60px auto;
-  padding:20px;
-  background:#111827;
-  border-radius:18px;
-  text-align:center;
-  box-shadow:0 0 25px rgba(0,255,255,.2);
-}
-.title{
-  font-size:24px;
-  font-weight:700;
-}
-.number{
-  margin-top:8px;
-  opacity:.8;
-}
-.status{
-  margin:20px 0;
-  padding:12px;
-  border-radius:10px;
-  background:#1e293b;
-  font-size:16px;
-}
-.btn{
-  display:inline-block;
-  padding:12px 18px;
-  border-radius:10px;
-  background:#22c55e;
-  color:white;
-  text-decoration:none;
-  font-weight:600;
-}
-.footer{
-  margin-top:25px;
-  opacity:.6;
-  font-size:13px;
-}
-</style>
+        body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: #00ff88;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .title {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00ff88, #00ccff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradient 3s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .subtitle {
+            color: #a0a0c0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== SERVICE SELECTOR ===== */
+        .service-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .service-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #444;
+            padding: 15px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        .service-btn:hover {
+            border-color: #666;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-btn.active {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .service-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* ===== UPLOAD AREA ===== */
+        .upload-area {
+            background: rgba(255, 255, 255, 0.03);
+            border: 3px dashed #00ff88;
+            border-radius: 20px;
+            padding: 60px 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .upload-area:hover {
+            background: rgba(0, 255, 136, 0.05);
+            border-color: #00ccff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .upload-area i {
+            font-size: 5rem;
+            color: #00ff88;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.5));
+        }
+
+        .upload-area h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .upload-area p {
+            color: #a0a0c0;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        .upload-btn {
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .upload-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ===== FILE INFO ===== */
+        .file-info {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .file-info p {
+            margin: 10px 0;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-info strong {
+            color: #00ff88;
+            min-width: 100px;
+        }
+
+        /* ===== PREVIEW ===== */
+        .preview {
+            max-width: 300px;
+            max-height: 300px;
+            margin: 25px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            display: none;
+            border: 3px solid rgba(0, 255, 136, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .preview img,
+        .preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview i.fa-file {
+            font-size: 5rem;
+            color: #00ff88;
+            display: block;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        /* ===== PROGRESS ===== */
+        .progress-container {
+            margin-top: 30px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #a0a0c0;
+            font-size: 1rem;
+        }
+
+        /* ===== LOADING ===== */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 30px 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #00ff88;
+            border-right: 4px solid #00ccff;
+            border-bottom: 4px solid #ff00ff;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===== RESULT ===== */
+        .result-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            display: none;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.1);
+            animation: slideUp 0.8s ease;
+        }
+
+        .result-title {
+            color: #00ff88;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .result-title i {
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .code-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 25px 0;
+            letter-spacing: 3px;
+            color: #00ff88;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .code-box:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .code-box::before {
+            content: '📋 Klik untuk copy';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00ff88;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .code-box:hover::before {
+            opacity: 1;
+            top: -40px;
+        }
+
+        .wa-link {
+            display: block;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 18px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 30px 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .wa-link:hover {
+            background: #1da851;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        /* ===== INSTRUCTIONS ===== */
+        .instructions {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 4px solid #00ff88;
+        }
+
+        .instructions h4 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+
+        .instructions ol {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+
+        .instructions li {
+            margin: 12px 0;
+            color: #a0a0c0;
+            line-height: 1.6;
+            padding-left: 10px;
+        }
+
+        .instructions strong {
+            color: #fff;
+            background: rgba(0, 255, 136, 0.1);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        .tip {
+            color: #00ff88;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #666;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer a {
+            color: #00ff88;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .service-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .service-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .upload-area {
+                padding: 40px 20px;
+            }
+            
+            .preview {
+                max-width: 250px;
+                max-height: 250px;
+            }
+            
+            .code-box {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+        }
+
+        /* ===== NOTIFICATION ===== */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #00ff88;
+            color: #000;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1000;
+            animation: slideInRight 0.5s ease;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ===== FILE LIMIT WARNING ===== */
+        .file-limit {
+            color: #ff5555;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            justify-content: center;
+        }
+    </style>
 </head>
-
 <body>
-<div class="container">
-  <div class="title">🤖 WhatsApp Bot - NandSki</div>
-  <div class="number">+62 851-2683-9864</div>
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
 
-  <div class="status" id="statusBox">
-    Status Bot: <b id="statusText">ONLINE</b>
-  </div>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <h1 class="title">Upload SW HD</h1>
+            <p class="subtitle">
+                Upload media Anda dan terima via WhatsApp Bot secara instan.
+                File akan otomatis terhapus setelah 7 hari.
+            </p>
+        </div>
 
-  <a class="btn" href="https://wa.me/6285126839864" target="_blank">
-    Chat Bot Sekarang
-  </a>
+        <!-- Service Selector -->
+        <div class="service-selector">
+            <div class="service-btn active" data-service="catbox">
+                <i class="fas fa-cat"></i>
+                <span>Catbox.moe</span>
+            </div>
+            <div class="service-btn" data-service="tmpfiles">
+                <i class="fas fa-file-alt"></i>
+                <span>TmpFiles.org</span>
+            </div>
+            <div class="service-btn" data-service="uguu">
+                <i class="fas fa-cloud"></i>
+                <span>Uguu.se</span>
+            </div>
+        </div>
 
-  <div class="footer">Hosted on GitHub Pages</div>
-</div>
+        <!-- Upload Area -->
+        <div class="upload-area" id="dropArea">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <h3>Klik atau Drop File Disini</h3>
+            <p>Maksimal: 200MB (Gambar, Video, Audio, Dokumen)</p>
+            <p class="file-limit">
+                <i class="fas fa-exclamation-triangle"></i>
+                File akan otomatis dihapus setelah 7 hari
+            </p>
+            <input type="file" id="fileInput" style="display: none;">
+            <button class="upload-btn" id="uploadBtn">
+                <i class="fas fa-folder-open"></i>
+                Pilih File
+            </button>
+        </div>
 
-<script>
-// kalau nanti mau dinamis tinggal sambungkan API / panel
-// contoh manual:
-let status = "ONLINE" // ubah jadi OFFLINE kalau perlu
+        <!-- File Info -->
+        <div class="file-info" id="fileInfo">
+            <p>
+                <strong>File:</strong>
+                <span id="fileName">-</span>
+            </p>
+            <p>
+                <strong>Ukuran:</strong>
+                <span id="fileSize">-</span>
+            </p>
+            <p>
+                <strong>Tipe:</strong>
+                <span id="fileType">-</span>
+            </p>
+            <p>
+                <strong>Service:</strong>
+                <span id="serviceInfo">Catbox.moe</span>
+            </p>
+        </div>
 
-document.getElementById("statusText").innerText = status
-document.getElementById("statusBox").style.background =
-  status === "ONLINE" ? "#064e3b" : "#7c2d12"
-</script>
+        <!-- Preview -->
+        <div class="preview" id="preview"></div>
 
+        <!-- Progress -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-text" id="progressText">Mengupload...</p>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Memproses file Anda...</p>
+        </div>
+
+        <!-- Result -->
+        <div class="result-container" id="resultContainer">
+            <h3 class="result-title">
+                <i class="fas fa-check-circle"></i>
+                Upload Berhasil!
+            </h3>
+            
+            <p style="text-align: center; margin-bottom: 20px; color: #a0a0c0;">
+                Salin kode berikut dan kirim ke WhatsApp Bot:
+            </p>
+            
+            <div class="code-box" id="codeBox">
+                <span id="codeText">NAND-XXXXXX</span>
+            </div>
+            
+            <p style="text-align: center; margin: 20px 0; color: #00ff88;">
+                <i class="fas fa-bolt"></i>
+                Klik tombol dibawah untuk otomatis buka WhatsApp
+            </p>
+
+            <a href="#" class="wa-link" id="waLink" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                Kirim Kode ke WhatsApp Bot
+            </a>
+
+            <div class="instructions">
+                <h4>
+                    <i class="fas fa-info-circle"></i>
+                    Cara Menerima Media:
+                </h4>
+                <ol>
+                    <li>Klik tombol WhatsApp diatas</li>
+                    <li>WhatsApp akan terbuka dengan kode otomatis terisi</li>
+                    <li>Kirim pesan ke nomor bot</li>
+                    <li>Bot akan langsung mengirim media ke Anda</li>
+                </ol>
+                <div class="tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Kode: <strong id="codeCopy">NAND-XXXXXX</strong> valid selama 7 hari</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Powered by <a href="https://catbox.moe" target="_blank">Catbox.moe</a> • <a href="https://tmpfiles.org" target="_blank">TmpFiles.org</a> • <a href="https://uguu.se" target="_blank">Uguu.se</a></p>
+            <p>© 2024 Upload SW HD • File hosting gratis • No backend required</p>
+        </div>
+    </div>
+
+    <script>
+        // ===== KONFIGURASI =====
+        const CONFIG = {
+            botNumber: '6282331243615',
+            maxSizeMB: 200,
+            services: {
+                catbox: {
+                    name: 'Catbox.moe',
+                    icon: 'fas fa-cat',
+                    url: 'https://catbox.moe/user/api.php',
+                    field: 'fileToUpload',
+                    params: { reqtype: 'fileupload' }
+                },
+                tmpfiles: {
+                    name: 'TmpFiles.org',
+                    icon: 'fas fa-file-alt',
+                    url: 'https://tmpfiles.org/api/v1/upload',
+                    field: 'file'
+                },
+                uguu: {
+                    name: 'Uguu.se',
+                    icon: 'fas fa-cloud',
+                    url: 'https://uguu.se/upload.php',
+                    field: 'files[]'
+                }
+            }
+        };
+
+        // ===== STATE MANAGEMENT =====
+        const state = {
+            currentService: 'catbox',
+            currentFile: null,
+            shortUrl: '',
+            code: '',
+            isUploading: false
+        };
+
+        // ===== ELEMENTS =====
+        const elements = {
+            fileInput: document.getElementById('fileInput'),
+            dropArea: document.getElementById('dropArea'),
+            uploadBtn: document.getElementById('uploadBtn'),
+            fileInfo: document.getElementById('fileInfo'),
+            fileName: document.getElementById('fileName'),
+            fileSize: document.getElementById('fileSize'),
+            fileType: document.getElementById('fileType'),
+            serviceInfo: document.getElementById('serviceInfo'),
+            preview: document.getElementById('preview'),
+            progressContainer: document.getElementById('progressContainer'),
+            progressFill: document.getElementById('progressFill'),
+            progressText: document.getElementById('progressText'),
+            loading: document.getElementById('loading'),
+            resultContainer: document.getElementById('resultContainer'),
+            codeBox: document.getElementById('codeBox'),
+            codeText: document.getElementById('codeText'),
+            codeCopy: document.getElementById('codeCopy'),
+            waLink: document.getElementById('waLink'),
+            notification: document.getElementById('notification')
+        };
+
+        // ===== INISIALISASI =====
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
+
+        function initApp() {
+            bindEvents();
+            updateUI();
+            showNotification('🟢 Sistem siap digunakan! Pilih file untuk mulai upload.', 'success');
+        }
+
+        // ===== EVENT BINDING =====
+        function bindEvents() {
+            // Service selector
+            document.querySelectorAll('.service-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    state.currentService = btn.dataset.service;
+                    updateUI();
+                    showNotification(`🔄 Service diubah ke ${CONFIG.services[state.currentService].name}`);
+                });
+            });
+
+            // File input
+            elements.fileInput.addEventListener('change', handleFileSelect);
+            elements.uploadBtn.addEventListener('click', () => elements.fileInput.click());
+
+            // Drag & Drop
+            ['dragenter', 'dragover'].forEach(eventName => {
+                elements.dropArea.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                elements.dropArea.addEventListener(eventName, unhighlight, false);
+            });
+
+            elements.dropArea.addEventListener('drop', handleDrop, false);
+
+            // Copy code
+            elements.codeBox.addEventListener('click', copyCodeToClipboard);
+
+            // Upload button in preview
+            elements.uploadBtn.addEventListener('click', startUpload);
+        }
+
+        // ===== DRAG & DROP HANDLERS =====
+        function highlight(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            elements.dropArea.style.borderColor = '#00ff88';
+            elements.dropArea.style.backgroundColor = 'rgba(0, 255, 136, 0.1)';
+        }
+
+        function unhighlight(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            elements.dropArea.style.borderColor = '';
+            elements.dropArea.style.backgroundColor = '';
+        }
+
+        // ===== FILE HANDLING =====
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            unhighlight(e);
+            
+            const files = e.dataTransfer.files;
+            processFile(files[0]);
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            processFile(files[0]);
+        }
+
+        function processFile(file) {
+            if (!file) return;
+
+            // Validasi ukuran
+            if (file.size > CONFIG.maxSizeMB * 1024 * 1024) {
+                showNotification(`❌ File terlalu besar! Maksimal ${CONFIG.maxSizeMB}MB`, 'error');
+                return;
+            }
+
+            // Validasi tipe file
+            const validTypes = ['image/', 'video/', 'audio/', 'application/', 'text/'];
+            if (!validTypes.some(type => file.type.startsWith(type))) {
+                showNotification('⚠️ Tipe file tidak didukung', 'warning');
+            }
+
+            state.currentFile = file;
+            showFileInfo(file);
+            showPreview(file);
+            showNotification('✅ File siap diupload! Klik area upload untuk memulai.');
+        }
+
+        function showFileInfo(file) {
+            elements.fileName.textContent = file.name;
+            elements.fileSize.textContent = formatBytes(file.size);
+            elements.fileType.textContent = file.type || 'Unknown';
+            elements.fileInfo.style.display = 'block';
+        }
+
+        function showPreview(file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                elements.preview.innerHTML = '';
+                
+                if (file.type.startsWith('image/')) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        // Resize jika terlalu besar
+                        if (img.width > 400 || img.height > 400) {
+                            const ratio = Math.min(400 / img.width, 400 / img.height);
+                            img.style.width = `${img.width * ratio}px`;
+                            img.style.height = `${img.height * ratio}px`;
+                        }
+                    };
+                    elements.preview.appendChild(img);
+                } else if (file.type.startsWith('video/')) {
+                    const video = document.createElement('video');
+                    video.src = e.target.result;
+                    video.controls = true;
+                    video.muted = true;
+                    video.style.maxWidth = '100%';
+                    elements.preview.appendChild(video);
+                } else if (file.type.startsWith('audio/')) {
+                    const audio = document.createElement('audio');
+                    audio.src = e.target.result;
+                    audio.controls = true;
+                    audio.style.width = '100%';
+                    elements.preview.appendChild(audio);
+                } else {
+                    elements.preview.innerHTML = `
+                        <i class="fas fa-file fa-3x" style="color: #00ff88; margin: 30px 0;"></i>
+                        <div style="text-align: center; color: #fff; font-weight: bold;">
+                            ${file.name}
+                        </div>
+                    `;
+                }
+                
+                elements.preview.style.display = 'block';
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        // ===== UPLOAD PROCESS =====
+        async function startUpload() {
+            if (!state.currentFile || state.isUploading) return;
+            
+            state.isUploading = true;
+            showLoading(true);
+            showProgress(true);
+            
+            try {
+                const shortUrl = await uploadToService(state.currentFile, state.currentService);
+                state.shortUrl = shortUrl;
+                state.code = generateCode(shortUrl, state.currentService);
+                
+                showResult();
+                showNotification('🎉 Upload berhasil! Kode telah dibuat.', 'success');
+                
+            } catch (error) {
+                console.error('Upload error:', error);
+                showNotification(`❌ Upload gagal: ${error.message}`, 'error');
+            } finally {
+                state.isUploading = false;
+                showLoading(false);
+                showProgress(false);
+            }
+        }
+
+        async function uploadToService(file, serviceName) {
+            const service = CONFIG.services[serviceName];
+            const formData = new FormData();
+            
+            formData.append(service.field, file);
+            
+            if (service.params) {
+                Object.entries(service.params).forEach(([key, value]) => {
+                    formData.append(key, value);
+                });
+            }
+            
+            // Simulate progress
+            simulateProgress();
+            
+            // Upload file
+            const response = await fetch(service.url, {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
+            let result;
+            
+            switch(serviceName) {
+                case 'catbox':
+                    result = await response.text();
+                    if (result.includes('error')) throw new Error(result);
+                    return result;
+                    
+                case 'tmpfiles':
+                    const tmpResult = await response.json();
+                    if (!tmpResult.success) throw new Error(tmpResult.message || 'Upload failed');
+                    const match = tmpResult.data.url.match(/https?:\/\/tmpfiles\.org\/(.*)/);
+                    return `https://tmpfiles.org/dl/${match[1]}`;
+                    
+                case 'uguu':
+                    const uguuResult = await response.json();
+                    if (!uguuResult.success) throw new Error('Upload failed');
+                    return uguuResult.files[0].url;
+                    
+                default:
+                    throw new Error('Service tidak dikenali');
+            }
+        }
+
+        function simulateProgress() {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 20;
+                if (progress > 85) {
+                    progress = 85;
+                    clearInterval(interval);
+                }
+                elements.progressFill.style.width = `${progress}%`;
+                elements.progressText.textContent = `Uploading... ${Math.round(progress)}%`;
+            }, 300);
+            
+            // Finish progress
+            setTimeout(() => {
+                elements.progressFill.style.width = '100%';
+                elements.progressText.textContent = 'Processing...';
+            }, 3000);
+        }
+
+        function generateCode(url, serviceName) {
+            switch(serviceName) {
+                case 'catbox':
+                    const catboxFile = url.split('/').pop();
+                    return `NAND-${catboxFile}`;
+                    
+                case 'tmpfiles':
+                    const tmpCode = url.split('/dl/').pop();
+                    return `TMP-${tmpCode}`;
+                    
+                case 'uguu':
+                    const uguuFile = url.split('/').pop();
+                    return `UGU-${uguuFile}`;
+                    
+                default:
+                    const random = Math.random().toString(36).substr(2, 8).toUpperCase();
+                    return `CODE-${random}`;
+            }
+        }
+
+        // ===== RESULT DISPLAY =====
+        function showResult() {
+            elements.codeText.textContent = state.code;
+            elements.codeCopy.textContent = state.code;
+            
+            // WhatsApp link
+            const encodedCode = encodeURIComponent(state.code);
+            elements.waLink.href = `https://wa.me/${CONFIG.botNumber}?text=${encodedCode}`;
+            
+            // Show result container
+            elements.resultContainer.style.display = 'block';
+            
+            // Scroll to result
+            elements.resultContainer.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
+        }
+
+        function showLoading(show) {
+            elements.loading.style.display = show ? 'block' : 'none';
+        }
+
+        function showProgress(show) {
+            elements.progressContainer.style.display = show ? 'block' : 'none';
+            if (!show) {
+                elements.progressFill.style.width = '0%';
+                elements.progressText.textContent = 'Mengupload...';
+            }
+        }
+
+        function updateUI() {
+            const service = CONFIG.services[state.currentService];
+            elements.serviceInfo.textContent = service.name;
+        }
+
+        function copyCodeToClipboard() {
+            if (!state.code) return;
+            
+            navigator.clipboard.writeText(state.code).then(() => {
+                const original = elements.codeText.textContent;
+                elements.codeText.textContent = '✓ COPIED!';
+                elements.codeText.style.color = '#00ff88';
+                elements.codeBox.style.borderColor = '#00ff88';
+                elements.codeBox.style.boxShadow = '0 0 20px rgba(0, 255, 136, 0.5)';
+                
+                showNotification('📋 Kode berhasil disalin ke clipboard!');
+                
+                setTimeout(() => {
+                    elements.codeText.textContent = original;
+                    elements.codeText.style.color = '';
+                    elements.codeBox.style.borderColor = '';
+                    elements.codeBox.style.boxShadow = '';
+                }, 2000);
+            }).catch(err => {
+                showNotification('❌ Gagal menyalin kode', 'error');
+            });
+        }
+
+        function showNotification(message, type = 'info') {
+            elements.notification.textContent = message;
+            elements.notification.style.display = 'block';
+            
+            // Set color based on type
+            switch(type) {
+                case 'success':
+                    elements.notification.style.background = '#00ff88';
+                    elements.notification.style.color = '#000';
+                    break;
+                case 'error':
+                    elements.notification.style.background = '#ff5555';
+                    elements.notification.style.color = '#fff';
+                    break;
+                case 'warning':
+                    elements.notification.style.background = '#ffaa00';
+                    elements.notification.style.color = '#000';
+                    break;
+                default:
+                    elements.notification.style.background = '#00ccff';
+                    elements.notification.style.color = '#000';
+            }
+            
+            // Auto hide
+            setTimeout(() => {
+                elements.notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // ===== PREVENT DEFAULT BEHAVIOR =====
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            document.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        // ===== WINDOW EVENT =====
+        window.addEventListener('beforeunload', (e) => {
+            if (state.isUploading) {
+                e.preventDefault();
+                e.returnValue = 'Upload sedang berlangsung. Tutup halaman?';
+            }
+        });
+    </script>
 </body>
 </html>
