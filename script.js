@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add floating particles
     createFloatingParticles();
+    
+    // Create grid dots
+    createGridDots();
 });
 
 function initializePage() {
@@ -335,3 +338,235 @@ wrParticleStyle.textContent = `
     }
 `;
 document.head.appendChild(wrParticleStyle);
+
+// =================== FUNGSI UNTUK METEOR ===================
+
+function createMeteors() {
+    const container = document.querySelector('.meteor-container');
+    if (!container) return;
+    
+    // Jumlah meteor
+    const meteorCount = 15;
+    
+    for (let i = 0; i < meteorCount; i++) {
+        const meteor = document.createElement('div');
+        meteor.className = 'meteor';
+        
+        // Random warna meteor
+        const colors = ['', 'blue', 'purple', 'green', 'orange', 'pink', 'cyan'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        if (randomColor) {
+            meteor.classList.add(randomColor);
+        }
+        
+        // Random posisi awal (dari kiri atas)
+        const startX = Math.random() * -50; // mulai dari off-screen kiri
+        const startY = Math.random() * -100; // mulai dari off-screen atas
+        
+        // Random ukuran
+        const size = Math.random() * 3 + 1;
+        const length = Math.random() * 80 + 40;
+        
+        // Random delay dan duration
+        const delay = Math.random() * 15; // delay sampai 15 detik
+        const duration = Math.random() * 5 + 3; // durasi 3-8 detik
+        
+        // Random animasi
+        const animations = ['meteorFallLeft', 'meteorFallRight', 'meteorFallSlow', 'meteorFallSmall'];
+        const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+        
+        // Set styling
+        meteor.style.cssText = `
+            left: ${startX}%;
+            top: ${startY}%;
+            width: ${size}px;
+            height: ${length}px;
+            opacity: ${Math.random() * 0.5 + 0.3};
+            animation: ${randomAnimation} ${duration}s linear ${delay}s infinite;
+        `;
+        
+        container.appendChild(meteor);
+    }
+}
+
+function createStars() {
+    const starsContainer = document.createElement('div');
+    starsContainer.className = 'stars';
+    document.body.appendChild(starsContainer);
+    
+    // Jumlah bintang
+    const starCount = 100;
+    
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random ukuran bintang
+        const sizes = ['small', 'medium', 'large'];
+        const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+        star.classList.add(randomSize);
+        
+        // Random posisi
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        
+        // Random delay animasi
+        const delay = Math.random() * 5;
+        
+        // Random opacity
+        const opacity = Math.random() * 0.7 + 0.3;
+        
+        star.style.cssText = `
+            left: ${left}%;
+            top: ${top}%;
+            opacity: ${opacity};
+            animation-delay: ${delay}s;
+        `;
+        
+        starsContainer.appendChild(star);
+    }
+}
+
+// Panggil fungsi saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function() {
+    createStars();
+    createMeteors();
+    
+    // Update tahun
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+});
+
+// =================== FUNGSI MODAL (existing) ===================
+
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function closeAllModals() {
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.classList.remove('active');
+    });
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal dengan Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeAllModals();
+    }
+});
+
+// Close modal ketika klik di luar content
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal(this.id);
+        }
+    });
+});
+
+// =================== EFEN RIPPLE BUTTON ===================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Efek ripple untuk semua button
+    const buttons = document.querySelectorAll('.menu-btn, .template-btn, .close-btn');
+    
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            createRippleEffect(this, e);
+        });
+    });
+});
+
+function createRippleEffect(button, event) {
+    const ripple = document.createElement('span');
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(0);
+        animation: ripple-animation 0.6s linear;
+        width: ${size}px;
+        height: ${size}px;
+        top: ${y}px;
+        left: ${x}px;
+        pointer-events: none;
+    `;
+    
+    button.style.position = 'relative';
+    button.style.overflow = 'hidden';
+    button.appendChild(ripple);
+    
+    setTimeout(() => ripple.remove(), 600);
+}
+
+// Tambahkan animasi ripple ke CSS
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// =================== GRID DOTS CREATOR ===================
+function createGridDots() {
+    const gridDots = document.getElementById('gridDots');
+    if (!gridDots) return;
+    
+    const dotCount = 40;
+    const colors = [
+        'rgba(79, 195, 247, 0.6)',  // blue
+        'rgba(102, 187, 106, 0.6)', // green
+        'rgba(186, 104, 200, 0.6)', // purple
+        'rgba(255, 183, 77, 0.6)',  // orange
+        'rgba(38, 198, 218, 0.6)'   // cyan
+    ];
+    
+    for (let i = 0; i < dotCount; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'grid-dot';
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Random color
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Random size
+        const size = 2 + Math.random() * 4;
+        
+        // Random animation delay
+        const delay = Math.random() * 3;
+        
+        dot.style.left = `${x}%`;
+        dot.style.top = `${y}%`;
+        dot.style.background = color;
+        dot.style.width = `${size}px`;
+        dot.style.height = `${size}px`;
+        dot.style.animationDelay = `${delay}s`;
+        
+        gridDots.appendChild(dot);
+    }
+}

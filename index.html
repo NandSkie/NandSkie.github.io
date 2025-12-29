@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Background Grid Biru Muda -->
+    <div class="grid-background"></div>
+    <div class="grid-center"></div>
+    <div class="grid-dots" id="gridDots"></div>
+    
+    <div class="meteor-container"></div>
     <div class="bg-overlay"></div>
     <div class="container">
         <header class="profile">
@@ -39,6 +45,12 @@
                 <span>OTHER TOOLS</span>
             </button>
             
+            <!-- TAMBAHAN: DOWNLOADER MENU BUTTON -->
+            <button class="menu-btn btn-orange" onclick="openModal('downloaderModal')">
+                <i class="fas fa-download"></i>
+                <span>DOWNLOADER MENU</span>
+            </button>
+            
             <button class="menu-btn btn-blue" onclick="openModal('socialModal')">
                 <i class="fas fa-share-alt"></i>
                 <span>SOCIAL MEDIA</span>
@@ -46,7 +58,7 @@
         </div>
 
         <footer>
-            NandSki ©️ <span id="currentYear">2025</span>
+            NandSki ©️ <span id="currentYear">2026</span>
             <div class="credit">
                 Website dibuat oleh <strong>NandSki</strong>
             </div>
@@ -98,6 +110,67 @@
         </div>
     </div>
 
+    <!-- DOWNLOADER MENU Modal (BARU) -->
+    <div id="downloaderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-download"></i> DOWNLOADER MENU</h3>
+                <button class="close-btn" onclick="closeModal('downloaderModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="template-grid">
+                    <!-- Instagram Downloader -->
+                    <a href="Instagram-downloader.html" class="template-btn btn-pink">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram Downloader</span>
+                    </a>
+                    
+                    <!-- TikTok Downloader -->
+                    <a href="tiktok-downloader.html" class="template-btn btn-cyan">
+                        <i class="fab fa-tiktok"></i>
+                        <span>TikTok Downloader</span>
+                    </a>
+                    
+                    <!-- YouTube Downloader -->
+                    <a href="youtube-downloader.html" class="template-btn btn-red">
+                        <i class="fab fa-youtube"></i>
+                        <span>YouTube Downloader</span>
+                    </a>
+                    
+                    <!-- Facebook Downloader -->
+                    <a href="facebook-downloader.html" class="template-btn btn-blue">
+                        <i class="fab fa-facebook"></i>
+                        <span>Facebook Downloader</span>
+                    </a>
+                    
+                    <!-- Twitter Downloader -->
+                    <a href="twitter-downloader.html" class="template-btn btn-teal">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter Downloader</span>
+                    </a>
+                    
+                    <!-- Pinterest Downloader -->
+                    <a href="pinterest-downloader.html" class="template-btn btn-red">
+                        <i class="fab fa-pinterest"></i>
+                        <span>Pinterest Downloader</span>
+                    </a>
+                    
+                    <!-- SoundCloud Downloader -->
+                    <a href="soundcloud-downloader.html" class="template-btn btn-orange">
+                        <i class="fab fa-soundcloud"></i>
+                        <span>SoundCloud Downloader</span>
+                    </a>
+                    
+                    <!-- All-in-One Downloader -->
+                    <a href="all-downloader.html" class="template-btn btn-purple">
+                        <i class="fas fa-globe"></i>
+                        <span>All-in-One Downloader</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Social Media Modal -->
     <div id="socialModal" class="modal">
         <div class="modal-content">
@@ -142,7 +215,6 @@
                         <i class="fab fa-telegram"></i>
                         <span>TELEGRAM</span>
                     </a>
-                    <!-- Twitter dengan class btn-blue -->
                 </div>
             </div>
         </div>
