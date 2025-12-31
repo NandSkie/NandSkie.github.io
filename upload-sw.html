@@ -1,140 +1,377 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>SW Upload System - NandS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body{
-  font-family: Arial;
-  background:#0f172a;
-  color:white;
-  text-align:center;
-}
-.box{
-  width:90%;
-  max-width:600px;
-  margin:30px auto;
-  padding:30px;
-  border:2px dashed #4ade80;
-  border-radius:15px;
-  background:#020617;
-}
-.box.drag{
-  border-color:#60a5fa;
-  background:#030712;
-}
-input[type=file]{display:none}
-label{
-  padding:12px 20px;
-  background:#4ade80;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
-}
-button{
-  padding:12px 20px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-  background:#38bdf8;
-  color:black;
-  font-weight:bold;
-  cursor:pointer;
-}
-progress{
-  width:100%;
-  height:20px;
-}
-.result{
-  margin-top:20px;
-  padding:15px;
-  background:#020617;
-  border:1px solid #4ade80;
-  border-radius:10px;
-}
-.code{
-  font-size:20px;
-  font-weight:bold;
-  color:#4ade80;
-}
-</style>
+    <title>SW Upload Simple | nandski.github.io × VPS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #0f172a; color: #fff; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        .header { 
+            text-align: center; 
+            padding: 30px; 
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .logo { font-size: 2.5em; font-weight: bold; margin-bottom: 10px; }
+        .tagline { color: #94a3b8; font-size: 1.1em; }
+        
+        .upload-area {
+            border: 3px dashed #3b82f6;
+            border-radius: 10px;
+            padding: 50px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover { background: rgba(59, 130, 246, 0.1); }
+        
+        .upload-icon { font-size: 3em; color: #3b82f6; margin-bottom: 15px; }
+        
+        .file-preview {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .file-info { display: flex; justify-content: space-between; }
+        
+        .upload-btn {
+            width: 100%;
+            padding: 15px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .upload-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .result-box {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
+            display: none;
+        }
+        
+        .nand-code {
+            font-size: 2em;
+            font-weight: bold;
+            color: #10b981;
+            margin: 15px 0;
+            padding: 10px;
+            background: #064e3b;
+            border-radius: 5px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .copy-btn { background: #3b82f6; color: white; }
+        .wa-btn { background: #10b981; color: white; }
+        
+        .history {
+            margin-top: 30px;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .history-title { margin-bottom: 15px; color: #94a3b8; }
+        
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
 </head>
 <body>
-
-<h2>🚀 SW Upload System</h2>
-<p>Upload file → dapet kode → kirim ke WhatsApp bot</p>
-
-<div class="box" id="dropZone">
-  <h3>Drag & Drop File di sini</h3>
-  <p>atau</p>
-  <label for="file">Pilih File</label>
-  <input type="file" id="file">
-  <br>
-  <button onclick="upload()">UPLOAD</button>
-
-  <progress id="progress" value="0" max="100" style="display:none"></progress>
-
-  <div class="result" id="result" style="display:none">
-    <p>🎉 Berhasil Upload!</p>
-    <p class="code" id="codeText"></p>
-    <button onclick="copyCode()">Copy Code</button>
-  </div>
-</div>
-
-<script>
-const uploadUrl = "http://85.211.245.201:3000/upload";
-const drop = document.getElementById("dropZone");
-const fileInput = document.getElementById("file");
-
-drop.addEventListener("dragover", e=>{
-  e.preventDefault();
-  drop.classList.add("drag");
-});
-drop.addEventListener("dragleave", ()=>drop.classList.remove("drag"));
-drop.addEventListener("drop", e=>{
-  e.preventDefault();
-  drop.classList.remove("drag");
-  fileInput.files = e.dataTransfer.files;
-});
-
-async function upload(){
-  if(!fileInput.files[0]) return alert("Pilih file dulu!");
-
-  let form = new FormData();
-  form.append("file", fileInput.files[0]);
-
-  const progress = document.getElementById("progress");
-  progress.style.display="block";
-
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", uploadUrl, true);
-
-  xhr.upload.onprogress = (e)=>{
-    if(e.lengthComputable){
-      progress.value = (e.loaded / e.total) * 100;
-    }
-  };
-
-  xhr.onload = ()=>{
-    if(xhr.status == 200){
-      let res = JSON.parse(xhr.responseText);
-      document.getElementById("result").style.display="block";
-      document.getElementById("codeText").innerText = res.code;
-    } else {
-      alert("Upload gagal");
-    }
-  };
-
-  xhr.send(form);
-}
-
-function copyCode(){
-  let c = document.getElementById("codeText").innerText;
-  navigator.clipboard.writeText(c);
-  alert("Code copied: " + c);
-}
-</script>
-
+    <div class="container">
+        <div class="header">
+            <div class="logo">SW UPLOAD SIMPLE</div>
+            <div class="tagline">nandski.github.io × VPS 85.211.245.201 × WhatsApp Bot</div>
+        </div>
+        
+        <div class="upload-area" id="uploadZone">
+            <div class="upload-icon">📁</div>
+            <div style="font-size: 1.2em; margin-bottom: 10px;">Drop file here or click to browse</div>
+            <div style="color: #94a3b8;">Max 100MB • Video, Image, PDF, ZIP, etc.</div>
+            <input type="file" id="fileInput" style="display: none;">
+        </div>
+        
+        <div class="file-preview" id="filePreview">
+            <div class="file-info">
+                <div>
+                    <div id="fileName" style="font-weight: bold;"></div>
+                    <div id="fileSize" style="color: #94a3b8; font-size: 0.9em;"></div>
+                </div>
+                <div id="removeFile" style="color: #ef4444; cursor: pointer;">✕</div>
+            </div>
+        </div>
+        
+        <button class="upload-btn" id="uploadBtn" disabled>📤 UPLOAD FILE</button>
+        
+        <div class="result-box" id="resultBox">
+            <div style="color: #10b981; font-size: 1.5em;">✅ Upload Success!</div>
+            <div>Your NAND Code:</div>
+            <div class="nand-code" id="nandCode">NAND-XXXXXXXXXXXX</div>
+            <div id="fileInfo" style="color: #94a3b8; margin-bottom: 15px;"></div>
+            
+            <div>Send to WhatsApp Bot:</div>
+            <div style="background: #064e3b; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                <strong>6285126839864</strong>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn copy-btn" id="copyBtn">📋 Copy Code</button>
+                <button class="btn wa-btn" id="waBtn" onclick="sendToWhatsApp()">📱 Send to WhatsApp</button>
+            </div>
+        </div>
+        
+        <div class="history">
+            <div class="history-title">📜 Upload History</div>
+            <div id="historyList">
+                <div style="text-align: center; color: #64748b; padding: 20px;">
+                    No upload history yet
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px; color: #64748b; font-size: 0.9em;">
+            API: http://85.211.245.201:3000 • WhatsApp Bot: 6285126839864
+        </div>
+    </div>
+    
+    <div class="toast" id="toast"></div>
+    
+    <script>
+        // API Configuration
+        const API_URL = 'http://85.211.245.201:3000';
+        let selectedFile = null;
+        
+        // DOM Elements
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const filePreview = document.getElementById('filePreview');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const removeFile = document.getElementById('removeFile');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const resultBox = document.getElementById('resultBox');
+        const nandCode = document.getElementById('nandCode');
+        const fileInfo = document.getElementById('fileInfo');
+        const copyBtn = document.getElementById('copyBtn');
+        const historyList = document.getElementById('historyList');
+        const toast = document.getElementById('toast');
+        
+        // Event Listeners
+        uploadZone.addEventListener('click', () => fileInput.click());
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.style.background = 'rgba(59, 130, 246, 0.1)';
+        });
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.style.background = '';
+        });
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.style.background = '';
+            if (e.dataTransfer.files[0]) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) {
+                handleFile(e.target.files[0]);
+            }
+        });
+        
+        removeFile.addEventListener('click', () => {
+            selectedFile = null;
+            fileInput.value = '';
+            filePreview.style.display = 'none';
+            uploadBtn.disabled = true;
+        });
+        
+        uploadBtn.addEventListener('click', uploadFile);
+        copyBtn.addEventListener('click', copyCode);
+        
+        // File Handling
+        function handleFile(file) {
+            if (file.size > 100 * 1024 * 1024) {
+                showToast('File too large! Max 100MB', 'error');
+                return;
+            }
+            
+            selectedFile = file;
+            fileName.textContent = file.name;
+            fileSize.textContent = formatBytes(file.size);
+            filePreview.style.display = 'block';
+            uploadBtn.disabled = false;
+        }
+        
+        // Upload Function
+        async function uploadFile() {
+            if (!selectedFile) return;
+            
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+            
+            uploadBtn.disabled = true;
+            uploadBtn.textContent = 'Uploading...';
+            
+            try {
+                const response = await fetch(`${API_URL}/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Show result
+                    nandCode.textContent = data.code;
+                    fileInfo.textContent = `${data.filename} • ${data.size}`;
+                    resultBox.style.display = 'block';
+                    
+                    // Save to history
+                    saveToHistory(data);
+                    
+                    // Clear file
+                    selectedFile = null;
+                    fileInput.value = '';
+                    filePreview.style.display = 'none';
+                    
+                    showToast('Upload successful!');
+                } else {
+                    showToast(data.message || 'Upload failed', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Upload error:', error);
+                showToast('Network error!', 'error');
+            }
+            
+            uploadBtn.disabled = false;
+            uploadBtn.textContent = '📤 UPLOAD FILE';
+        }
+        
+        // Send to WhatsApp
+        function sendToWhatsApp() {
+            const phone = '6285126839864';
+            const message = encodeURIComponent(nandCode.textContent);
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        }
+        
+        // Copy Code
+        function copyCode() {
+            navigator.clipboard.writeText(nandCode.textContent)
+                .then(() => showToast('Code copied!'))
+                .catch(() => showToast('Copy failed', 'error'));
+        }
+        
+        // History Functions
+        function saveToHistory(data) {
+            let history = JSON.parse(localStorage.getItem('uploadHistory') || '[]');
+            
+            history.unshift({
+                code: data.code,
+                filename: data.filename,
+                size: data.size,
+                time: new Date().toLocaleString(),
+                url: data.download_url
+            });
+            
+            // Keep only last 10 items
+            if (history.length > 10) history.pop();
+            
+            localStorage.setItem('uploadHistory', JSON.stringify(history));
+            loadHistory();
+        }
+        
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('uploadHistory') || '[]');
+            
+            if (history.length === 0) {
+                historyList.innerHTML = '<div style="text-align: center; color: #64748b; padding: 20px;">No upload history yet</div>';
+                return;
+            }
+            
+            historyList.innerHTML = history.map(item => `
+                <div class="history-item">
+                    <div>
+                        <div style="font-weight: bold; color: #10b981;">${item.code}</div>
+                        <div style="font-size: 0.9em; color: #94a3b8;">${item.filename}</div>
+                    </div>
+                    <div style="font-size: 0.8em; color: #64748b;">${item.time}</div>
+                </div>
+            `).join('');
+        }
+        
+        // Utilities
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function showToast(message, type = 'success') {
+            toast.textContent = message;
+            toast.style.background = type === 'error' ? '#ef4444' : '#10b981';
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Load history on page load
+        loadHistory();
+        
+        // Test API connection
+        fetch(`${API_URL}/`)
+            .then(() => console.log('API connected'))
+            .catch(() => showToast('API not connected', 'error'));
+    </script>
 </body>
 </html>
