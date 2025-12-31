@@ -1,25 +1,140 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SW Upload</title>
+<title>SW Upload System - NandS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body { font-family: Arial; background:#f4f4f4; padding:20px; }
-#upload-zone { border:2px dashed #aaa; padding:50px; text-align:center; cursor:pointer; }
-#progress { width:100%; background:#ddd; height:20px; margin-top:20px; }
-#bar { width:0%; height:100%; background:green; }
-#result { margin-top:20px; }
+body{
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+}
+.box{
+  width:90%;
+  max-width:600px;
+  margin:30px auto;
+  padding:30px;
+  border:2px dashed #4ade80;
+  border-radius:15px;
+  background:#020617;
+}
+.box.drag{
+  border-color:#60a5fa;
+  background:#030712;
+}
+input[type=file]{display:none}
+label{
+  padding:12px 20px;
+  background:#4ade80;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+button{
+  padding:12px 20px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  background:#38bdf8;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+}
+progress{
+  width:100%;
+  height:20px;
+}
+.result{
+  margin-top:20px;
+  padding:15px;
+  background:#020617;
+  border:1px solid #4ade80;
+  border-radius:10px;
+}
+.code{
+  font-size:20px;
+  font-weight:bold;
+  color:#4ade80;
+}
 </style>
 </head>
 <body>
 
-<h2>Upload File SW</h2>
-<div id="upload-zone">Klik atau drag & drop file di sini</div>
-<input type="file" id="file-input" style="display:none;">
-<div id="progress"><div id="bar"></div></div>
-<div id="result"></div>
+<h2>🚀 SW Upload System</h2>
+<p>Upload file → dapet kode → kirim ke WhatsApp bot</p>
 
-<script src="upload.js"></script>
+<div class="box" id="dropZone">
+  <h3>Drag & Drop File di sini</h3>
+  <p>atau</p>
+  <label for="file">Pilih File</label>
+  <input type="file" id="file">
+  <br>
+  <button onclick="upload()">UPLOAD</button>
+
+  <progress id="progress" value="0" max="100" style="display:none"></progress>
+
+  <div class="result" id="result" style="display:none">
+    <p>🎉 Berhasil Upload!</p>
+    <p class="code" id="codeText"></p>
+    <button onclick="copyCode()">Copy Code</button>
+  </div>
+</div>
+
+<script>
+const uploadUrl = "http://85.211.245.201:3000/upload";
+const drop = document.getElementById("dropZone");
+const fileInput = document.getElementById("file");
+
+drop.addEventListener("dragover", e=>{
+  e.preventDefault();
+  drop.classList.add("drag");
+});
+drop.addEventListener("dragleave", ()=>drop.classList.remove("drag"));
+drop.addEventListener("drop", e=>{
+  e.preventDefault();
+  drop.classList.remove("drag");
+  fileInput.files = e.dataTransfer.files;
+});
+
+async function upload(){
+  if(!fileInput.files[0]) return alert("Pilih file dulu!");
+
+  let form = new FormData();
+  form.append("file", fileInput.files[0]);
+
+  const progress = document.getElementById("progress");
+  progress.style.display="block";
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", uploadUrl, true);
+
+  xhr.upload.onprogress = (e)=>{
+    if(e.lengthComputable){
+      progress.value = (e.loaded / e.total) * 100;
+    }
+  };
+
+  xhr.onload = ()=>{
+    if(xhr.status == 200){
+      let res = JSON.parse(xhr.responseText);
+      document.getElementById("result").style.display="block";
+      document.getElementById("codeText").innerText = res.code;
+    } else {
+      alert("Upload gagal");
+    }
+  };
+
+  xhr.send(form);
+}
+
+function copyCode(){
+  let c = document.getElementById("codeText").innerText;
+  navigator.clipboard.writeText(c);
+  alert("Code copied: " + c);
+}
+</script>
+
 </body>
 </html>
