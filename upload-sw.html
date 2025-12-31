@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SW Upload</title>
+<style>
+body { font-family: Arial; background:#f4f4f4; padding:20px; }
+#upload-zone { border:2px dashed #aaa; padding:50px; text-align:center; cursor:pointer; }
+#progress { width:100%; background:#ddd; height:20px; margin-top:20px; }
+#bar { width:0%; height:100%; background:green; }
+#result { margin-top:20px; }
+</style>
+</head>
+<body>
+
+<h2>Upload File SW</h2>
+<div id="upload-zone">Klik atau drag & drop file di sini</div>
+<input type="file" id="file-input" style="display:none;">
+<div id="progress"><div id="bar"></div></div>
+<div id="result"></div>
+
+<script src="upload.js"></script>
+</body>
+</html>
