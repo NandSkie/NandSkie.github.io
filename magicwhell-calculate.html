@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Magic Wheel - NandSki</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a2a 0%, #1a1a3a 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animasi Meteor */
+        .meteor {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            z-index: 1;
+        }
+        
+        .meteor::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            z-index: 10;
+            position: relative;
+        }
+        
+        /* Tombol Back */
+        .back-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(30, 60, 114, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            z-index: 100;
+            text-decoration: none;
+            border: 1px solid rgba(100, 150, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-button:hover {
+            background: rgba(40, 80, 150, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .back-button i {
+            font-size: 1.2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 25px;
+            background: rgba(30, 60, 114, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 150, 255, 0.2);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(100, 150, 255, 0.2);
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        h1 {
+            font-size: 2.3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .creator {
+            color: #ffcc00;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 204, 0, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 204, 0, 0.3);
+        }
+        
+        .calculator-container {
+            background: rgba(20, 40, 80, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 50, 50, 0.1);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 50, 50, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .calculator-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e0e0ff;
+        }
+        
+        .price-info {
+            background: rgba(255, 50, 50, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 50, 50, 0.3);
+            text-align: center;
+        }
+        
+        .price-info .highlight {
+            color: #ffcc00;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .mode-btn {
+            background: rgba(30, 60, 114, 0.8);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid rgba(100, 150, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mode-btn.active {
+            background: rgba(255, 50, 50, 0.9);
+            border-color: rgba(255, 204, 0, 0.5);
+            box-shadow: 0 0 15px rgba(255, 50, 50, 0.5);
+        }
+        
+        .mode-btn i {
+            font-size: 1.3rem;
+        }
+        
+        .slider-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(10, 20, 40, 0.6);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .slider-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .slider-label {
+            font-size: 1.4rem;
+            color: #e0e0ff;
+            margin-bottom: 10px;
+        }
+        
+        .point-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .point-value-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px 40px;
+            min-width: 200px;
+            text-align: center;
+            border: 2px solid rgba(255, 204, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+        
+        .point-value-label {
+            font-size: 1rem;
+            color: #a0a0ff;
+            margin-bottom: 5px;
+        }
+        
+        .point-value {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+        }
+        
+        .slider-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        
+        /* Tombol Oval */
+        .point-control {
+            background: rgba(255, 50, 50, 0.8);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            width: 70px;
+            height: 45px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .point-control:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .point-control:active {
+            transform: translateY(0);
+        }
+        
+        .point-control.decrease {
+            background: rgba(30, 60, 114, 0.9);
+        }
+        
+        .point-control.increase {
+            background: rgba(255, 50, 50, 0.9);
+        }
+        
+        .slider-container {
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 30px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, #1e3c72, #d32f2f);
+            border-radius: 15px;
+            outline: none;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ffcc00;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.8), 0 0 20px rgba(255, 204, 0, 0.5);
+            border: 3px solid white;
+            transition: all 0.2s;
+        }
+        
+        .slider::-moz-range-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ffcc00;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.8), 0 0 20px rgba(255, 204, 0, 0.5);
+            border: 3px solid white;
+        }
+        
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 1), 0 0 30px rgba(255, 204, 0, 0.7);
+        }
+        
+        .slider-range {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            color: #a0a0ff;
+        }
+        
+        .calculation-result {
+            background: rgba(10, 20, 40, 0.8);
+            border-radius: 15px;
+            padding: 0;
+            margin-top: 30px;
+            border: 2px solid rgba(255, 50, 50, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .result-title {
+            font-size: 1.3rem;
+            margin: 0;
+            color: #e0e0ff;
+            text-align: center;
+            padding: 15px;
+            background: rgba(30, 60, 114, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Layout 2x2 dengan border separator */
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            grid-template-rows: 1fr 1px 1fr;
+            height: 200px;
+        }
+        
+        /* Horizontal separator */
+        .separator-h {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+        }
+        
+        /* Vertical separator */
+        .separator-v {
+            grid-column: 2;
+            grid-row: 1 / -1;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.2), transparent);
+        }
+        
+        .result-item {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .result-item:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1;
+        }
+        
+        .result-item:nth-child(2) {
+            grid-column: 3;
+            grid-row: 1;
+        }
+        
+        .result-item:nth-child(3) {
+            grid-column: 1;
+            grid-row: 3;
+        }
+        
+        .result-item:nth-child(4) {
+            grid-column: 3;
+            grid-row: 3;
+        }
+        
+        .result-label {
+            color: #a0a0ff;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .result-value {
+            color: #ffcc00;
+            font-weight: bold;
+            font-size: 1.8rem;
+        }
+        
+        .result-value.diamond {
+            font-size: 2rem;
+            color: #ffcc00;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .diamond-icon-small {
+            color: #ffcc00;
+            font-size: 1.5rem;
+        }
+        
+        .spin-details {
+            background: rgba(30, 60, 114, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 15px;
+            border: 1px solid rgba(100, 150, 255, 0.2);
+        }
+        
+        .spin-details-title {
+            color: #4fc3f7;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .spin-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        
+        .spin-detail:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .quick-reference {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .reference-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .reference-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .reference-point {
+            font-weight: bold;
+            color: #ffcc00;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .reference-diamond {
+            color: #4fc3f7;
+            font-size: 1rem;
+        }
+        
+        .note-section {
+            background: rgba(30, 60, 114, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 25px;
+            border-left: 4px solid #ffcc00;
+        }
+        
+        .note-title {
+            color: #ffcc00;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .note-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .note-list li {
+            margin-bottom: 6px;
+            padding-left: 18px;
+            position: relative;
+            color: #e0e0ff;
+            font-size: 0.9rem;
+        }
+        
+        .note-list li:before {
+            content: "•";
+            color: #ffcc00;
+            position: absolute;
+            left: 0;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            color: #a0a0ff;
+            font-size: 0.85rem;
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .highlight {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+        
+        /* Tombol Sound */
+        .sound-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(30, 60, 114, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 100;
+            border: 1px solid rgba(100, 150, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .sound-button:hover {
+            background: rgba(40, 80, 150, 0.9);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Responsif */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .calculator-container {
+                padding: 20px;
+            }
+            
+            .mode-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .mode-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .quick-reference {
+                grid-template-columns: 1fr;
+            }
+            
+            .point-value {
+                font-size: 2.8rem;
+            }
+            
+            .back-button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+                top: 10px;
+                left: 10px;
+            }
+            
+            .sound-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+                top: 10px;
+                right: 10px;
+            }
+            
+            .slider-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .slider-container {
+                width: 100%;
+            }
+            
+            .result-grid {
+                height: 180px;
+                grid-template-rows: 1fr 1px 1fr;
+            }
+            
+            .result-item {
+                padding: 15px;
+            }
+            
+            .result-label {
+                font-size: 0.8rem;
+            }
+            
+            .result-value {
+                font-size: 1.5rem;
+            }
+            
+            .result-value.diamond {
+                font-size: 1.6rem;
+            }
+            
+            .point-control {
+                width: 60px;
+                height: 40px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        /* Animasi untuk perubahan nilai */
+        @keyframes highlight {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .highlight-animation {
+            animation: highlight 0.5s ease;
+        }
+        
+        /* Efek bintang di latar belakang */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background stars -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Tombol Back -->
+    <a href="https://NandSki.github.io" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+    
+    <!-- Tombol Sound -->
+    <button class="sound-button" id="soundButton">
+        <i class="fas fa-volume-up"></i>
+    </button>
+    
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calculator"></i> KALKULATOR MAGIC WHEEL</h1>
+            <p class="subtitle">Hitung diamond yang dibutuhkan untuk skin LEGEND</p>
+            <div class="creator">by NandSki</div>
+        </header>
+        
+        <main class="calculator-container">
+            <div class="calculator-description">
+                <p>Geser slider untuk mengatur point Magic Wheel yang sudah kamu miliki. Sistem 5x spin menggunakan diskon khusus berdasarkan kelompok point.</p>
+            </div>
+            
+            <div class="price-info">
+                <p>Harga per spin: <span class="highlight">60 Diamond</span> | 5x Spin: <span class="highlight">Diskon kelompok</span></p>
+                <p style="font-size: 0.9rem; margin-top: 5px;">Setiap spin memberikan 1 point</p>
+            </div>
+            
+            <div class="mode-selector">
+                <button class="mode-btn active" id="singleSpinBtn">
+                    <i class="fas fa-redo-alt"></i> Single Spin
+                </button>
+                <button class="mode-btn" id="fiveSpinBtn">
+                    <i class="fas fa-redo-alt"></i> 5x Spin (Sistem Kelompok)
+                </button>
+            </div>
+            
+            <div class="slider-section">
+                <div class="slider-header">
+                    <div class="slider-label">POINT MAGIC WHEEL YANG SUDAH DIMILIKI</div>
+                </div>
+                
+                <div class="point-display">
+                    <div class="point-value-container">
+                        <div class="point-value-label">POINT SAAT INI</div>
+                        <div class="point-value" id="pointValue">175</div>
+                    </div>
+                    
+                    <div class="slider-controls">
+                        <button class="point-control decrease" id="decreaseBtn">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        
+                        <div class="slider-container">
+                            <input type="range" min="0" max="200" value="175" class="slider" id="pointSlider">
+                            <div class="slider-range">
+                                <span>0</span>
+                                <span>200</span>
+                            </div>
+                        </div>
+                        
+                        <button class="point-control increase" id="increaseBtn">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calculation-result">
+                <div class="result-title">
+                    <i class="fas fa-calculator"></i> HASIL PERHITUNGAN
+                </div>
+                
+                <div class="result-grid">
+                    <!-- Kiri Atas: Point yang dimiliki -->
+                    <div class="result-item">
+                        <div class="result-label">Point yang dimiliki</div>
+                        <div class="result-value" id="currentPointResult">175</div>
+                    </div>
+                    
+                    <!-- Kanan Atas: Mode Spin -->
+                    <div class="result-item">
+                        <div class="result-label">Mode Spin</div>
+                        <div class="result-value" id="modeResult">Single Spin</div>
+                    </div>
+                    
+                    <!-- Separator Horizontal -->
+                    <div class="separator-h"></div>
+                    
+                    <!-- Separator Vertikal -->
+                    <div class="separator-v"></div>
+                    
+                    <!-- Kiri Bawah: Point & Spin dibutuhkan -->
+                    <div class="result-item">
+                        <div class="result-label">Point & Spin dibutuhkan</div>
+                        <div class="result-value" id="neededResult">25</div>
+                    </div>
+                    
+                    <!-- Kanan Bawah: Diamond dibutuhkan -->
+                    <div class="result-item">
+                        <div class="result-label">Diamond dibutuhkan</div>
+                        <div class="result-value diamond" id="diamondResult"><i class="fas fa-gem diamond-icon-small"></i> 1.500</div>
+                    </div>
+                </div>
+                
+                <div class="spin-details" style="display: none;">
+                    <div class="spin-details-title">Detail Perhitungan 5x Spin</div>
+                    <div class="spin-detail">
+                        <span>Kelompok Point:</span>
+                        <span id="groupRange">175-179</span>
+                    </div>
+                    <div class="spin-detail">
+                        <span>Harga Kelompok:</span>
+                        <span id="groupPrice">1.350 Diamond</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-reference">
+                <div class="reference-item">
+                    <div class="reference-point">0-4 Point</div>
+                    <div class="reference-diamond">10.800 Diamond (5x)</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-point">50-54 Point</div>
+                    <div class="reference-diamond">8.100 Diamond (5x)</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-point">100-104 Point</div>
+                    <div class="reference-diamond">5.400 Diamond (5x)</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-point">150-154 Point</div>
+                    <div class="reference-diamond">2.700 Diamond (5x)</div>
+                </div>
+            </div>
+            
+            <div class="note-section">
+                <div class="note-title"><i class="fas fa-info-circle"></i> Sistem Perhitungan:</div>
+                <ul class="note-list">
+                    <li><span class="highlight">Single Spin:</span> (200 - Point Saat Ini) × 60 diamond</li>
+                    <li><span class="highlight">5x Spin:</span> Menggunakan sistem kelompok setiap 5 point</li>
+                    <li>Contoh Single Spin: 0 point → 12.000, 1 point → 11.940, dst.</li>
+                    <li>Skin LEGEND didapatkan setelah <span class="highlight">200 point</span></li>
+                    <li>Disarankan menggunakan <span class="highlight">5x spin</span> untuk menghemat diamond</li>
+                </ul>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2023 Kalkulator Magic Wheel by <span class="highlight">NandSki</span></p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: #8888cc;">
+                Magic Wheel Calculator for Mobile Legends
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Data untuk Single Spin
+        const PRICE_PER_SPIN = 60;
+        const MAX_POINTS = 200;
+        
+        // Data untuk 5x Spin (sistem kelompok)
+        const fiveSpinGroups = [
+            { min: 0, max: 4, price: 10800 },      // 0-4
+            { min: 5, max: 9, price: 10530 },      // 5-9
+            { min: 10, max: 14, price: 10260 },    // 10-14
+            { min: 15, max: 19, price: 9990 },     // 15-19
+            { min: 20, max: 24, price: 9720 },     // 20-24
+            { min: 25, max: 29, price: 9450 },     // 25-29
+            { min: 30, max: 34, price: 9180 },     // 30-34
+            { min: 35, max: 39, price: 8910 },     // 35-39
+            { min: 40, max: 44, price: 8640 },     // 40-44
+            { min: 45, max: 49, price: 8370 },     // 45-49
+            { min: 50, max: 54, price: 8100 },     // 50-54
+            { min: 55, max: 59, price: 7830 },     // 55-59
+            { min: 60, max: 64, price: 7560 },     // 60-64
+            { min: 65, max: 69, price: 7290 },     // 65-69
+            { min: 70, max: 74, price: 7020 },     // 70-74
+            { min: 75, max: 79, price: 6750 },     // 75-79
+            { min: 80, max: 84, price: 6480 },     // 80-84
+            { min: 85, max: 89, price: 6210 },     // 85-89
+            { min: 90, max: 94, price: 5940 },     // 90-94
+            { min: 95, max: 99, price: 5670 },     // 95-99
+            { min: 100, max: 104, price: 5400 },   // 100-104
+            { min: 105, max: 109, price: 5130 },   // 105-109
+            { min: 110, max: 114, price: 4860 },   // 110-114
+            { min: 115, max: 119, price: 4590 },   // 115-119
+            { min: 120, max: 124, price: 4320 },   // 120-124
+            { min: 125, max: 129, price: 4050 },   // 125-129
+            { min: 130, max: 134, price: 3780 },   // 130-134
+            { min: 135, max: 139, price: 3510 },   // 135-139
+            { min: 140, max: 144, price: 3240 },   // 140-144
+            { min: 145, max: 149, price: 2970 },   // 145-149
+            { min: 150, max: 154, price: 2700 },   // 150-154
+            { min: 155, max: 159, price: 2430 },   // 155-159
+            { min: 160, max: 164, price: 2160 },   // 160-164
+            { min: 165, max: 169, price: 1890 },   // 165-169
+            { min: 170, max: 174, price: 1620 },   // 170-174
+            { min: 175, max: 179, price: 1350 },   // 175-179
+            { min: 180, max: 184, price: 1080 },   // 180-184
+            { min: 185, max: 189, price: 810 },    // 185-189
+            { min: 190, max: 194, price: 540 },    // 190-194
+            { min: 195, max: 195, price: 270 },    // 195
+            { min: 196, max: 196, price: 240 },    // 196
+            { min: 197, max: 197, price: 180 },    // 197
+            { min: 198, max: 198, price: 120 },    // 198
+            { min: 199, max: 199, price: 60 },     // 199
+            { min: 200, max: 200, price: 0 }       // 200
+        ];
+        
+        // Inisialisasi elemen
+        const pointSlider = document.getElementById('pointSlider');
+        const pointValue = document.getElementById('pointValue');
+        const decreaseBtn = document.getElementById('decreaseBtn');
+        const increaseBtn = document.getElementById('increaseBtn');
+        const singleSpinBtn = document.getElementById('singleSpinBtn');
+        const fiveSpinBtn = document.getElementById('fiveSpinBtn');
+        const soundButton = document.getElementById('soundButton');
+        
+        // Element hasil
+        const currentPointResult = document.getElementById('currentPointResult');
+        const modeResult = document.getElementById('modeResult');
+        const neededResult = document.getElementById('neededResult');
+        const diamondResult = document.getElementById('diamondResult');
+        const groupRange = document.getElementById('groupRange');
+        const groupPrice = document.getElementById('groupPrice');
+        
+        // Variabel state
+        let currentMode = 'single'; // 'single' atau 'five'
+        let soundEnabled = true;
+        
+        // Fungsi untuk efek suara
+        function playSound(type) {
+            if (!soundEnabled) return;
+            
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                if (type === 'click') {
+                    // Suara untuk klik
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.value = 800;
+                    oscillator.type = 'sine';
+                    
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                    
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.1);
+                } else if (type === 'slide') {
+                    // Suara untuk slider
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.value = 400;
+                    oscillator.type = 'sine';
+                    
+                    gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+                    
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.05);
+                }
+            } catch (e) {
+                console.log("Audio tidak didukung");
+            }
+        }
+        
+        // Fungsi untuk toggle sound
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = soundButton.querySelector('i');
+            
+            if (soundEnabled) {
+                icon.className = 'fas fa-volume-up';
+                soundButton.style.background = 'rgba(30, 60, 114, 0.9)';
+                soundButton.style.color = '#4fc3f7';
+                playSound('click');
+            } else {
+                icon.className = 'fas fa-volume-mute';
+                soundButton.style.background = 'rgba(100, 30, 30, 0.9)';
+                soundButton.style.color = '#ff6666';
+            }
+        }
+        
+        // Fungsi untuk mengubah mode spin
+        function changeMode(mode) {
+            currentMode = mode;
+            playSound('click');
+            
+            // Update tombol aktif
+            if (mode === 'single') {
+                singleSpinBtn.classList.add('active');
+                fiveSpinBtn.classList.remove('active');
+                modeResult.textContent = 'Single Spin';
+                document.querySelector('.spin-details').style.display = 'none';
+            } else {
+                singleSpinBtn.classList.remove('active');
+                fiveSpinBtn.classList.add('active');
+                modeResult.textContent = '5x Spin (Sistem Kelompok)';
+                document.querySelector('.spin-details').style.display = 'block';
+            }
+            
+            // Update perhitungan
+            updateCalculation();
+        }
+        
+        // Fungsi untuk menghitung diamond Single Spin
+        function calculateSingleSpin(point) {
+            const pointsNeeded = MAX_POINTS - point;
+            const spinsNeeded = pointsNeeded;
+            const diamondNeeded = spinsNeeded * PRICE_PER_SPIN;
+            
+            return {
+                pointsNeeded: pointsNeeded,
+                spinsNeeded: spinsNeeded,
+                diamondNeeded: diamondNeeded
+            };
+        }
+        
+        // Fungsi untuk menghitung diamond 5x Spin
+        function calculateFiveSpin(point) {
+            if (point === 200) {
+                return {
+                    pointsNeeded: 0,
+                    spinsNeeded: 0,
+                    diamondNeeded: 0,
+                    groupInfo: "200 = 0 diamond"
+                };
+            }
+            
+            // Cari kelompok yang sesuai
+            let currentGroup = null;
+            for (const group of fiveSpinGroups) {
+                if (point >= group.min && point <= group.max) {
+                    currentGroup = group;
+                    break;
+                }
+            }
+            
+            // Jika tidak ditemukan kelompok (seharusnya tidak terjadi)
+            if (!currentGroup) {
+                return calculateSingleSpin(point);
+            }
+            
+            return {
+                pointsNeeded: MAX_POINTS - point,
+                spinsNeeded: MAX_POINTS - point,
+                diamondNeeded: currentGroup.price,
+                groupInfo: `${currentGroup.min}-${currentGroup.max} = ${currentGroup.price.toLocaleString()} diamond`
+            };
+        }
+        
+        // Fungsi untuk mengubah nilai point
+        function changePoint(change) {
+            let newPoint = parseInt(pointSlider.value) + change;
+            
+            // Batasi antara 0 dan 200
+            if (newPoint < 0) newPoint = 0;
+            if (newPoint > MAX_POINTS) newPoint = MAX_POINTS;
+            
+            // Update slider
+            pointSlider.value = newPoint;
+            
+            // Update tampilan
+            updateDisplay();
+            updateCalculation();
+            
+            // Efek suara
+            playSound('click');
+            
+            // Efek visual pada tombol
+            if (change < 0) {
+                decreaseBtn.style.transform = 'translateY(-2px)';
+                setTimeout(() => {
+                    decreaseBtn.style.transform = 'translateY(0)';
+                }, 150);
+            } else {
+                increaseBtn.style.transform = 'translateY(-2px)';
+                setTimeout(() => {
+                    increaseBtn.style.transform = 'translateY(0)';
+                }, 150);
+            }
+        }
+        
+        // Fungsi untuk update tampilan point
+        function updateDisplay() {
+            const point = parseInt(pointSlider.value);
+            pointValue.textContent = point;
+            
+            // Animasi
+            pointValue.classList.remove('highlight-animation');
+            void pointValue.offsetWidth;
+            pointValue.classList.add('highlight-animation');
+        }
+        
+        // Fungsi untuk update perhitungan
+        function updateCalculation() {
+            const point = parseInt(pointSlider.value);
+            
+            let calculation;
+            if (currentMode === 'single') {
+                calculation = calculateSingleSpin(point);
+            } else {
+                calculation = calculateFiveSpin(point);
+                if (calculation.groupInfo) {
+                    const parts = calculation.groupInfo.split('=');
+                    groupRange.textContent = parts[0].trim();
+                    groupPrice.textContent = parts[1].trim();
+                }
+            }
+            
+            // Update hasil
+            currentPointResult.textContent = point;
+            neededResult.textContent = calculation.pointsNeeded; // Gabungan point & spin
+            diamondResult.innerHTML = `<i class="fas fa-gem diamond-icon-small"></i> ${calculation.diamondNeeded.toLocaleString()}`;
+            
+            // Animasi perubahan
+            diamondResult.classList.remove('highlight-animation');
+            void diamondResult.offsetWidth;
+            diamondResult.classList.add('highlight-animation');
+            
+            // Update warna berdasarkan jumlah diamond
+            if (calculation.diamondNeeded >= 10000) {
+                diamondResult.style.color = '#ff3232';
+                currentPointResult.style.color = '#ff3232';
+            } else if (calculation.diamondNeeded >= 5000) {
+                diamondResult.style.color = '#ff9900';
+                currentPointResult.style.color = '#ffcc00';
+            } else if (calculation.diamondNeeded > 0) {
+                diamondResult.style.color = '#ffcc00';
+                currentPointResult.style.color = '#ffcc00';
+            } else {
+                diamondResult.style.color = '#4CAF50';
+                currentPointResult.style.color = '#4CAF50';
+            }
+        }
+        
+        // Event listener untuk slider
+        let slideTimer;
+        pointSlider.addEventListener('input', () => {
+            updateDisplay();
+            updateCalculation();
+            
+            // Mainkan suara slide dengan throttle
+            clearTimeout(slideTimer);
+            slideTimer = setTimeout(() => {
+                playSound('slide');
+            }, 50);
+        });
+        
+        // Event listener untuk tombol +/-
+        decreaseBtn.addEventListener('click', () => changePoint(-1));
+        increaseBtn.addEventListener('click', () => changePoint(1));
+        
+        // Event listener untuk tombol mode
+        singleSpinBtn.addEventListener('click', () => changeMode('single'));
+        fiveSpinBtn.addEventListener('click', () => changeMode('five'));
+        
+        // Event listener untuk tombol sound
+        soundButton.addEventListener('click', toggleSound);
+        
+        // Event listener untuk tombol keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === '-') {
+                changePoint(-1);
+                e.preventDefault();
+            } else if (e.key === 'ArrowRight' || e.key === '+' || e.key === '=') {
+                changePoint(1);
+                e.preventDefault();
+            }
+        });
+        
+        // Event listener untuk hover efek
+        document.querySelectorAll('.mode-btn, .point-control, .reference-item').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                if (!btn.classList.contains('active')) {
+                    playSound('click');
+                }
+            });
+        });
+        
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update tampilan awal
+            updateDisplay();
+            updateCalculation();
+            
+            // Sembunyikan detail 5x spin awalnya
+            document.querySelector('.spin-details').style.display = 'none';
+            
+            // Efek untuk tombol back
+            const backButton = document.querySelector('.back-button');
+            backButton.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(-5px)';
+                playSound('click');
+            });
+            
+            backButton.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+            
+            backButton.addEventListener('click', function(e) {
+                playSound('click');
+                // Animasi keluar sebelum redirect
+                e.preventDefault();
+                document.body.style.opacity = '0.7';
+                document.body.style.transition = 'opacity 0.3s';
+                
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 300);
+            });
+            
+            // Mainkan suara startup
+            setTimeout(() => {
+                playSound('click');
+            }, 500);
+        });
+        
+        // Fungsi untuk membuat bintang di background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Ukuran acak
+                const size = Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Posisi acak
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Animasi dengan delay acak
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Fungsi untuk membuat meteor
+        function createMeteor() {
+            const meteor = document.createElement('div');
+            meteor.classList.add('meteor');
+            
+            // Posisi awal acak di bagian atas
+            const startX = Math.random() * 100;
+            meteor.style.left = `${startX}%`;
+            meteor.style.top = '-10px';
+            
+            // Durasi dan sudut acak
+            const duration = 1 + Math.random() * 2;
+            const angle = 20 + Math.random() * 40;
+            
+            // Atur animasi meteor
+            meteor.style.animation = `meteorFall ${duration}s linear forwards`;
+            
+            // Tambahkan ke body
+            document.body.appendChild(meteor);
+            
+            // Hapus meteor setelah selesai animasi
+            setTimeout(() => {
+                if (meteor.parentNode) {
+                    meteor.parentNode.removeChild(meteor);
+                }
+            }, duration * 1000);
+        }
+        
+        // Animasi meteor jatuh
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes meteorFall {
+                0% {
+                    transform: translate(0, 0) rotate(${Math.random() * 30}deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(${Math.random() * 200 - 100}px, 100vh) rotate(${Math.random() * 30}deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Buat meteor secara periodik
+        function startMeteorShower() {
+            // Buat meteor pertama setelah delay acak
+            setTimeout(() => {
+                createMeteor();
+                // Buat meteor berikutnya secara periodik
+                setInterval(() => {
+                    if (Math.random() > 0.3) { // 70% kemungkinan membuat meteor
+                        createMeteor();
+                    }
+                }, 2000);
+            }, Math.random() * 3000);
+        }
+        
+        // Mulai animasi
+        createStars();
+        startMeteorShower();
+    </script>
+</body>
+</html>
