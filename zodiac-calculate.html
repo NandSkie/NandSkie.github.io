@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Zodiak Wheel MLBB - NandSki</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c1a3a 0%, #1a2b5e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            z-index: 10;
+            position: relative;
+        }
+        
+        /* Tombol Back */
+        .back-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(30, 60, 120, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            z-index: 100;
+            text-decoration: none;
+            border: 1px solid rgba(100, 150, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .back-button:hover {
+            background: rgba(40, 80, 160, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .back-button i {
+            font-size: 1.2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 25px;
+            background: rgba(20, 40, 100, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 100, 255, 0.3);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+        
+        h1 {
+            font-size: 2.3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        
+        h1 i {
+            color: #ffd700;
+            margin-right: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            color: #b3d9ff;
+        }
+        
+        .creator {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 215, 0, 0.15);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+        }
+        
+        .calculator-container {
+            background: rgba(15, 30, 70, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 100, 255, 0.2);
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 150, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .calculator-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e6f2ff;
+        }
+        
+        .price-info {
+            background: rgba(0, 100, 255, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 100, 255, 0.3);
+            text-align: center;
+        }
+        
+        .price-info .highlight {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .zodiac-system-info {
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .zodiac-system-info p {
+            margin: 5px 0;
+            color: #e6f2ff;
+        }
+        
+        .slider-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(10, 20, 50, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .slider-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .slider-label {
+            font-size: 1.4rem;
+            color: #e6f2ff;
+            margin-bottom: 10px;
+        }
+        
+        .point-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .point-value-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px 40px;
+            min-width: 200px;
+            text-align: center;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+        
+        .point-value-label {
+            font-size: 1rem;
+            color: #b3d9ff;
+            margin-bottom: 5px;
+        }
+        
+        .point-value {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+        }
+        
+        .slider-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        
+        /* Tombol Oval */
+        .point-control {
+            background: rgba(0, 100, 255, 0.8);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            width: 70px;
+            height: 45px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .point-control:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .point-control:active {
+            transform: translateY(0);
+        }
+        
+        .point-control.decrease {
+            background: rgba(30, 60, 120, 0.9);
+        }
+        
+        .point-control.increase {
+            background: rgba(0, 100, 255, 0.9);
+        }
+        
+        .slider-container {
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 30px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, #1a3c72, #0064ff, #ffd700);
+            border-radius: 15px;
+            outline: none;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ffd700;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.6);
+            border: 3px solid white;
+            transition: all 0.2s;
+        }
+        
+        .slider::-moz-range-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ffd700;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.6);
+            border: 3px solid white;
+        }
+        
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 35px rgba(255, 215, 0, 0.8);
+        }
+        
+        .slider-range {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            color: #b3d9ff;
+        }
+        
+        .calculation-result {
+            background: rgba(10, 20, 50, 0.9);
+            border-radius: 15px;
+            padding: 0;
+            margin-top: 30px;
+            border: 2px solid rgba(0, 100, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .result-title {
+            font-size: 1.3rem;
+            margin: 0;
+            color: #e6f2ff;
+            text-align: center;
+            padding: 15px;
+            background: rgba(30, 60, 120, 0.7);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .result-title i {
+            color: #ffd700;
+            margin-right: 8px;
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            grid-template-rows: 1fr 1px 1fr;
+            height: 200px;
+        }
+        
+        .separator-h {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            background: linear-gradient(to right, transparent, rgba(0, 150, 255, 0.3), transparent);
+        }
+        
+        .separator-v {
+            grid-column: 2;
+            grid-row: 1 / -1;
+            background: linear-gradient(to bottom, transparent, rgba(0, 150, 255, 0.3), transparent);
+        }
+        
+        .result-item {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .result-item:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1;
+        }
+        
+        .result-item:nth-child(2) {
+            grid-column: 3;
+            grid-row: 1;
+        }
+        
+        .result-item:nth-child(3) {
+            grid-column: 1;
+            grid-row: 3;
+        }
+        
+        .result-item:nth-child(4) {
+            grid-column: 3;
+            grid-row: 3;
+        }
+        
+        .result-label {
+            color: #b3d9ff;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .result-value {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.8rem;
+        }
+        
+        .result-value.diamond {
+            font-size: 2rem;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .diamond-icon-small {
+            color: #ffd700;
+            font-size: 1.5rem;
+        }
+        
+        .spin-details {
+            background: rgba(30, 60, 120, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 15px;
+            border: 1px solid rgba(0, 150, 255, 0.2);
+        }
+        
+        .spin-details-title {
+            color: #4fc3f7;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .spin-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        
+        .spin-detail:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .quick-reference {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .reference-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .reference-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .reference-point {
+            font-weight: bold;
+            color: #ffd700;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .reference-diamond {
+            color: #4fc3f7;
+            font-size: 1rem;
+        }
+        
+        .note-section {
+            background: rgba(30, 60, 120, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 25px;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .note-title {
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .note-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .note-list li {
+            margin-bottom: 6px;
+            padding-left: 18px;
+            position: relative;
+            color: #e6f2ff;
+            font-size: 0.9rem;
+        }
+        
+        .note-list li:before {
+            content: "•";
+            color: #ffd700;
+            position: absolute;
+            left: 0;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            color: #b3d9ff;
+            font-size: 0.85rem;
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .highlight {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .calculator-container {
+                padding: 20px;
+            }
+            
+            .quick-reference {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .point-value {
+                font-size: 2.8rem;
+            }
+            
+            .back-button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+                top: 10px;
+                left: 10px;
+            }
+            
+            .slider-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .slider-container {
+                width: 100%;
+            }
+            
+            .result-grid {
+                height: 180px;
+                grid-template-rows: 1fr 1px 1fr;
+            }
+            
+            .result-item {
+                padding: 15px;
+            }
+            
+            .result-label {
+                font-size: 0.8rem;
+            }
+            
+            .result-value {
+                font-size: 1.5rem;
+            }
+            
+            .result-value.diamond {
+                font-size: 1.6rem;
+            }
+            
+            .point-control {
+                width: 60px;
+                height: 40px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        @keyframes highlight {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .highlight-animation {
+            animation: highlight 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-star"></i> KALKULATOR ZODIAK WHEEL MLBB</h1>
+            <p class="subtitle">Hitung diamond yang dibutuhkan untuk skin Zodiak - Rumus Akurat</p>
+            <div class="creator">by NandSki</div>
+        </header>
+        
+        <main class="calculator-container">
+            <div class="calculator-description">
+                <p>Geser slider untuk mengatur progress Zodiak Wheel yang sudah kamu miliki. Kalkulator ini menggunakan rumus akurat dari 0-100 point.</p>
+            </div>
+            
+            <div class="price-info">
+                <p>Harga mulai: <span class="highlight">1.700 Diamond</span> | Max point untuk skin: <span class="highlight">100 Point</span></p>
+                <p style="font-size: 0.9rem; margin-top: 5px;">Rumus: 0 point = 1.700 diamond, turun 17 diamond per point</p>
+            </div>
+            
+            <div class="zodiac-system-info">
+                <p><strong>Rumus Zodiak Wheel MLBB:</strong></p>
+                <p>• 0-89 point: <span class="highlight">1.700 - (point × 17)</span> diamond</p>
+                <p>• 90-99 point: <span class="highlight">200 - ((point-90) × 20)</span> diamond</p>
+                <p>• 100 point: <span class="highlight">0 diamond</span> (sudah dapat skin)</p>
+            </div>
+            
+            <div class="slider-section">
+                <div class="slider-header">
+                    <div class="slider-label">POINT ZODIAK WHEEL YANG SUDAH DIMILIKI</div>
+                </div>
+                
+                <div class="point-display">
+                    <div class="point-value-container">
+                        <div class="point-value-label">POINT SAAT INI</div>
+                        <div class="point-value" id="pointValue">0</div>
+                    </div>
+                    
+                    <div class="slider-controls">
+                        <button class="point-control decrease" id="decreaseBtn">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        
+                        <div class="slider-container">
+                            <input type="range" min="0" max="100" value="0" class="slider" id="pointSlider">
+                            <div class="slider-range">
+                                <span>0</span>
+                                <span>50</span>
+                                <span>100</span>
+                            </div>
+                        </div>
+                        
+                        <button class="point-control increase" id="increaseBtn">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calculation-result">
+                <div class="result-title">
+                    <i class="fas fa-calculator"></i> HASIL PERHITUNGAN ZODIAK WHEEL
+                </div>
+                
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-label">Point yang dimiliki</div>
+                        <div class="result-value" id="currentPointResult">0</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Sisa point</div>
+                        <div class="result-value" id="neededPointsResult">100</div>
+                    </div>
+                    
+                    <div class="separator-h"></div>
+                    <div class="separator-v"></div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Estimasi spin</div>
+                        <div class="result-value" id="estimatedSpinsResult">~100</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Diamond dibutuhkan</div>
+                        <div class="result-value diamond" id="diamondResult"><i class="fas fa-gem diamond-icon-small"></i> 1.700</div>
+                    </div>
+                </div>
+                
+                <div class="spin-details">
+                    <div class="spin-details-title">Detail Perhitungan</div>
+                    <div class="spin-detail">
+                        <span>Rumus digunakan:</span>
+                        <span id="formulaUsed">1.700 - (0 × 17)</span>
+                    </div>
+                    <div class="spin-detail">
+                        <span>Point saat ini:</span>
+                        <span id="currentPointDetail">0</span>
+                    </div>
+                    <div class="spin-detail">
+                        <span>Diamond per point:</span>
+                        <span id="diamondPerPoint">17</span>
+                    </div>
+                    <div class="spin-detail">
+                        <span>Total diamond:</span>
+                        <span id="totalDiamondDetail">1.700</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-reference">
+                <div class="reference-item">
+                    <div class="reference-point">0 Point</div>
+                    <div class="reference-diamond">1.700 Diamond</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-point">25 Point</div>
+                    <div class="reference-diamond">1.275 Diamond</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-point">50 Point</div>
+                    <div class="reference-diamond">850 Diamond</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-point">75 Point</div>
+                    <div class="reference-diamond">425 Diamond</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-point">89 Point</div>
+                    <div class="reference-diamond">187 Diamond</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-point">95 Point</div>
+                    <div class="reference-diamond">100 Diamond</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-point">99 Point</div>
+                    <div class="reference-diamond">20 Diamond</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-point">100 Point</div>
+                    <div class="reference-diamond">0 Diamond</div>
+                </div>
+            </div>
+            
+            <div class="note-section">
+                <div class="note-title"><i class="fas fa-info-circle"></i> Sistem Zodiak Wheel MLBB:</div>
+                <ul class="note-list">
+                    <li><span class="highlight">0-89 Point:</span> 1.700 - (point × 17) diamond</li>
+                    <li><span class="highlight">90-99 Point:</span> 200 - ((point-90) × 20) diamond</li>
+                    <li><span class="highlight">100 Point:</span> 0 diamond (sudah dapat skin)</li>
+                    <li><span class="highlight">Contoh:</span> 50 point = 1.700 - (50×17) = 850 diamond</li>
+                    <li><span class="highlight">Contoh:</span> 89 point = 1.700 - (89×17) = 1.700 - 1.513 = 187 diamond</li>
+                    <li><span class="highlight">Contoh:</span> 95 point = 200 - ((95-90)×20) = 200 - (5×20) = 100 diamond</li>
+                    <li>Progress Zodiak Wheel tidak reset setelah dapat skin</li>
+                </ul>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2026 Kalkulator Zodiak Wheel MLBB by <span class="highlight">NandSki</span></p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: #8888cc;">
+                Zodiak Wheel Calculator for Mobile Legends: Bang Bang
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Data untuk Zodiak Wheel MLBB - Rumus Akurat
+        const ZODIAC_MAX_POINTS = 100;
+        const ZODIAC_BASE_PRICE = 1700; // Harga untuk 0 point
+        const ZODIAC_PRICE_DECREASE = 17; // Turun 17 diamond per point (0-89)
+        
+        // Fungsi hitung diamond berdasarkan rumus yang diberikan
+        function calculateZodiacDiamond(point) {
+            if (point >= 100) return 0;
+            
+            // 90-99 point: 200 - ((point-90) × 20)
+            if (point >= 90) {
+                return 200 - ((point - 90) * 20);
+            }
+            
+            // 0-89 point: 1.700 - (point × 17)
+            return ZODIAC_BASE_PRICE - (point * ZODIAC_PRICE_DECREASE);
+        }
+        
+        // Fungsi untuk mendapatkan formula yang digunakan
+        function getFormulaUsed(point) {
+            if (point >= 100) return "Sudah dapat skin";
+            if (point >= 90) return `200 - ((${point}-90) × 20)`;
+            return `1.700 - (${point} × 17)`;
+        }
+        
+        // Fungsi untuk mendapatkan diamond per point
+        function getDiamondPerPoint(point) {
+            if (point >= 100) return 0;
+            if (point >= 90) return 20;
+            return 17;
+        }
+        
+        // Inisialisasi elemen
+        const pointSlider = document.getElementById('pointSlider');
+        const pointValue = document.getElementById('pointValue');
+        const decreaseBtn = document.getElementById('decreaseBtn');
+        const increaseBtn = document.getElementById('increaseBtn');
+        
+        // Element hasil
+        const currentPointResult = document.getElementById('currentPointResult');
+        const neededPointsResult = document.getElementById('neededPointsResult');
+        const estimatedSpinsResult = document.getElementById('estimatedSpinsResult');
+        const diamondResult = document.getElementById('diamondResult');
+        const formulaUsed = document.getElementById('formulaUsed');
+        const currentPointDetail = document.getElementById('currentPointDetail');
+        const diamondPerPoint = document.getElementById('diamondPerPoint');
+        const totalDiamondDetail = document.getElementById('totalDiamondDetail');
+        
+        // Fungsi untuk mengubah nilai point
+        function changePoint(change) {
+            let newPoint = parseInt(pointSlider.value) + change;
+            
+            // Batasi antara 0 dan 100
+            if (newPoint < 0) newPoint = 0;
+            if (newPoint > ZODIAC_MAX_POINTS) newPoint = ZODIAC_MAX_POINTS;
+            
+            // Update slider
+            pointSlider.value = newPoint;
+            
+            // Update tampilan
+            updateDisplay();
+            updateCalculation();
+            
+            // Efek visual pada tombol
+            if (change < 0) {
+                decreaseBtn.style.transform = 'translateY(-2px)';
+                setTimeout(() => {
+                    decreaseBtn.style.transform = 'translateY(0)';
+                }, 150);
+            } else {
+                increaseBtn.style.transform = 'translateY(-2px)';
+                setTimeout(() => {
+                    increaseBtn.style.transform = 'translateY(0)';
+                }, 150);
+            }
+        }
+        
+        // Fungsi untuk update tampilan point
+        function updateDisplay() {
+            const point = parseInt(pointSlider.value);
+            pointValue.textContent = point;
+            
+            // Animasi
+            pointValue.classList.remove('highlight-animation');
+            void pointValue.offsetWidth;
+            pointValue.classList.add('highlight-animation');
+        }
+        
+        // Fungsi untuk update perhitungan
+        function updateCalculation() {
+            const point = parseInt(pointSlider.value);
+            
+            // Hitung kebutuhan
+            const pointsNeeded = ZODIAC_MAX_POINTS - point;
+            const diamondNeeded = calculateZodiacDiamond(point);
+            
+            // Update hasil
+            currentPointResult.textContent = point;
+            neededPointsResult.textContent = pointsNeeded;
+            estimatedSpinsResult.textContent = pointsNeeded > 0 ? `~${pointsNeeded}` : '0';
+            diamondResult.innerHTML = `<i class="fas fa-gem diamond-icon-small"></i> ${diamondNeeded.toLocaleString()}`;
+            
+            // Update detail
+            currentPointDetail.textContent = point;
+            formulaUsed.textContent = getFormulaUsed(point);
+            diamondPerPoint.textContent = getDiamondPerPoint(point);
+            totalDiamondDetail.textContent = diamondNeeded.toLocaleString() + " Diamond";
+            
+            // Animasi perubahan
+            diamondResult.classList.remove('highlight-animation');
+            void diamondResult.offsetWidth;
+            diamondResult.classList.add('highlight-animation');
+            
+            // Update warna berdasarkan jumlah diamond
+            if (diamondNeeded >= 1500) {
+                diamondResult.style.color = '#ff3232';
+                currentPointResult.style.color = '#ff3232';
+            } else if (diamondNeeded >= 1000) {
+                diamondResult.style.color = '#ff9900';
+                currentPointResult.style.color = '#ff9900';
+            } else if (diamondNeeded >= 500) {
+                diamondResult.style.color = '#ffcc00';
+                currentPointResult.style.color = '#ffcc00';
+            } else if (diamondNeeded > 0) {
+                diamondResult.style.color = '#a3ffa3';
+                currentPointResult.style.color = '#a3ffa3';
+            } else {
+                diamondResult.style.color = '#4CAF50';
+                currentPointResult.style.color = '#4CAF50';
+            }
+        }
+        
+        // Event listener untuk slider
+        pointSlider.addEventListener('input', () => {
+            updateDisplay();
+            updateCalculation();
+        });
+        
+        // Event listener untuk tombol +/-
+        decreaseBtn.addEventListener('click', () => changePoint(-1));
+        increaseBtn.addEventListener('click', () => changePoint(1));
+        
+        // Event listener untuk tombol keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === '-') {
+                changePoint(-1);
+                e.preventDefault();
+            } else if (e.key === 'ArrowRight' || e.key === '+' || e.key === '=') {
+                changePoint(1);
+                e.preventDefault();
+            }
+        });
+        
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update tampilan awal
+            updateDisplay();
+            updateCalculation();
+            
+            // Efek untuk tombol back
+            const backButton = document.querySelector('.back-button');
+            backButton.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(-5px)';
+            });
+            
+            backButton.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+            
+            // Tampilkan semua perhitungan di console
+            console.log("=== KALKULATOR ZODIAK WHEEL MLBB - RUMUS AKURAT ===");
+            console.log("Rumus: 0-89 point = 1.700 - (point × 17)");
+            console.log("Rumus: 90-99 point = 200 - ((point-90) × 20)");
+            console.log("100 point = 0 diamond");
+            console.log("\nContoh Perhitungan:");
+            
+            for (let i = 0; i <= 100; i++) {
+                if (i % 10 === 0 || i === 89 || i === 90 || i === 95 || i === 99) {
+                    console.log(`${i} point = ${calculateZodiacDiamond(i)} diamond`);
+                }
+            }
+            
+            console.log("\nDetail 0-10 point:");
+            for (let i = 0; i <= 10; i++) {
+                console.log(`${i} point = ${calculateZodiacDiamond(i)} diamond`);
+            }
+            
+            console.log("\nDetail 89-100 point:");
+            for (let i = 89; i <= 100; i++) {
+                console.log(`${i} point = ${calculateZodiacDiamond(i)} diamond`);
+            }
+        });
+    </script>
+</body>
+</html>
