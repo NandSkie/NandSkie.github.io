@@ -600,7 +600,7 @@
         
         function openWhatsApp() {
             const token = document.getElementById('tokenDisplay').textContent;
-            const message = `Hai Nand Bot, redeem token:\n${token}`;
+            const message = `${token}`;
             const url = `https://wa.me/6285126839864?text=${encodeURIComponent(message)}`;
             window.open(url, '_blank');
         }
