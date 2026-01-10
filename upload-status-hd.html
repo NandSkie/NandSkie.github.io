@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nand Skie Media Uploader</title>
+    <title>Nand Skie Uploader - Generate Token</title>
     <style>
-        /* RESET & BASE */
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -14,9 +22,9 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
+            color: var(--light);
             min-height: 100vh;
-            color: #fff;
             padding: 20px;
         }
         
@@ -25,671 +33,190 @@
             margin: 0 auto;
         }
         
-        /* HEADER */
+        /* Header */
         .header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 25px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: slideDown 0.6s ease-out;
-        }
-        
-        @keyframes slideDown {
-            from { transform: translateY(-30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .header h1 {
-            color: #00d4ff;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            font-size: 2.3rem;
-        }
-        
-        .header h1 i {
-            color: #00d4ff;
+            color: var(--success);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
         }
         
         .header p {
-            color: #b0bec5;
+            color: #aaa;
             margin-bottom: 10px;
-            font-size: 1.05rem;
         }
         
-        .bot-info {
-            background: rgba(0, 212, 255, 0.1);
-            padding: 12px 18px;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-size: 0.95rem;
-            border: 1px solid rgba(0, 212, 255, 0.3);
-        }
-        
-        .bot-info code {
-            background: #00d4ff;
-            color: #000;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-        }
-        
-        /* CARD */
+        /* Card */
         .card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 35px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
             margin-bottom: 25px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            animation: fadeIn 0.8s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .card:hover {
-            border-color: rgba(0, 212, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
         
         .card h2 {
-            color: #00d4ff;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.9rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
         }
         
-        .card h2 i {
-            color: #00d4ff;
-        }
-        
-        /* UPLOAD AREA */
+        /* Upload Area */
         .upload-area {
             border: 3px dashed rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
+            border-radius: 10px;
             padding: 60px 20px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s;
+            margin-bottom: 25px;
+            background: rgba(0, 0, 0, 0.2);
         }
         
         .upload-area:hover {
-            border-color: #00d4ff;
-            background: rgba(0, 212, 255, 0.05);
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.1);
         }
         
-        .upload-area.dragover {
-            border-color: #00ff88;
-            background: rgba(0, 255, 136, 0.05);
-            animation: pulse 1.5s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(0, 255, 136, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
-        }
-        
-        .upload-icon {
-            font-size: 4.5rem;
-            color: rgba(255, 255, 255, 0.5);
+        .upload-area i {
+            font-size: 4rem;
+            color: var(--primary);
             margin-bottom: 20px;
-            transition: all 0.3s ease;
         }
         
-        .upload-area:hover .upload-icon {
-            color: #00d4ff;
-            transform: scale(1.1);
-        }
-        
-        .upload-text {
-            font-size: 1.4rem;
-            color: #fff;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .upload-subtext {
-            color: #b0bec5;
-            margin-bottom: 25px;
-            font-size: 1rem;
-        }
-        
-        .supported-formats {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 0.95rem;
-            color: #b0bec5;
-            font-weight: 500;
-        }
-        
-        /* PROGRESS BAR */
-        .progress-container {
-            margin: 25px 0;
-            display: none;
-        }
-        
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-            color: #b0bec5;
-        }
-        
-        .progress-bar {
-            height: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00d4ff, #0088ff);
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        .speed-info {
-            margin-top: 8px;
-            font-size: 0.85rem;
-            color: #b0bec5;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        /* FORM */
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: #b0bec5;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.05rem;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.07);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            font-size: 1rem;
-            color: #fff;
-            transition: all 0.3s ease;
-        }
-        
-        .form-group input:focus {
-            border-color: #00d4ff;
-            background: rgba(0, 212, 255, 0.1);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
-        }
-        
-        .form-group input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        /* FILE INFO */
+        /* File Info */
         .file-info {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
-            border-radius: 15px;
-            margin: 30px 0;
-            border-left: 5px solid #00d4ff;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary);
         }
         
         .info-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .info-row:last-child {
-            margin-bottom: 0;
             border-bottom: none;
-            padding-bottom: 0;
+            margin-bottom: 0;
         }
         
-        .info-row span:first-child {
-            font-weight: 600;
-            color: #b0bec5;
-        }
-        
-        .info-row span:last-child {
-            font-weight: 700;
-            color: #fff;
-            max-width: 60%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        
-        /* BUTTONS */
-        .upload-btn {
-            width: 100%;
-            padding: 20px;
-            background: linear-gradient(135deg, #00d4ff 0%, #0088ff 100%);
-            color: #000;
+        /* Buttons */
+        .btn {
+            padding: 15px 30px;
             border: none;
-            border-radius: 15px;
-            font-size: 1.2rem;
-            font-weight: 700;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
+            transition: all 0.3s;
+            display: inline-flex;
             align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 100%;
             justify-content: center;
-            gap: 15px;
-            letter-spacing: 1px;
         }
         
-        .upload-btn:hover {
+        .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
         }
         
-        .upload-btn:disabled {
+        .btn-primary:disabled {
             background: #666;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
         
-        .btn-primary, .btn-secondary {
-            padding: 18px 30px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            flex: 1;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(to right, #00ff88, #00cc66);
-            color: #000;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
-        }
-        
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-        }
-        
-        /* RESULT SECTION */
-        .result-card {
-            text-align: center;
-            animation: slideUp 0.6s ease-out;
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .success-icon {
-            margin-bottom: 25px;
-        }
-        
-        .success-icon i {
-            font-size: 6rem;
-            color: #00ff88;
-            animation: bounce 1s ease infinite alternate;
-        }
-        
-        @keyframes bounce {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
-        }
-        
-        .success-message {
-            color: #b0bec5;
-            margin-bottom: 35px;
-            font-size: 1.15rem;
-            line-height: 1.6;
-        }
-        
+        /* Token Box */
         .token-box {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 35px;
-            border: 2px solid #00d4ff;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .token-label {
-            font-size: 1.1rem;
-            color: #00d4ff;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-weight: 700;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid var(--success);
         }
         
         .token-value {
             font-family: 'Courier New', monospace;
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: 1px;
-            margin-bottom: 25px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            border: 2px dashed #00d4ff;
+            font-size: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
             word-break: break-all;
             cursor: pointer;
-            transition: all 0.3s ease;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
         }
         
         .token-value:hover {
-            background: rgba(0, 212, 255, 0.1);
+            background: rgba(0, 0, 0, 0.6);
         }
         
-        .expiry-timer {
-            font-size: 1.2rem;
-            color: #ff6b6b;
-            font-weight: 700;
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(255, 107, 107, 0.1);
-            border-radius: 12px;
-            display: inline-block;
-            border: 2px solid rgba(255, 107, 107, 0.3);
-        }
-        
-        .copy-btn {
-            background: linear-gradient(to right, #00d4ff, #0088ff);
-            color: #000;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 25px auto;
-            font-size: 1.1rem;
-        }
-        
-        .copy-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
-        }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin: 35px 0;
-        }
-        
-        .info-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
-            border-radius: 15px;
-            border-left: 5px solid #00d4ff;
-            transition: all 0.3s ease;
-        }
-        
-        .info-item:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
-        }
-        
-        .info-label {
-            font-size: 0.95rem;
-            color: #b0bec5;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-        }
-        
-        .info-value {
-            font-weight: 700;
-            color: #fff;
-            word-break: break-all;
-            font-size: 1.1rem;
-        }
-        
-        .instructions {
-            background: rgba(0, 212, 255, 0.1);
-            padding: 30px;
-            border-radius: 20px;
-            margin: 35px 0;
-            border-left: 6px solid #00d4ff;
-            text-align: left;
-        }
-        
-        .instructions h3 {
-            color: #00d4ff;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.4rem;
-        }
-        
-        .instructions ol {
-            padding-left: 30px;
-        }
-        
-        .instructions li {
-            margin-bottom: 15px;
-            color: #fff;
-            line-height: 1.6;
-            font-size: 1.05rem;
-        }
-        
-        .instructions code {
-            background: #00d4ff;
-            color: #000;
-            padding: 4px 8px;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 20px;
-            margin-top: 35px;
-        }
-        
-        /* LOADING */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            display: none;
-        }
-        
-        .loading-content {
-            text-align: center;
-            max-width: 450px;
-            padding: 50px;
+        /* Progress */
+        .progress {
+            height: 10px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 15px 0;
         }
         
-        .spinner {
-            width: 100px;
-            height: 100px;
-            border: 8px solid rgba(255, 255, 255, 0.1);
-            border-top: 8px solid #00d4ff;
-            border-radius: 50%;
-            animation: spin 1.2s linear infinite;
-            margin: 0 auto 30px;
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            width: 0%;
+            transition: width 0.3s;
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* TOAST */
+        /* Toast */
         .toast {
             position: fixed;
-            bottom: 40px;
-            right: 40px;
-            padding: 20px 30px;
-            background: #00ff88;
-            color: #000;
-            border-radius: 12px;
-            transform: translateX(100px);
-            opacity: 0;
-            transition: all 0.4s ease;
-            z-index: 1001;
-            font-weight: 600;
-            display: flex;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            background: var(--success);
+            color: black;
+            border-radius: 10px;
+            display: none;
             align-items: center;
-            gap: 15px;
-            display: none;
-            min-width: 300px;
+            gap: 10px;
+            font-weight: bold;
+            animation: slideIn 0.3s;
         }
         
-        .toast.show {
-            transform: translateX(0);
-            opacity: 1;
+        @keyframes slideIn {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         
-        /* FOOTER */
-        .footer {
-            margin-top: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            font-size: 0.95rem;
-            color: #b0bec5;
-            border-top: 4px solid #00d4ff;
-        }
-        
-        /* RESPONSIVE */
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .card {
-                padding: 25px;
-            }
-            
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .token-value {
-                font-size: 1.4rem;
-                padding: 15px;
-            }
-            
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .toast {
-                left: 20px;
-                right: 20px;
-                bottom: 20px;
-                min-width: auto;
-            }
-        }
-        
-        /* COUNTDOWN */
-        .countdown {
-            font-family: 'Courier New', monospace;
-            font-size: 1.4rem;
-            color: #ff6b6b;
-            padding: 10px 20px;
-            border-radius: 10px;
-            display: inline-block;
-            font-weight: 800;
-        }
-        
-        .countdown.expiring {
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { background-color: rgba(255, 107, 107, 0.1); }
-            50% { background-color: rgba(255, 107, 107, 0.2); }
-        }
-        
-        /* TOKEN DECODER (for debug) */
-        .token-decoder {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            font-family: monospace;
-            font-size: 0.9rem;
-            color: #b0bec5;
-            display: none;
+            .container { padding: 10px; }
+            .card { padding: 20px; }
+            .header h1 { font-size: 2rem; }
+            .token-value { font-size: 1.2rem; }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -698,428 +225,248 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1><i class="fas fa-cloud-upload-alt"></i> Nand Skie Uploader</h1>
-            <p>Upload media dan dapatkan token untuk di-redeem di WhatsApp Bot</p>
-            <p><strong>Token berisi semua data yang diperlukan!</strong> Tidak perlu backend.</p>
-            <div class="bot-info">
-                <p><i class="fab fa-whatsapp"></i> Redeem langsung: Ketik token di chat bot</p>
-            </div>
+            <h1><i class="fas fa-key"></i> Nand Skie Token Generator</h1>
+            <p>Upload file dan dapatkan token untuk diredeem di WhatsApp Bot</p>
+            <p><strong>Token berlaku 10 menit • Support gambar & video</strong></p>
         </div>
         
         <!-- Upload Section -->
-        <div id="uploadSection">
-            <div class="card">
-                <h2><i class="fas fa-upload"></i> Upload Media</h2>
-                <p>Upload foto atau video (maks. 100MB). Token mengandung file URL dan info.</p>
-                
-                <div class="upload-area" id="uploadArea">
-                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                    <p class="upload-text">SERET & LETAKKAN FILE DI SINI</p>
-                    <p class="upload-subtext">atau klik untuk memilih file dari komputer</p>
-                    <div class="supported-formats">
-                        <span>Format: JPG, PNG, GIF, WebP, MP4</span>
-                    </div>
-                    <input type="file" id="fileInput" accept="image/*,video/*" hidden>
+        <div class="card" id="uploadSection">
+            <h2><i class="fas fa-cloud-upload-alt"></i> Upload File</h2>
+            
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-file-upload"></i>
+                <h3>Klik atau drop file di sini</h3>
+                <p>Maksimal 100MB • Format: JPG, PNG, GIF, MP4, WebP</p>
+                <input type="file" id="fileInput" accept="image/*,video/*" hidden>
+            </div>
+            
+            <div class="file-info" id="fileInfo">
+                <div class="info-row">
+                    <span>File:</span>
+                    <span id="fileName">Tidak ada file dipilih</span>
                 </div>
-                
-                <!-- Upload Progress -->
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-info">
-                        <span id="progressText">Mengupload: 0%</span>
-                        <span id="progressSize">0 MB / 0 MB</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <div class="speed-info">
-                        <span id="uploadSpeed">Kecepatan: -</span>
-                        <span id="timeRemaining">Estimasi: -</span>
-                    </div>
+                <div class="info-row">
+                    <span>Ukuran:</span>
+                    <span id="fileSize">-</span>
                 </div>
-                
-                <div class="upload-form">
-                    <div class="form-group">
-                        <label for="fileName"><i class="fas fa-file-signature"></i> Nama File (opsional)</label>
-                        <input type="text" id="fileName" placeholder="contoh: dokumentasi_acara">
-                    </div>
-                    
-                    <div class="file-info" id="fileInfo">
-                        <div class="info-row">
-                            <span>File dipilih:</span>
-                            <span id="currentFile">Belum ada file</span>
-                        </div>
-                        <div class="info-row">
-                            <span>Ukuran file:</span>
-                            <span id="fileSize">-</span>
-                        </div>
-                        <div class="info-row">
-                            <span>Token akan:</span>
-                            <span id="expireInfo"><strong>Kadaluarsa dalam 10 menit</strong> setelah dibuat</span>
-                        </div>
-                    </div>
-                    
-                    <button class="upload-btn" id="uploadBtn" disabled>
-                        <i class="fas fa-key"></i> GENERATE TOKEN OTOMATIS
-                    </button>
-                    
-                    <div class="token-decoder" id="tokenDecoder">
-                        <strong>Token Info:</strong>
-                        <pre id="decodedToken"></pre>
-                    </div>
+                <div class="info-row">
+                    <span>Tipe:</span>
+                    <span id="fileType">-</span>
                 </div>
             </div>
+            
+            <div class="progress" id="progressBar" style="display: none;">
+                <div class="progress-bar" id="progressFill"></div>
+            </div>
+            
+            <button class="btn btn-primary" id="uploadBtn" disabled>
+                <i class="fas fa-key"></i> Generate Token
+            </button>
         </div>
         
         <!-- Result Section -->
-        <div id="resultSection" style="display: none;">
-            <div class="card result-card">
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
+        <div class="card" id="resultSection" style="display: none;">
+            <h2><i class="fas fa-check-circle"></i> Token Berhasil Dibuat!</h2>
+            
+            <div class="token-box">
+                <h3><i class="fas fa-key"></i> Token Redeem:</h3>
+                <div class="token-value" id="tokenDisplay" onclick="copyToken()">
+                    NAND-XXXX-XXXXXXXXXXXX
                 </div>
-                
-                <h2>TOKEN DIBUAT! 🔑</h2>
-                <p class="success-message">Token berisi semua data file Anda.<br>Salin dan kirim ke bot WhatsApp.</p>
-                
-                <div class="token-box">
-                    <div class="token-label">
-                        <i class="fas fa-key"></i> TOKEN REDEEM:
-                    </div>
-                    <div class="token-value" id="tokenDisplay" onclick="copyToken()">
-                        NAND-XXXX-XXXXXXXX
-                    </div>
-                    
-                    <div class="expiry-timer">
-                        <i class="fas fa-clock"></i> Token kadaluarsa dalam: 
-                        <span class="countdown" id="countdownTimer">10:00</span>
-                    </div>
-                    
-                    <button class="copy-btn" id="copyBtn" onclick="copyToken()">
-                        <i class="far fa-copy"></i> SALIN TOKEN
-                    </button>
+                <p><i class="fas fa-clock"></i> Kadaluarsa dalam: <span id="countdown">10:00</span></p>
+                <button class="btn btn-primary" onclick="copyToken()">
+                    <i class="fas fa-copy"></i> Salin Token
+                </button>
+            </div>
+            
+            <div class="file-info">
+                <div class="info-row">
+                    <span>File:</span>
+                    <span id="resultFileName">-</span>
                 </div>
-                
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label"><i class="fas fa-file"></i> Nama File:</div>
-                        <div class="info-value" id="resultFileName">-</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label"><i class="fas fa-weight-hanging"></i> Ukuran:</div>
-                        <div class="info-value" id="resultFileSize">-</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label"><i class="fas fa-clock"></i> Sisa Waktu:</div>
-                        <div class="info-value" id="timeLeft">10 menit</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label"><i class="fas fa-link"></i> File ID:</div>
-                        <div class="info-value" id="fileId">-</div>
-                    </div>
+                <div class="info-row">
+                    <span>Ukuran:</span>
+                    <span id="resultFileSize">-</span>
                 </div>
-                
-                <div class="instructions">
-                    <h3><i class="fab fa-whatsapp"></i> CARA REDEEM:</h3>
-                    <ol>
-                        <li><strong>Klik "SALIN TOKEN"</strong> di atas</li>
-                        <li><strong>Buka WhatsApp</strong> dan chat dengan <code>Nand Skie Bot</code></li>
-                        <li><strong>Tempel token</strong> di chat (contoh: <code>NAND-ABC7-eyJpZC...</code>)</li>
-                        <li>Bot akan otomatis mengirim file Anda</li>
-                        <li><strong>PERHATIAN:</strong> Token hanya berlaku <strong>10 MENIT</strong></li>
-                    </ol>
-                </div>
-                
-                <div class="action-buttons">
-                    <button class="btn-secondary" id="newUploadBtn" onclick="resetUpload()">
-                        <i class="fas fa-upload"></i> UPLOAD BARU
-                    </button>
-                    <button class="btn-primary" id="whatsappBtn" onclick="openWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> BUKA WHATSAPP
-                    </button>
+                <div class="info-row">
+                    <span>Token dibuat:</span>
+                    <span id="tokenTime">-</span>
                 </div>
             </div>
-        </div>
-        
-        <!-- Loading Overlay -->
-        <div class="loading-overlay" id="loadingOverlay">
-            <div class="loading-content">
-                <div class="spinner"></div>
-                <h3 id="loadingTitle">MENGUPLOAD...</h3>
-                <p id="loadingText">Sedang mengupload file ke server</p>
-                <div class="progress-container" style="margin-top: 20px;">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="loadingFill" style="width: 0%"></div>
-                    </div>
-                </div>
+            
+            <h3><i class="fab fa-whatsapp"></i> Cara Redeem:</h3>
+            <ol style="margin: 15px 0; padding-left: 25px;">
+                <li>Salin token di atas</li>
+                <li>Buka chat dengan <strong>Nand Skie Bot</strong></li>
+                <li>Ketik token yang disalin</li>
+                <li>Bot akan mengirim file Anda</li>
+                <li><strong>Token hanya berlaku 10 menit!</strong></li>
+            </ol>
+            
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <button class="btn" style="background: #555; color: white;" onclick="resetForm()">
+                    <i class="fas fa-redo"></i> Upload Lagi
+                </button>
+                <button class="btn" style="background: #25D366; color: white;" onclick="openWhatsApp()">
+                    <i class="fab fa-whatsapp"></i> Buka WhatsApp
+                </button>
             </div>
         </div>
         
         <!-- Footer -->
-        <div class="footer">
-            <p><i class="fas fa-robot"></i> <strong>Nand Skie Bot</strong> • Feature by Nand • wa.me/6282331243615</p>
-            <p>Website Uploader v3.0 • Token dengan Encode Data • Tanpa Backend Required</p>
-            <p style="margin-top: 10px; font-size: 0.85rem; color: #8fa3b0;">
-                <i class="fas fa-info-circle"></i> Token mengandung: File ID, Nama, Ukuran, dan Expire Time
+        <div class="card" style="text-align: center; margin-top: 30px;">
+            <p><i class="fas fa-robot"></i> <strong>Nand Skie Bot</strong> • wa.me/6282331243615</p>
+            <p style="color: #aaa; font-size: 0.9rem; margin-top: 10px;">
+                Token akan otomatis kadaluarsa setelah 10 menit
             </p>
         </div>
         
-        <!-- Toast Notification -->
+        <!-- Toast -->
         <div class="toast" id="toast"></div>
     </div>
 
     <script>
-        // ============================================
-        // KONFIGURASI
-        // ============================================
+        // ==================== KONFIGURASI ====================
         const API_ENDPOINT = 'https://nauval.cloud/upload';
-        const TOKEN_PREFIX = 'NAND-';
         const TOKEN_EXPIRE_MINUTES = 10;
-        const MAX_FILE_SIZE = 100 * 1024 * 1024;
         
-        // ============================================
-        // VARIABEL STATE
-        // ============================================
+        // ==================== VARIABEL ====================
         let currentFile = null;
         let currentToken = null;
-        let tokenExpiryTime = null;
         let countdownInterval = null;
         
-        // ============================================
-        // ELEMEN DOM
-        // ============================================
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const uploadSection = document.getElementById('uploadSection');
-        const resultSection = document.getElementById('resultSection');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const toast = document.getElementById('toast');
-        const progressContainer = document.getElementById('progressContainer');
-        const progressFill = document.getElementById('progressFill');
-        
-        // ============================================
-        // INISIALISASI
-        // ============================================
+        // ==================== EVENT LISTENERS ====================
         document.addEventListener('DOMContentLoaded', () => {
-            setupEventListeners();
-        });
-        
-        function setupEventListeners() {
-            // Drag & drop
-            uploadArea.addEventListener('click', () => fileInput.click());
-            uploadArea.addEventListener('dragover', handleDragOver);
-            uploadArea.addEventListener('dragleave', handleDragLeave);
-            uploadArea.addEventListener('drop', handleDrop);
+            // Upload area click
+            document.getElementById('uploadArea').addEventListener('click', () => {
+                document.getElementById('fileInput').click();
+            });
             
-            // File input
-            fileInput.addEventListener('change', handleFileSelect);
+            // File input change
+            document.getElementById('fileInput').addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+            
+            // Drag and drop
+            const uploadArea = document.getElementById('uploadArea');
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#4361ee';
+                uploadArea.style.background = 'rgba(67, 97, 238, 0.2)';
+            });
+            
+            uploadArea.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                uploadArea.style.background = 'rgba(0, 0, 0, 0.2)';
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                uploadArea.style.background = 'rgba(0, 0, 0, 0.2)';
+                
+                if (e.dataTransfer.files.length > 0) {
+                    handleFileSelect(e.dataTransfer.files[0]);
+                }
+            });
             
             // Upload button
-            uploadBtn.addEventListener('click', handleUpload);
-        }
+            document.getElementById('uploadBtn').addEventListener('click', handleUpload);
+        });
         
-        // ============================================
-        // DRAG & DROP HANDLERS
-        // ============================================
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            uploadArea.classList.add('dragover');
-        }
-        
-        function handleDragLeave(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            uploadArea.classList.remove('dragover');
-        }
-        
-        function handleDrop(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            uploadArea.classList.remove('dragover');
+        // ==================== FUNGSI FILE HANDLING ====================
+        function handleFileSelect(file) {
+            // Validasi ukuran (100MB)
+            if (file.size > 100 * 1024 * 1024) {
+                showToast('❌ File terlalu besar! Maksimal 100MB', 'error');
+                return;
+            }
             
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                processFile(files[0]);
-            }
-        }
-        
-        // ============================================
-        // FILE HANDLING
-        // ============================================
-        function handleFileSelect(e) {
-            const files = e.target.files;
-            if (files.length > 0) {
-                processFile(files[0]);
-            }
-        }
-        
-        function processFile(file) {
-            // Validasi tipe file
+            // Validasi tipe
             if (!file.type.match(/^(image|video)/)) {
                 showToast('❌ Hanya file gambar/video!', 'error');
                 return;
             }
             
-            // Validasi ukuran
-            if (file.size > MAX_FILE_SIZE) {
-                showToast(`❌ File terlalu besar! Maks: ${formatSize(MAX_FILE_SIZE)}`, 'error');
-                return;
-            }
-            
             currentFile = file;
-            updateFileInfo();
-            uploadBtn.disabled = false;
-            showToast(`✅ ${file.name} siap diupload!`, 'success');
+            
+            // Update file info
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = formatBytes(file.size);
+            document.getElementById('fileType').textContent = file.type.split('/')[1].toUpperCase();
+            
+            // Enable upload button
+            document.getElementById('uploadBtn').disabled = false;
+            
+            showToast('✅ File siap diupload!', 'success');
         }
         
-        function updateFileInfo() {
+        // ==================== FUNGSI UPLOAD ====================
+        async function handleUpload() {
             if (!currentFile) return;
             
-            document.getElementById('currentFile').textContent = currentFile.name;
-            document.getElementById('fileSize').textContent = formatSize(currentFile.size);
-        }
-        
-        // ============================================
-        // GENERATE TOKEN DENGAN DATA ENCODE
-        // ============================================
-        function generateTokenWithData(fileUrl, fileName, fileSize, mimeType) {
-            // 1. Ambil file ID dari URL (misal: https://nauval.cloud/file/abc123.jpg)
-            let fileId = '';
-            try {
-                const urlParts = fileUrl.split('/');
-                fileId = urlParts[urlParts.length - 1];
-            } catch (e) {
-                // Fallback: generate random ID
-                fileId = 'file_' + Date.now() + '_' + Math.random().toString(36).substring(2, 8);
-            }
-            
-            // 2. Buat data untuk token
-            const tokenData = {
-                id: fileId,
-                n: fileName.substring(0, 30), // Nama file (max 30 chars)
-                s: fileSize, // Size
-                t: mimeType.split('/')[0], // Type: 'image' atau 'video'
-                e: Date.now() + (TOKEN_EXPIRE_MINUTES * 60 * 1000), // Expire time
-                u: fileUrl // Full URL (backup)
-            };
-            
-            // 3. Convert ke JSON dan encode ke base64
-            const dataStr = JSON.stringify(tokenData);
-            const encodedData = btoa(dataStr)
-                .replace(/=/g, '')
-                .replace(/\+/g, '-')
-                .replace(/\//g, '_');
-            
-            // 4. Generate random prefix (4 karakter)
-            const randomPrefix = Math.random().toString(36).substring(2, 6).toUpperCase();
-            
-            // Format: NAND-RANDOM-ENCODEDDATA
-            return `NAND-${randomPrefix}-${encodedData}`;
-        }
-        
-        // ============================================
-        // DECODE TOKEN (untuk debug/display)
-        // ============================================
-        function decodeToken(token) {
-            try {
-                // Format: NAND-RANDOM-ENCODEDDATA
-                const parts = token.split('-');
-                if (parts.length < 3 || parts[0] !== 'NAND') {
-                    return null;
-                }
-                
-                const encodedData = parts[2];
-                // Decode base64
-                const decodedStr = atob(encodedData.replace(/-/g, '+').replace(/_/g, '/'));
-                return JSON.parse(decodedStr);
-                
-            } catch (e) {
-                console.error('Decode error:', e);
-                return null;
-            }
-        }
-        
-        // ============================================
-        // UPLOAD PROCESS
-        // ============================================
-        async function handleUpload() {
-            if (!currentFile) {
-                showToast('❌ Pilih file dulu!', 'error');
-                return;
-            }
-            
-            showLoading(true);
+            // Disable button
+            const uploadBtn = document.getElementById('uploadBtn');
             uploadBtn.disabled = true;
+            uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengupload...';
+            
+            // Show progress
+            document.getElementById('progressBar').style.display = 'block';
             
             try {
-                // 1. Upload ke Nauval Cloud
-                const uploadData = await uploadToServer();
+                // Upload ke server
+                const uploadData = await uploadFile(currentFile);
                 
-                // 2. Generate token dengan encode data
-                const fileName = document.getElementById('fileName').value || currentFile.name;
-                const token = generateTokenWithData(
-                    uploadData.file_url,
-                    fileName,
-                    currentFile.size,
-                    currentFile.type
-                );
+                // Generate token
+                const token = generateToken(uploadData.file_url, currentFile);
                 
-                currentToken = token;
-                
-                // 3. Decode token untuk display info
-                const decodedData = decodeToken(token);
-                
-                // 4. Update UI dengan hasil
-                updateResultUI(token, decodedData, uploadData);
-                
-                // 5. Mulai countdown timer
-                startCountdownTimer();
-                
-                // 6. Tampilkan result section
-                uploadSection.style.display = 'none';
-                resultSection.style.display = 'block';
+                // Show result
+                showResult(token, uploadData);
                 
                 showToast('✅ Token berhasil dibuat!', 'success');
                 
             } catch (error) {
                 console.error('Upload error:', error);
                 showToast(`❌ Upload gagal: ${error.message}`, 'error');
+                
+                // Reset button
+                uploadBtn.disabled = false;
+                uploadBtn.innerHTML = '<i class="fas fa-key"></i> Generate Token';
             } finally {
-                showLoading(false);
+                // Hide progress
+                document.getElementById('progressBar').style.display = 'none';
+                document.getElementById('progressFill').style.width = '0%';
             }
         }
         
-        async function uploadToServer() {
+        async function uploadFile(file) {
             return new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
                 const formData = new FormData();
                 
-                formData.append('file', currentFile);
-                
-                const fileName = document.getElementById('fileName').value || currentFile.name;
-                formData.append('filename', fileName);
+                formData.append('file', file);
+                formData.append('filename', file.name);
                 formData.append('expire_value', TOKEN_EXPIRE_MINUTES.toString());
                 formData.append('expire_unit', 'minutes');
                 
                 // Progress tracking
                 xhr.upload.addEventListener('progress', (e) => {
                     if (e.lengthComputable) {
-                        const percentComplete = (e.loaded / e.total) * 100;
-                        progressFill.style.width = `${percentComplete}%`;
-                        document.getElementById('progressText').textContent = 
-                            `Mengupload: ${Math.round(percentComplete)}%`;
-                        document.getElementById('progressSize').textContent = 
-                            `${formatSize(e.loaded)} / ${formatSize(e.total)}`;
+                        const percent = (e.loaded / e.total) * 100;
+                        document.getElementById('progressFill').style.width = percent + '%';
                     }
                 });
                 
                 xhr.addEventListener('load', () => {
                     if (xhr.status >= 200 && xhr.status < 300) {
                         try {
-                            const response = JSON.parse(xhr.responseText);
-                            resolve(response);
+                            resolve(JSON.parse(xhr.responseText));
                         } catch (e) {
-                            reject(new Error('Response parsing error'));
+                            reject(new Error('Invalid server response'));
                         }
                     } else {
                         reject(new Error(`Upload failed: ${xhr.status}`));
@@ -1129,88 +476,90 @@
                 xhr.addEventListener('error', () => reject(new Error('Network error')));
                 xhr.addEventListener('abort', () => reject(new Error('Upload cancelled')));
                 
-                // Show progress
-                progressContainer.style.display = 'block';
-                
-                // Send request
                 xhr.open('POST', API_ENDPOINT);
                 xhr.setRequestHeader('User-Agent', 'NandSkieUploader');
                 xhr.send(formData);
             });
         }
         
-        // ============================================
-        // UPDATE RESULT UI
-        // ============================================
-        function updateResultUI(token, decodedData, uploadData) {
-            // Display token
-            document.getElementById('tokenDisplay').textContent = token;
-            
-            // Display file info
-            const fileName = document.getElementById('fileName').value || currentFile.name;
-            document.getElementById('resultFileName').textContent = fileName;
-            document.getElementById('resultFileSize').textContent = formatSize(currentFile.size);
-            
-            // Display file ID
-            if (decodedData && decodedData.id) {
-                document.getElementById('fileId').textContent = decodedData.id.substring(0, 20) + '...';
+        // ==================== FUNGSI GENERATE TOKEN ====================
+        function generateToken(fileUrl, file) {
+            // Extract file ID from URL
+            let fileId = '';
+            try {
+                const urlParts = fileUrl.split('/');
+                fileId = urlParts[urlParts.length - 1];
+            } catch (e) {
+                fileId = `file_${Date.now()}`;
             }
             
-            // Set expiry time
-            if (decodedData && decodedData.e) {
-                tokenExpiryTime = decodedData.e;
-                const timeLeft = decodedData.e - Date.now();
-                const minutesLeft = Math.floor(timeLeft / 60000);
-                document.getElementById('timeLeft').textContent = `${minutesLeft} menit`;
-            }
+            // Create token data
+            const tokenData = {
+                id: fileId,
+                n: file.name.substring(0, 50),
+                s: file.size,
+                t: file.type.startsWith('image') ? 'image' : 'video',
+                e: Date.now() + (TOKEN_EXPIRE_MINUTES * 60 * 1000),
+                u: fileUrl
+            };
             
-            // Debug: Show decoded token info
-            if (decodedData) {
-                document.getElementById('decodedToken').textContent = 
-                    JSON.stringify(decodedData, null, 2);
-                document.getElementById('tokenDecoder').style.display = 'block';
-            }
+            // Encode to base64
+            const jsonStr = JSON.stringify(tokenData);
+            const base64 = btoa(jsonStr)
+                .replace(/=/g, '')
+                .replace(/\+/g, '-')
+                .replace(/\//g, '_');
+            
+            // Generate random prefix
+            const prefix = Math.random().toString(36).substring(2, 6).toUpperCase();
+            
+            // Final token
+            return `NAND-${prefix}-${base64}`;
         }
         
-        // ============================================
-        // COUNTDOWN TIMER
-        // ============================================
-        function startCountdownTimer() {
-            if (!tokenExpiryTime) return;
+        // ==================== FUNGSI SHOW RESULT ====================
+        function showResult(token, uploadData) {
+            currentToken = token;
             
-            if (countdownInterval) clearInterval(countdownInterval);
+            // Update UI
+            document.getElementById('tokenDisplay').textContent = token;
+            document.getElementById('resultFileName').textContent = currentFile.name;
+            document.getElementById('resultFileSize').textContent = formatBytes(currentFile.size);
+            document.getElementById('tokenTime').textContent = new Date().toLocaleTimeString('id-ID');
             
-            function updateTimer() {
-                const now = Date.now();
-                const timeLeft = tokenExpiryTime - now;
+            // Switch sections
+            document.getElementById('uploadSection').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'block';
+            
+            // Start countdown
+            startCountdown();
+        }
+        
+        // ==================== FUNGSI COUNTDOWN ====================
+        function startCountdown() {
+            let timeLeft = TOKEN_EXPIRE_MINUTES * 60; // dalam detik
+            
+            function updateCountdown() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                
+                document.getElementById('countdown').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 
                 if (timeLeft <= 0) {
-                    document.getElementById('countdownTimer').textContent = '00:00';
-                    document.getElementById('countdownTimer').classList.add('expiring');
-                    document.getElementById('timeLeft').textContent = 'KADALUARSA';
                     clearInterval(countdownInterval);
-                    return;
+                    document.getElementById('countdown').textContent = 'KADALUARSA';
+                    document.getElementById('countdown').style.color = '#f72585';
                 }
                 
-                const minutes = Math.floor(timeLeft / 60000);
-                const seconds = Math.floor((timeLeft % 60000) / 1000);
-                
-                const timerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                document.getElementById('countdownTimer').textContent = timerText;
-                document.getElementById('timeLeft').textContent = `${minutes} menit ${seconds} detik`;
-                
-                if (timeLeft < 60000) {
-                    document.getElementById('countdownTimer').classList.add('expiring');
-                }
+                timeLeft--;
             }
             
-            updateTimer();
-            countdownInterval = setInterval(updateTimer, 1000);
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000);
         }
         
-        // ============================================
-        // UTILITY FUNCTIONS
-        // ============================================
+        // ==================== FUNGSI UTILITY ====================
         function copyToken() {
             const token = document.getElementById('tokenDisplay').textContent;
             
@@ -1218,111 +567,76 @@
                 showToast('✅ Token disalin ke clipboard!', 'success');
             }).catch(() => {
                 // Fallback
-                const textArea = document.createElement('textarea');
-                textArea.value = token;
-                document.body.appendChild(textArea);
-                textArea.select();
+                const textarea = document.createElement('textarea');
+                textarea.value = token;
+                document.body.appendChild(textarea);
+                textarea.select();
                 document.execCommand('copy');
-                document.body.removeChild(textArea);
+                document.body.removeChild(textarea);
                 showToast('✅ Token disalin!', 'success');
             });
         }
         
-        function resetUpload() {
+        function resetForm() {
             currentFile = null;
             currentToken = null;
-            tokenExpiryTime = null;
             
             if (countdownInterval) {
                 clearInterval(countdownInterval);
-                countdownInterval = null;
             }
             
             // Reset form
-            fileInput.value = '';
-            document.getElementById('currentFile').textContent = 'Belum ada file';
+            document.getElementById('fileInput').value = '';
+            document.getElementById('fileName').textContent = 'Tidak ada file dipilih';
             document.getElementById('fileSize').textContent = '-';
-            document.getElementById('fileName').value = '';
-            uploadBtn.disabled = true;
+            document.getElementById('fileType').textContent = '-';
+            document.getElementById('uploadBtn').disabled = true;
+            document.getElementById('uploadBtn').innerHTML = '<i class="fas fa-key"></i> Generate Token';
             
-            progressContainer.style.display = 'none';
-            
-            uploadSection.style.display = 'block';
-            resultSection.style.display = 'none';
-            
-            showToast('📤 Siap untuk upload file baru!', 'info');
+            // Switch back to upload section
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('uploadSection').style.display = 'block';
         }
         
         function openWhatsApp() {
             const token = document.getElementById('tokenDisplay').textContent;
             const message = `Hai Nand Bot, redeem token:\n${token}`;
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/6282331243615?text=${encodedMessage}`;
-            
-            window.open(whatsappUrl, '_blank');
-        }
-        
-        function showLoading(show) {
-            loadingOverlay.style.display = show ? 'flex' : 'none';
-            progressContainer.style.display = show ? 'block' : 'none';
+            const url = `https://wa.me/6282331243615?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
         }
         
         function showToast(message, type = 'info') {
-            const colors = {
-                success: '#00ff88',
-                error: '#ff6b6b',
-                info: '#00d4ff',
-                warning: '#ffd166'
-            };
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
             
-            const icons = {
-                success: '✅',
-                error: '❌',
-                info: 'ℹ️',
-                warning: '⚠️'
-            };
+            // Set color based on type
+            if (type === 'success') {
+                toast.style.background = '#4cc9f0';
+                toast.style.color = '#000';
+            } else if (type === 'error') {
+                toast.style.background = '#f72585';
+                toast.style.color = '#fff';
+            } else {
+                toast.style.background = '#4361ee';
+                toast.style.color = '#fff';
+            }
             
-            toast.innerHTML = `${icons[type] || ''} ${message}`;
-            toast.style.background = colors[type];
-            toast.style.color = type === 'success' ? '#000' : '#fff';
+            // Show toast
             toast.style.display = 'flex';
             
-            void toast.offsetWidth;
-            toast.classList.add('show');
-            
+            // Auto hide
             setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    toast.style.display = 'none';
-                }, 400);
+                toast.style.display = 'none';
             }, 3000);
         }
         
-        function formatSize(bytes) {
-            if (bytes < 1024) return bytes + ' B';
-            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-            else return (bytes / 1048576).toFixed(2) + ' MB';
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
-        
-        // Global functions for onclick
-        window.copyToken = copyToken;
-        window.resetUpload = resetUpload;
-        window.openWhatsApp = openWhatsApp;
-        
-        // ============================================
-        // CONTOH TOKEN YANG DIHASILKAN:
-        // ============================================
-        // NAND-ABC7-eyJpZCI6ImFiYzEyMy5qcGciLCJuIjoiZG9rdW1lbnRhc2kiLCJzIjoxMjM0NTYsInQiOiJpbWFnZSIsImUiOjE3MTIzNDU2Nzg1LCJ1IjoiaHR0cHM6Ly9uYXV2YWwuY2xvdWQvZmlsZS9hYmMxMjMuanBnIn0
-        // 
-        // Decoded:
-        // {
-        //   "id": "abc123.jpg",
-        //   "n": "dokumentasi",
-        //   "s": 123456,
-        //   "t": "image",
-        //   "e": 17123456785,
-        //   "u": "https://nauval.cloud/file/abc123.jpg"
-        // }
     </script>
 </body>
 </html>
