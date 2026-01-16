@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPLOAD STATUS WHATSAPP - Dual Server</title>
+    <title>UPLOAD STATUS WHATSAPP - Image & Video</title>
     <style>
         :root {
             --primary: #4361ee;
@@ -13,8 +13,6 @@
             --warning: #ffaa00;
             --dark: #1a1a2e;
             --light: #f8f9fa;
-            --server1: #4cc9f0;
-            --server2: #f72585;
         }
         
         * {
@@ -58,17 +56,16 @@
             margin-bottom: 10px;
         }
         
-        /* Server Selection */
-        .server-selector {
+        /* File Type Indicator */
+        .file-type-indicator {
             display: flex;
-            gap: 15px;
-            margin: 20px 0;
             justify-content: center;
-            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
         }
         
-        .server-btn {
-            padding: 12px 25px;
+        .type-badge {
+            padding: 10px 25px;
             border-radius: 25px;
             font-weight: bold;
             display: flex;
@@ -76,37 +73,11 @@
             gap: 10px;
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid transparent;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
         }
         
-        .server-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .server-btn.active {
+        .type-badge.active {
             background: var(--primary);
             border-color: var(--success);
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
-        }
-        
-        .server-btn.server1 {
-            border-color: var(--server1);
-        }
-        
-        .server-btn.server2 {
-            border-color: var(--server2);
-        }
-        
-        .server-btn.server1.active {
-            background: var(--server1);
-            border-color: white;
-        }
-        
-        .server-btn.server2.active {
-            background: var(--server2);
-            border-color: white;
         }
         
         /* Card */
@@ -373,47 +344,34 @@
             to { transform: translateX(0); opacity: 1; }
         }
         
-        /* Server Info */
-        .server-info {
-            display: flex;
+        /* File Limits */
+        .file-limits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
             margin: 20px 0;
-            justify-content: center;
-            flex-wrap: wrap;
         }
         
-        .server-card {
+        .limit-card {
             background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             text-align: center;
-            border: 2px solid transparent;
-            flex: 1;
-            min-width: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .server-card.server1 {
-            border-color: var(--server1);
-        }
-        
-        .server-card.server2 {
-            border-color: var(--server2);
-        }
-        
-        .server-card h3 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+        .limit-card i {
+            font-size: 2rem;
             margin-bottom: 10px;
+            display: block;
         }
         
-        .server-card.server1 h3 {
-            color: var(--server1);
+        .limit-card.image {
+            border-color: var(--primary);
         }
         
-        .server-card.server2 h3 {
-            color: var(--server2);
+        .limit-card.video {
+            border-color: var(--success);
         }
         
         /* Responsive */
@@ -422,8 +380,8 @@
             .card { padding: 20px; }
             .header h1 { font-size: 2rem; }
             .token-value { font-size: 1.2rem; }
-            .server-selector { flex-direction: column; }
-            .server-card { min-width: 100%; }
+            .file-type-indicator { flex-direction: column; gap: 10px; }
+            .file-limits { grid-template-columns: 1fr; }
             .toast { min-width: 250px; right: 10px; bottom: 10px; }
         }
     </style>
@@ -435,43 +393,37 @@
         <div class="header">
             <h1><i class="fas fa-images"></i> UPLOAD STATUS WHATSAPP</h1>
             <p>Upload gambar & video untuk status WhatsApp dengan kualitas terbaik</p>
-            <p><strong>Token berlaku 10 menit • Dual Server • Support HD</strong></p>
-        </div>
-        
-        <!-- Server Info -->
-        <div class="server-info">
-            <div class="server-card server1">
-                <h3><i class="fas fa-server"></i> Server 1</h3>
-                <p><strong>TmpFiles.org</strong></p>
-                <p>• Gratis, unlimited</p>
-                <p>• Auto-delete setelah 24 jam</p>
-                <p>• No API key needed</p>
-            </div>
-            <div class="server-card server2">
-                <h3><i class="fas fa-server"></i> Server 2</h3>
-                <p><strong>Betabotz API</strong></p>
-                <p>• Lebih stabil</p>
-                <p>• Support lebih banyak format</p>
-                <p>• Menggunakan API key</p>
+            <p><strong>Token berlaku 10 menit • Support HD Quality</strong></p>
+            
+            <div class="file-type-indicator">
+                <div class="type-badge" id="imageBadge">
+                    <i class="fas fa-image"></i> GAMBAR (JPG, PNG, WebP, GIF)
+                </div>
+                <div class="type-badge" id="videoBadge">
+                    <i class="fas fa-video"></i> VIDEO (MP4, MOV, MKV, AVI)
+                </div>
             </div>
         </div>
         
-        <!-- Server Selection -->
-        <div class="server-selector">
-            <button class="server-btn server1 active" onclick="selectServer('server1')">
-                <i class="fas fa-bolt"></i> Server 1 (TmpFiles)
-            </button>
-            <button class="server-btn server2" onclick="selectServer('server2')">
-                <i class="fas fa-key"></i> Server 2 (Betabotz API)
-            </button>
+        <!-- File Limits -->
+        <div class="file-limits">
+            <div class="limit-card image">
+                <i class="fas fa-file-image" style="color: #4361ee;"></i>
+                <h3>Gambar</h3>
+                <p>Max: 50MB</p>
+                <p>Format: JPG, PNG, WebP, GIF</p>
+            </div>
+            <div class="limit-card video">
+                <i class="fas fa-file-video" style="color: #4cc9f0;"></i>
+                <h3>Video</h3>
+                <p>Max: 100MB</p>
+                <p>Format: MP4, MOV, MKV, AVI</p>
+            </div>
         </div>
         
         <!-- Upload Section -->
         <div class="card" id="uploadSection">
             <h2><i class="fas fa-cloud-upload-alt"></i> Upload File</h2>
-            <p id="serverStatus" style="margin-bottom: 15px; color: var(--server1);">
-                <i class="fas fa-check-circle"></i> Menggunakan Server 1: TmpFiles.org
-            </p>
             
             <div class="upload-area" id="uploadArea">
                 <i class="fas fa-file-upload"></i>
@@ -514,10 +466,6 @@
                 <div class="info-row">
                     <span><i class="fas fa-ruler-combined"></i> Resolusi:</span>
                     <span id="fileResolution">-</span>
-                </div>
-                <div class="info-row">
-                    <span><i class="fas fa-server"></i> Server:</span>
-                    <span id="selectedServer">TmpFiles.org</span>
                 </div>
             </div>
             
@@ -567,10 +515,6 @@
                     <span id="resultFileType">-</span>
                 </div>
                 <div class="info-row">
-                    <span><i class="fas fa-server"></i> Server:</span>
-                    <span id="resultServer">-</span>
-                </div>
-                <div class="info-row">
                     <span><i class="fas fa-link"></i> URL File:</span>
                     <span style="word-break: break-all; font-size: 0.9em;" id="fileUrl">-</span>
                 </div>
@@ -607,7 +551,7 @@
                 <i class="fab fa-github"></i> <strong>NandSki</strong>
             </p>
             <p style="color: #aaa; font-size: 0.9rem; margin-top: 10px;">
-                Pilih server tercepat untuk upload file Anda • Bot otomatis compress untuk WhatsApp Status
+                Bot akan otomatis compress video & gambar untuk optimal WhatsApp Status
             </p>
         </div>
         
@@ -617,24 +561,7 @@
 
     <script>
         // ==================== KONFIGURASI ====================
-        const SERVERS = {
-            SERVER1: {
-                name: "TmpFiles.org",
-                url: "https://tmpfiles.org/api/v1/upload",
-                method: "tmpfiles",
-                color: "#4cc9f0",
-                description: "Gratis, unlimited, auto-delete 24 jam"
-            },
-            SERVER2: {
-                name: "Betabotz API",
-                url: "https://api.betabotz.eu.org/api/tools/upload",
-                method: "betabotz",
-                apikey: "Btz-hVprH",
-                color: "#f72585",
-                description: "Stabil, support banyak format"
-            }
-        };
-        
+        const TMPFILES_API = 'https://tmpfiles.org/api/v1/upload';
         const TOKEN_EXPIRE_MINUTES = 10;
         const MAX_IMAGE_SIZE = 50 * 1024 * 1024; // 50MB
         const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
@@ -645,7 +572,6 @@
         let countdownInterval = null;
         let uploadedUrl = null;
         let imageRotation = 0;
-        let selectedServer = "server1";
         
         // ==================== EVENT LISTENERS ====================
         document.addEventListener('DOMContentLoaded', () => {
@@ -685,43 +611,9 @@
             // Upload button
             document.getElementById('uploadBtn').addEventListener('click', handleUpload);
             
-            // Update server display
-            updateServerDisplay();
+            // Update file type badges
+            updateFileTypeBadges();
         });
-        
-        // ==================== FUNGSI SERVER SELECTION ====================
-        function selectServer(server) {
-            selectedServer = server;
-            
-            // Update button states
-            document.querySelectorAll('.server-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`.server-btn.${server}`).classList.add('active');
-            
-            // Update server status
-            updateServerDisplay();
-            
-            // Update file info jika ada file
-            if (currentFile) {
-                document.getElementById('selectedServer').textContent = 
-                    server === 'server1' ? SERVERS.SERVER1.name : SERVERS.SERVER2.name;
-            }
-            
-            // Show notification
-            const serverName = server === 'server1' ? SERVERS.SERVER1.name : SERVERS.SERVER2.name;
-            showToast(`✅ Server diubah ke: ${serverName}`, 'success');
-        }
-        
-        function updateServerDisplay() {
-            const serverStatus = document.getElementById('serverStatus');
-            const server = selectedServer === 'server1' ? SERVERS.SERVER1 : SERVERS.SERVER2;
-            
-            serverStatus.innerHTML = `<i class="fas fa-check-circle"></i> Menggunakan ${server.name}`;
-            serverStatus.style.color = server.color;
-            
-            document.getElementById('selectedServer').textContent = server.name;
-        }
         
         // ==================== FUNGSI FILE HANDLING ====================
         function handleFileSelect(file) {
@@ -754,6 +646,9 @@
             // Show preview
             showPreview(file, isImage, isVideo);
             
+            // Update file type badges
+            updateFileTypeBadges(isImage ? 'image' : 'video');
+            
             // Enable upload button
             document.getElementById('uploadBtn').disabled = false;
             
@@ -761,12 +656,9 @@
         }
         
         function updateFileInfo(file, isImage, isVideo) {
-            const server = selectedServer === 'server1' ? SERVERS.SERVER1 : SERVERS.SERVER2;
-            
             document.getElementById('fileName').textContent = file.name;
             document.getElementById('fileSize').textContent = formatBytes(file.size);
             document.getElementById('fileType').textContent = isImage ? 'Gambar' : 'Video';
-            document.getElementById('selectedServer').textContent = server.name;
             
             // Get resolution/duration
             if (isImage) {
@@ -831,7 +723,7 @@
             imagePreview.style.transform = 'rotate(0deg)';
         }
         
-        // ==================== FUNGSI UPLOAD KE SERVER ====================
+        // ==================== FUNGSI UPLOAD KE TMPFILES (VERSI FIX) ====================
         async function handleUpload() {
             if (!currentFile) return;
             
@@ -846,20 +738,13 @@
             updateProgress(0, 'Mempersiapkan upload...');
             
             try {
-                let downloadUrl;
-                const server = selectedServer === 'server1' ? SERVERS.SERVER1 : SERVERS.SERVER2;
-                
-                // Pilih metode upload berdasarkan server
-                if (selectedServer === 'server1') {
-                    downloadUrl = await uploadToTmpFiles(currentFile);
-                } else {
-                    downloadUrl = await uploadToBetabotz(currentFile);
-                }
-                
+                // **VERSI BARU: Upload dengan method yang lebih stabil**
+                const tmpfilesUrl = await uploadWithMultipleMethods(currentFile);
+                const downloadUrl = tmpfilesUrl.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
                 uploadedUrl = downloadUrl;
                 
                 // Generate token untuk bot WhatsApp
-                const token = generateToken(downloadUrl, currentFile, server.name);
+                const token = generateToken(downloadUrl, currentFile);
                 
                 // Show success
                 updateProgress(100, 'Upload selesai!');
@@ -868,12 +753,22 @@
                 await new Promise(resolve => setTimeout(resolve, 500));
                 
                 // Show result
-                showResult(token, downloadUrl, server.name);
+                showResult(token, downloadUrl);
                 
-                showToast(`✅ Upload berhasil ke ${server.name}! Token telah dibuat.`, 'success');
+                showToast('✅ Upload berhasil! Token telah dibuat.', 'success');
                 
             } catch (error) {
-                console.error('Upload error:', error);
+                console.error('Upload error details:', {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack,
+                    file: currentFile ? {
+                        name: currentFile.name,
+                        size: currentFile.size,
+                        type: currentFile.type
+                    } : null
+                });
+                
                 showToast(`❌ Upload gagal: ${error.message}`, 'error');
                 
                 // Reset button
@@ -886,121 +781,232 @@
             }
         }
         
-        async function uploadToTmpFiles(file) {
+        // **METHOD 1: Menggunakan fetch API dengan timeout**
+        async function uploadWithFetch(file) {
+            console.log('Menggunakan method FETCH untuk upload...');
+            
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 120000); // 2 menit timeout
+            
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                const response = await fetch(TMPFILES_API, {
+                    method: 'POST',
+                    body: formData,
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*'
+                    }
+                });
+                
+                clearTimeout(timeout);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const responseText = await response.text();
+                console.log('Fetch response:', responseText);
+                
+                // Coba parse sebagai JSON
+                try {
+                    const jsonData = JSON.parse(responseText);
+                    if (jsonData.data && jsonData.data.url) {
+                        return jsonData.data.url;
+                    } else if (jsonData.url) {
+                        return jsonData.url;
+                    } else if (jsonData.success && jsonData.url) {
+                        return jsonData.url;
+                    }
+                } catch (jsonError) {
+                    // Jika bukan JSON, cari URL dalam teks
+                    const urlMatch = responseText.match(/https?:\/\/tmpfiles\.org\/[^\s"']+/);
+                    if (urlMatch) {
+                        return urlMatch[0];
+                    }
+                }
+                
+                throw new Error('Tidak dapat menemukan URL dalam response');
+            } catch (error) {
+                clearTimeout(timeout);
+                if (error.name === 'AbortError') {
+                    throw new Error('Upload timeout (lebih dari 2 menit)');
+                }
+                throw error;
+            }
+        }
+        
+        // **METHOD 2: Menggunakan XMLHttpRequest dengan progress tracking**
+        async function uploadWithXHR(file) {
+            console.log('Menggunakan method XHR untuk upload...');
+            
             return new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
                 const formData = new FormData();
-                
                 formData.append('file', file);
                 
                 // Progress tracking
                 xhr.upload.addEventListener('progress', (e) => {
                     if (e.lengthComputable) {
                         const percent = (e.loaded / e.total) * 100;
-                        updateProgress(percent, `Mengupload ke TmpFiles... ${Math.round(percent)}%`);
+                        updateProgress(percent, `Mengupload... ${Math.round(percent)}%`);
                     }
                 });
                 
-                xhr.addEventListener('load', () => {
-                    if (xhr.status === 200) {
-                        try {
-                            const response = JSON.parse(xhr.responseText);
-                            if (response.status === 'success') {
-                                // Convert to direct download URL
-                                const directUrl = response.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
-                                resolve(directUrl);
-                            } else {
-                                reject(new Error('Upload gagal: ' + (response.message || 'Unknown error')));
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        console.log('XHR status:', xhr.status);
+                        console.log('XHR response:', xhr.responseText);
+                        
+                        if (xhr.status === 200) {
+                            try {
+                                // Coba parse JSON
+                                const data = JSON.parse(xhr.responseText);
+                                if (data.data && data.data.url) {
+                                    resolve(data.data.url);
+                                } else if (data.url) {
+                                    resolve(data.url);
+                                } else {
+                                    // Cari URL dalam response text
+                                    const urlMatch = xhr.responseText.match(/https?:\/\/tmpfiles\.org\/[^\s"']+/);
+                                    if (urlMatch) {
+                                        resolve(urlMatch[0]);
+                                    } else {
+                                        reject(new Error('URL tidak ditemukan dalam response'));
+                                    }
+                                }
+                            } catch (parseError) {
+                                // Cari URL dalam plain text
+                                const urlMatch = xhr.responseText.match(/https?:\/\/tmpfiles\.org\/[^\s"']+/);
+                                if (urlMatch) {
+                                    resolve(urlMatch[0]);
+                                } else {
+                                    reject(new Error('Response tidak valid'));
+                                }
                             }
-                        } catch (e) {
-                            reject(new Error('Invalid response from server'));
+                        } else {
+                            reject(new Error(`HTTP ${xhr.status}: ${xhr.statusText}`));
                         }
-                    } else {
-                        reject(new Error(`Server error: ${xhr.status}`));
                     }
-                });
-                
-                xhr.addEventListener('error', () => {
-                    reject(new Error('Network error - Periksa koneksi internet'));
-                });
-                
-                xhr.addEventListener('abort', () => {
-                    reject(new Error('Upload dibatalkan'));
-                });
-                
-                xhr.timeout = 300000; // 5 minutes
-                xhr.ontimeout = () => {
-                    reject(new Error('Timeout - Server terlalu lama merespons'));
                 };
                 
-                xhr.open('POST', SERVERS.SERVER1.url);
+                xhr.onerror = function() {
+                    reject(new Error('Network error - Periksa koneksi internet'));
+                };
+                
+                xhr.ontimeout = function() {
+                    reject(new Error('Upload timeout'));
+                };
+                
+                xhr.timeout = 120000; // 2 menit
+                xhr.open('POST', TMPFILES_API);
+                xhr.setRequestHeader('Accept', 'application/json, text/plain, */*');
                 xhr.send(formData);
             });
         }
         
-        async function uploadToBetabotz(file) {
+        // **METHOD 3: Coba multiple methods secara berurutan**
+        async function uploadWithMultipleMethods(file) {
+            console.log('Mencoba multiple upload methods...');
+            
+            // Method 1: Fetch API
+            try {
+                const result = await uploadWithFetch(file);
+                console.log('✅ Method FETCH berhasil');
+                return result;
+            } catch (fetchError) {
+                console.warn('Method FETCH gagal:', fetchError.message);
+                
+                // Method 2: XHR
+                try {
+                    const result = await uploadWithXHR(file);
+                    console.log('✅ Method XHR berhasil');
+                    return result;
+                } catch (xhrError) {
+                    console.warn('Method XHR gagal:', xhrError.message);
+                    
+                    // Method 3: Direct form submission (fallback)
+                    try {
+                        const result = await uploadWithDirectForm(file);
+                        console.log('✅ Method Direct Form berhasil');
+                        return result;
+                    } catch (directError) {
+                        console.warn('Semua method gagal:', directError.message);
+                        throw new Error('Semua method upload gagal. Coba file lain atau refresh halaman.');
+                    }
+                }
+            }
+        }
+        
+        // **METHOD 4: Direct form submission (fallback extreme)**
+        async function uploadWithDirectForm(file) {
+            console.log('Menggunakan method Direct Form (fallback)...');
+            
             return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                const formData = new FormData();
+                // Buat form secara dinamis
+                const form = document.createElement('form');
+                form.style.display = 'none';
+                form.method = 'POST';
+                form.action = TMPFILES_API;
+                form.enctype = 'multipart/form-data';
                 
-                // Get file extension
-                const fileName = file.name;
-                const fileExt = fileName.split('.').pop().toLowerCase();
+                // Buat file input
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.name = 'file';
                 
-                // Prepare file for upload sesuai dengan kode Node.js yang Anda berikan
-                formData.append('file', file, `tmp.${fileExt}`);
-                formData.append('apikey', SERVERS.SERVER2.apikey);
-                formData.append('tmp', 'false');
+                // Transfer file ke input (hacky way)
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInput.files = dataTransfer.files;
                 
-                // Progress tracking
-                xhr.upload.addEventListener('progress', (e) => {
-                    if (e.lengthComputable) {
-                        const percent = (e.loaded / e.total) * 100;
-                        updateProgress(percent, `Mengupload ke Betabotz API... ${Math.round(percent)}%`);
-                    }
-                });
+                form.appendChild(fileInput);
+                document.body.appendChild(form);
                 
-                xhr.addEventListener('load', () => {
-                    if (xhr.status === 200) {
-                        try {
-                            const response = JSON.parse(xhr.responseText);
-                            console.log('Betabotz Response:', response);
-                            
-                            // Cek berbagai kemungkinan response format
-                            if (response.result && response.result.url) {
-                                resolve(response.result.url);
-                            } else if (response.url) {
-                                resolve(response.url);
-                            } else if (response.result) {
-                                // Jika result adalah string URL langsung
-                                resolve(response.result);
-                            } else {
-                                reject(new Error('Upload gagal: Invalid response format'));
-                            }
-                        } catch (e) {
-                            reject(new Error('Invalid JSON response'));
+                // Buat iframe untuk response
+                const iframe = document.createElement('iframe');
+                iframe.name = 'upload-frame';
+                iframe.style.display = 'none';
+                
+                iframe.onload = function() {
+                    try {
+                        // Coba baca response dari iframe
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        const responseText = iframeDoc.body.textContent || iframeDoc.body.innerHTML;
+                        
+                        console.log('Direct form response:', responseText);
+                        
+                        // Cari URL dalam response
+                        const urlMatch = responseText.match(/https?:\/\/tmpfiles\.org\/[^\s"']+/);
+                        if (urlMatch) {
+                            resolve(urlMatch[0]);
+                        } else {
+                            reject(new Error('URL tidak ditemukan dalam response'));
                         }
-                    } else {
-                        reject(new Error(`Server error: ${xhr.status}`));
+                    } catch (e) {
+                        reject(new Error('Gagal membaca response dari iframe'));
+                    } finally {
+                        // Cleanup
+                        document.body.removeChild(form);
+                        document.body.removeChild(iframe);
                     }
-                });
-                
-                xhr.addEventListener('error', () => {
-                    reject(new Error('Network error - Periksa koneksi internet'));
-                });
-                
-                xhr.addEventListener('abort', () => {
-                    reject(new Error('Upload dibatalkan'));
-                });
-                
-                xhr.timeout = 300000; // 5 minutes
-                xhr.ontimeout = () => {
-                    reject(new Error('Timeout - Server terlalu lama merespons'));
                 };
                 
-                xhr.open('POST', SERVERS.SERVER2.url);
-                xhr.setRequestHeader('Accept', 'application/json');
-                xhr.send(formData);
+                iframe.onerror = function() {
+                    reject(new Error('Iframe error'));
+                    document.body.removeChild(form);
+                    document.body.removeChild(iframe);
+                };
+                
+                document.body.appendChild(iframe);
+                form.target = 'upload-frame';
+                
+                // Submit form
+                setTimeout(() => {
+                    form.submit();
+                }, 100);
             });
         }
         
@@ -1015,7 +1021,7 @@
         }
         
         // ==================== FUNGSI GENERATE TOKEN ====================
-        function generateToken(fileUrl, file, serverName) {
+        function generateToken(fileUrl, file) {
             const isImage = file.type.startsWith('image/');
             const isVideo = file.type.startsWith('video/');
             
@@ -1036,8 +1042,7 @@
                 t: isImage ? 'image' : (isVideo ? 'video' : 'file'),
                 e: Date.now() + (TOKEN_EXPIRE_MINUTES * 60 * 1000),
                 u: fileUrl,
-                r: imageRotation,
-                server: serverName
+                r: imageRotation // Store rotation if any
             };
             
             // Encode to base64
@@ -1054,7 +1059,7 @@
         }
         
         // ==================== FUNGSI SHOW RESULT ====================
-        function showResult(token, fileUrl, serverName) {
+        function showResult(token, fileUrl) {
             currentToken = token;
             
             // Update UI
@@ -1063,12 +1068,7 @@
             document.getElementById('resultFileSize').textContent = formatBytes(currentFile.size);
             document.getElementById('resultFileType').textContent = 
                 currentFile.type.startsWith('image/') ? 'Gambar' : 'Video';
-            document.getElementById('resultServer').textContent = serverName;
             document.getElementById('fileUrl').textContent = fileUrl;
-            
-            // Set server color
-            const serverColor = serverName === SERVERS.SERVER1.name ? SERVERS.SERVER1.color : SERVERS.SERVER2.color;
-            document.getElementById('resultServer').style.color = serverColor;
             
             // Switch sections
             document.getElementById('uploadSection').style.display = 'none';
@@ -1167,8 +1167,6 @@
             document.getElementById('fileSize').textContent = '-';
             document.getElementById('fileType').textContent = '-';
             document.getElementById('fileResolution').textContent = '-';
-            document.getElementById('selectedServer').textContent = 
-                selectedServer === 'server1' ? SERVERS.SERVER1.name : SERVERS.SERVER2.name;
             document.getElementById('uploadBtn').disabled = true;
             document.getElementById('uploadBtn').innerHTML = '<i class="fas fa-key"></i> Upload & Generate Token';
             document.getElementById('previewContainer').classList.remove('show');
@@ -1179,6 +1177,9 @@
             // Switch back to upload section
             document.getElementById('resultSection').style.display = 'none';
             document.getElementById('uploadSection').style.display = 'block';
+            
+            // Reset file type badges
+            updateFileTypeBadges();
             
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1202,9 +1203,23 @@
                 const jsonStr = decodeURIComponent(escape(atob(data)));
                 const tokenData = JSON.parse(jsonStr);
                 
-                showToast(`✅ Token valid! Tipe: ${tokenData.t}, Server: ${tokenData.server}, Expires: ${new Date(tokenData.e).toLocaleTimeString()}`, 'success');
+                showToast(`✅ Token valid! Tipe: ${tokenData.t}, Expires: ${new Date(tokenData.e).toLocaleTimeString()}`, 'success');
             } catch (error) {
                 showToast('❌ Token tidak valid', 'error');
+            }
+        }
+        
+        function updateFileTypeBadges(activeType = null) {
+            const imageBadge = document.getElementById('imageBadge');
+            const videoBadge = document.getElementById('videoBadge');
+            
+            imageBadge.classList.remove('active');
+            videoBadge.classList.remove('active');
+            
+            if (activeType === 'image') {
+                imageBadge.classList.add('active');
+            } else if (activeType === 'video') {
+                videoBadge.classList.add('active');
             }
         }
         
@@ -1234,12 +1249,35 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
         }
         
+        // ==================== DEBUG FUNCTIONS ====================
+        function testTmpFilesConnection() {
+            console.log('Testing TmpFiles.org connection...');
+            
+            fetch(TMPFILES_API, { 
+                method: 'HEAD',
+                mode: 'no-cors'
+            }).then(() => {
+                console.log('✅ TmpFiles.org is accessible');
+                showToast('✅ Koneksi ke server OK', 'success');
+            }).catch(error => {
+                console.warn('⚠️ TmpFiles.org mungkin diblokir:', error);
+                showToast('⚠️ Cek koneksi ke TmpFiles.org', 'warning');
+            });
+        }
+        
         // ==================== INITIALIZATION ====================
         window.addEventListener('load', () => {
-            console.log('Dual Server Uploader loaded');
-            console.log('Server 1:', SERVERS.SERVER1);
-            console.log('Server 2:', SERVERS.SERVER2);
-            console.log('Token Expiry: 10 minutes');
+            console.log('WhatsApp Status Uploader loaded');
+            console.log('=== SYSTEM INFO ===');
+            console.log('User Agent:', navigator.userAgent);
+            console.log('Online:', navigator.onLine);
+            console.log('Max Image Size:', MAX_IMAGE_SIZE / (1024*1024), 'MB');
+            console.log('Max Video Size:', MAX_VIDEO_SIZE / (1024*1024), 'MB');
+            console.log('Token Expiry:', TOKEN_EXPIRE_MINUTES, 'minutes');
+            console.log('TmpFiles API:', TMPFILES_API);
+            
+            // Test connection on load
+            setTimeout(testTmpFilesConnection, 1000);
             
             // Check if browser supports required features
             if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
@@ -1259,18 +1297,22 @@
                     resetForm();
                 }
             }
-            
-            // Switch servers with F1 and F2
-            if (e.key === 'F1') {
-                e.preventDefault();
-                selectServer('server1');
-            }
-            
-            if (e.key === 'F2') {
-                e.preventDefault();
-                selectServer('server2');
-            }
         });
+        
+        // ==================== TROUBLESHOOTING TIPS ====================
+        console.log(`
+        ========= TROUBLESHOOTING TIPS =========
+        1. Jika upload gagal, coba file kecil dulu (<5MB)
+        2. Buka Developer Tools (F12) → Console untuk debug
+        3. Coba browser lain (Chrome/Firefox/Edge)
+        4. Coba koneksi internet lain
+        5. Nonaktifkan ekstensi/adblocker
+        6. Coba mode Incognito/Private
+        7. Refresh halaman jika bermasalah
+        
+        Status: ✅ READY
+        ========================================
+        `);
     </script>
 </body>
 </html>
