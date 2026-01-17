@@ -13,6 +13,8 @@
             --warning: #ffaa00;
             --dark: #1a1a2e;
             --light: #f8f9fa;
+            --online: #00ff00;
+            --offline: #ff4444;
         }
         
         * {
@@ -32,6 +34,100 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
+        }
+        
+        /* Notebook */
+        .notebook {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid var(--warning);
+            backdrop-filter: blur(10px);
+            position: relative;
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        .notebook-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .notebook h3 {
+            color: var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
+        
+        .notebook-content {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--success);
+        }
+        
+        .notebook-content ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+        
+        .notebook-content li {
+            margin-bottom: 8px;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-left: 10px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--online);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
         }
         
         /* Header */
@@ -73,11 +169,14 @@
             gap: 10px;
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid transparent;
+            transition: all 0.3s;
         }
         
         .type-badge.active {
             background: var(--primary);
             border-color: var(--success);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
         }
         
         /* Card */
@@ -88,12 +187,21 @@
             margin-bottom: 25px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
         .card h2 {
             color: var(--primary);
             margin-bottom: 20px;
             font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         /* Upload Area */
@@ -113,17 +221,24 @@
         .upload-area:hover {
             border-color: var(--primary);
             background: rgba(67, 97, 238, 0.1);
+            transform: translateY(-2px);
         }
         
         .upload-area.dragover {
             border-color: var(--success);
             background: rgba(76, 201, 240, 0.1);
+            transform: scale(1.01);
         }
         
         .upload-area i {
             font-size: 4rem;
             color: var(--primary);
             margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover i {
+            transform: scale(1.1);
         }
         
         /* File Info */
@@ -133,6 +248,7 @@
             border-radius: 10px;
             margin: 20px 0;
             border-left: 4px solid var(--primary);
+            transition: all 0.3s;
         }
         
         .info-row {
@@ -157,6 +273,7 @@
             max-width: 400px;
             margin-left: auto;
             margin-right: auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         
         .preview-container.show {
@@ -194,6 +311,12 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            transition: all 0.3s;
+        }
+        
+        .preview-controls button:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
         }
         
         /* Buttons */
@@ -248,6 +371,18 @@
             margin: 25px 0;
             border: 2px solid var(--success);
             animation: pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .token-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--success));
         }
         
         @keyframes pulse {
@@ -267,11 +402,13 @@
             cursor: pointer;
             border: 1px dashed rgba(255, 255, 255, 0.3);
             user-select: all;
+            transition: all 0.3s;
         }
         
         .token-value:hover {
             background: rgba(0, 0, 0, 0.6);
             border-color: var(--success);
+            transform: translateY(-2px);
         }
         
         /* Progress */
@@ -282,6 +419,7 @@
         
         .progress-container.show {
             display: block;
+            animation: fadeIn 0.5s;
         }
         
         .progress-label {
@@ -322,21 +460,25 @@
             z-index: 1000;
             min-width: 300px;
             max-width: 400px;
+            backdrop-filter: blur(10px);
         }
         
         .toast.success {
-            background: var(--success);
+            background: rgba(76, 201, 240, 0.9);
             color: black;
+            border-left: 4px solid var(--success);
         }
         
         .toast.error {
-            background: var(--danger);
+            background: rgba(247, 37, 133, 0.9);
             color: white;
+            border-left: 4px solid var(--danger);
         }
         
         .toast.warning {
-            background: var(--warning);
+            background: rgba(255, 170, 0, 0.9);
             color: black;
+            border-left: 4px solid var(--warning);
         }
         
         @keyframes slideIn {
@@ -358,6 +500,12 @@
             border-radius: 10px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .limit-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
         }
         
         .limit-card i {
@@ -374,6 +522,35 @@
             border-color: var(--success);
         }
         
+        /* Caption Section */
+        .caption-section {
+            background: rgba(76, 201, 240, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid var(--primary);
+        }
+        
+        .caption-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--primary);
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            resize: none;
+            min-height: 100px;
+        }
+        
+        .caption-input:focus {
+            outline: none;
+            border-color: var(--success);
+            box-shadow: 0 0 0 2px rgba(76, 201, 240, 0.3);
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .container { padding: 10px; }
@@ -383,17 +560,45 @@
             .file-type-indicator { flex-direction: column; gap: 10px; }
             .file-limits { grid-template-columns: 1fr; }
             .toast { min-width: 250px; right: 10px; bottom: 10px; }
+            .notebook-header { flex-direction: column; gap: 10px; text-align: center; }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
+        <!-- Notebook -->
+        <div class="notebook" id="notebook">
+            <div class="notebook-header">
+                <h3><i class="fas fa-book"></i> Panduan Upload Status</h3>
+                <button class="close-btn" onclick="closeNotebook()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="notebook-content">
+                <ul>
+                    <li>Sebelum mengupload, pastikan video/gambar sudah <strong>jernih dan tidak buram</strong></li>
+                    <li>Platform ini menjaga kualitas asli file Anda (tanpa penurunan kualitas)</li>
+                    <li>Untuk hasil terbaik, gunakan file dengan resolusi tinggi</li>
+                    <li>Token berlaku selama <strong>10 menit</strong> setelah di-generate</li>
+                    <li>Bot akan otomatis compress file untuk optimal WhatsApp Status</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Status Bot -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                <span>STATUS BOT: <strong>🟢 ONLINE</strong></span>
+            </div>
+        </div>
+        
         <!-- Header -->
         <div class="header">
             <h1><i class="fas fa-images"></i> UPLOAD STATUS WHATSAPP</h1>
             <p>Upload gambar & video untuk status WhatsApp dengan kualitas terbaik</p>
-            <p><strong>Token berlaku 10 menit • Support HD Quality</strong></p>
+            <p><strong>Token berlaku 10 menit • Support HD Quality • Caption Dinamis</strong></p>
             
             <div class="file-type-indicator">
                 <div class="type-badge" id="imageBadge">
@@ -490,14 +695,52 @@
         <div class="card" id="resultSection" style="display: none;">
             <h2><i class="fas fa-check-circle"></i> Upload Berhasil!</h2>
             
-            <div class="token-box">
-                <h3><i class="fas fa-key"></i> Token Redeem:</h3>
-                <div class="token-value" id="tokenDisplay" onclick="copyToken()">
+            <!-- Token tanpa caption -->
+            <div class="token-box" id="baseTokenBox">
+                <h3><i class="fas fa-key"></i> Token Dasar:</h3>
+                <div class="token-value" id="baseTokenDisplay" onclick="copyToken('base')">
                     NAND-XXXX-XXXXXXXXXXXX
                 </div>
-                <p><i class="fas fa-clock"></i> Kadaluarsa dalam: <span id="countdown" style="font-weight: bold;">10:00</span></p>
-                <button class="btn btn-success" onclick="copyToken()">
-                    <i class="fas fa-copy"></i> Salin Token
+                <p><i class="fas fa-info-circle"></i> Token ini TANPA caption • <i class="fas fa-clock"></i> Kadaluarsa: <span id="countdown">10:00</span></p>
+                <button class="btn btn-success" onclick="copyToken('base')">
+                    <i class="fas fa-copy"></i> Salin Token Dasar
+                </button>
+            </div>
+            
+            <!-- Caption Section -->
+            <div class="caption-section">
+                <h3><i class="fas fa-pencil-alt"></i> Tambah Caption (Opsional)</h3>
+                <p style="color: #aaa; margin-bottom: 10px;">Tambahkan caption untuk status Anda (maksimal 150 karakter). Token akan otomatis terupdate.</p>
+                <textarea 
+                    id="captionInput" 
+                    class="caption-input"
+                    placeholder="Ketik caption di sini... (contoh: 'Liburan seru di pantai! 🌊')"
+                    maxlength="150"
+                ></textarea>
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div style="color: #aaa; font-size: 0.9rem;">
+                        <span id="charCount">0/150 karakter</span>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn" onclick="updateCaption()" style="background: var(--success);">
+                            <i class="fas fa-sync"></i> Update dengan Caption
+                        </button>
+                        <button class="btn" onclick="clearCaption()" style="background: #666;">
+                            <i class="fas fa-times"></i> Hapus Caption
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Token dengan caption -->
+            <div class="token-box" id="captionTokenBox" style="display: none; border-color: var(--primary);">
+                <h3><i class="fas fa-key"></i> Token dengan Caption:</h3>
+                <div class="token-value" id="captionTokenDisplay" onclick="copyToken('caption')">
+                    NAND-XXXX-XXXXXXXXXXXX CAPTION_XXXX_XXXXXXXX
+                </div>
+                <p><i class="fas fa-comment"></i> Caption aktif: "<span id="currentCaption">-</span>"</p>
+                <button class="btn btn-success" onclick="copyToken('caption')">
+                    <i class="fas fa-copy"></i> Salin Token + Caption
                 </button>
             </div>
             
@@ -515,22 +758,23 @@
                     <span id="resultFileType">-</span>
                 </div>
                 <div class="info-row">
-                    <span><i class="fas fa-link"></i> URL File:</span>
-                    <span style="word-break: break-all; font-size: 0.9em;" id="fileUrl">-</span>
+                    <span><i class="fas fa-history"></i> Waktu Upload:</span>
+                    <span id="uploadTime">-</span>
                 </div>
             </div>
             
             <h3><i class="fab fa-whatsapp"></i> Cara Redeem di WhatsApp:</h3>
             <ol style="margin: 15px 0; padding-left: 25px; line-height: 1.8;">
-                <li><strong>Salin token</strong> di atas (klik untuk auto-copy)</li>
+                <li><strong>Pilih token</strong> (dengan/tanpa caption)</li>
+                <li><strong>Klik token</strong> untuk auto-copy</li>
                 <li>Buka WhatsApp dengan tombol <strong>"BUKA WHATSAPP"</strong></li>
-                <li><strong>Tempel token</strong> di chat (format: NAND-ABCD-abc123)</li>
+                <li><strong>Tempel token</strong> di chat bot</li>
                 <li>Bot akan mengirim file ke Anda</li>
                 <li><strong>Tahan file</strong> → <strong>Forward</strong> → <strong>"Status Saya"</strong></li>
                 <li><span style="color: var(--warning); font-weight: bold;">Token hanya berlaku 10 menit!</span></li>
             </ol>
             
-            <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap; justify-content: center;">
                 <button class="btn" style="background: #555; color: white;" onclick="resetForm()">
                     <i class="fas fa-redo"></i> Upload Lagi
                 </button>
@@ -544,15 +788,27 @@
         </div>
         
         <!-- Footer -->
-        <div class="card" style="text-align: center; margin-top: 30px;">
-            <p>
-                <i class="fab fa-youtube"></i> <strong>NandSki</strong> |
-                <i class="fab fa-instagram"></i> <strong>@nandz.404</strong> |
-                <i class="fab fa-github"></i> <strong>NandSki</strong>
+        <div class="card" style="text-align: center; margin-top: 30px; background: rgba(0, 0, 0, 0.1);">
+            <p style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <a href="https://youtube.com/@NandSkie" style="color: var(--success); text-decoration: none;">
+                    <i class="fab fa-youtube"></i> <strong>NandSki</strong>
+                </a>
+                <a href="https://instagram.com/nandz.404" style="color: var(--primary); text-decoration: none;">
+                    <i class="fab fa-instagram"></i> <strong>@nandz.404</strong>
+                </a>
+                <a href="https://github.com/NandSki" style="color: var(--light); text-decoration: none;">
+                    <i class="fab fa-github"></i> <strong>NandSki</strong>
+                </a>
             </p>
             <p style="color: #aaa; font-size: 0.9rem; margin-top: 10px;">
                 Bot akan otomatis compress video & gambar untuk optimal WhatsApp Status
             </p>
+            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <p style="color: var(--success); font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <div class="status-dot"></div>
+                    STATUS BOT: 🟢 ONLINE
+                </p>
+            </div>
         </div>
         
         <!-- Toast -->
@@ -568,13 +824,21 @@
         
         // ==================== VARIABEL ====================
         let currentFile = null;
-        let currentToken = null;
+        let baseToken = null;
+        let captionToken = null;
         let countdownInterval = null;
         let uploadedUrl = null;
         let imageRotation = 0;
+        let uploadTime = null;
         
         // ==================== EVENT LISTENERS ====================
         document.addEventListener('DOMContentLoaded', () => {
+            // Notebook visibility
+            const notebookHidden = localStorage.getItem('notebookHidden');
+            if (notebookHidden === 'true') {
+                document.getElementById('notebook').style.display = 'none';
+            }
+            
             // Upload area click
             document.getElementById('uploadArea').addEventListener('click', () => {
                 document.getElementById('fileInput').click();
@@ -586,6 +850,9 @@
                     handleFileSelect(e.target.files[0]);
                 }
             });
+            
+            // Caption input character count
+            document.getElementById('captionInput').addEventListener('input', updateCharCount);
             
             // Drag and drop
             const uploadArea = document.getElementById('uploadArea');
@@ -613,7 +880,20 @@
             
             // Update file type badges
             updateFileTypeBadges();
+            
+            // Initialize character count
+            updateCharCount();
         });
+        
+        // ==================== FUNGSI NOTEBOOK ====================
+        function closeNotebook() {
+            const notebook = document.getElementById('notebook');
+            notebook.style.animation = 'slideDown 0.3s ease-in reverse';
+            setTimeout(() => {
+                notebook.style.display = 'none';
+            }, 300);
+            localStorage.setItem('notebookHidden', 'true');
+        }
         
         // ==================== FUNGSI FILE HANDLING ====================
         function handleFileSelect(file) {
@@ -723,6 +1003,88 @@
             imagePreview.style.transform = 'rotate(0deg)';
         }
         
+        // ==================== FUNGSI CAPTION ====================
+        function updateCharCount() {
+            const captionInput = document.getElementById('captionInput');
+            const charCount = document.getElementById('charCount');
+            const length = captionInput.value.length;
+            charCount.textContent = `${length}/150 karakter`;
+            
+            charCount.style.color = length > 140 ? 'var(--danger)' : 
+                                   length > 120 ? 'var(--warning)' : '#aaa';
+        }
+        
+        function updateCaption() {
+            const captionInput = document.getElementById('captionInput');
+            const caption = captionInput.value.trim();
+            
+            if (!baseToken) {
+                showToast('⚠️ Token dasar belum tersedia', 'warning');
+                return;
+            }
+            
+            if (!caption) {
+                showToast('⚠️ Masukkan caption terlebih dahulu', 'warning');
+                return;
+            }
+            
+            try {
+                // Enkripsi caption
+                const encryptedCaption = simpleEncrypt(caption);
+                
+                // Gabungkan dengan token dasar
+                captionToken = `${baseToken} ${encryptedCaption}`;
+                
+                // Update UI
+                document.getElementById('captionTokenDisplay').textContent = captionToken;
+                document.getElementById('currentCaption').textContent = caption;
+                document.getElementById('captionTokenBox').style.display = 'block';
+                
+                showToast('✅ Token dengan caption telah diupdate!', 'success');
+                
+                // Auto scroll ke token dengan caption
+                document.getElementById('captionTokenBox').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                
+            } catch (error) {
+                console.error('Caption encryption error:', error);
+                showToast('❌ Gagal membuat token dengan caption', 'error');
+            }
+        }
+        
+        function clearCaption() {
+            document.getElementById('captionInput').value = '';
+            document.getElementById('captionTokenBox').style.display = 'none';
+            captionToken = null;
+            updateCharCount();
+            showToast('✅ Caption telah dihapus', 'success');
+        }
+        
+        function simpleEncrypt(text) {
+            // Base64 encode
+            let base64 = btoa(unescape(encodeURIComponent(text)));
+            
+            // Simple XOR encryption dengan key random
+            const key = Math.random().toString(36).substring(2, 6);
+            let encrypted = '';
+            
+            for (let i = 0; i < base64.length; i++) {
+                const charCode = base64.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+                encrypted += String.fromCharCode(charCode);
+            }
+            
+            // Encode hasil XOR ke base64 lagi
+            const final = btoa(encrypted)
+                .replace(/=/g, '')
+                .replace(/\+/g, '-')
+                .replace(/\//g, '_');
+            
+            // Tambahkan key di depan untuk decoding nanti
+            return `CAPTION_${key}_${final}`;
+        }
+        
         // ==================== FUNGSI UPLOAD KE TMPFILES ====================
         async function handleUpload() {
             if (!currentFile) return;
@@ -738,28 +1100,65 @@
             updateProgress(0, 'Mempersiapkan upload...');
             
             try {
-                // Upload ke TmpFiles.org dengan progress tracking
-                const tmpfilesUrl = await uploadToTmpFiles(currentFile);
-                const downloadUrl = tmpfilesUrl.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
-                uploadedUrl = downloadUrl;
+                // Upload ke TmpFiles.org
+                const formData = new FormData();
+                formData.append('file', currentFile);
                 
-                // Generate token untuk bot WhatsApp
-                const token = generateToken(downloadUrl, currentFile);
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 120000);
                 
-                // Show success
-                updateProgress(100, 'Upload selesai!');
+                updateProgress(30, 'Mengupload ke server...');
                 
-                // Tunggu sebentar untuk efek visual
-                await new Promise(resolve => setTimeout(resolve, 500));
+                const response = await fetch(TMPFILES_API, {
+                    method: 'POST',
+                    body: formData,
+                    signal: controller.signal
+                });
                 
-                // Show result
-                showResult(token, downloadUrl);
+                clearTimeout(timeoutId);
                 
-                showToast('✅ Upload berhasil! Token telah dibuat.', 'success');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                
+                updateProgress(80, 'Memproses hasil...');
+                
+                if (result.status === 'success') {
+                    uploadedUrl = result.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
+                    
+                    // Generate token dasar
+                    baseToken = generateBaseToken(uploadedUrl, currentFile);
+                    uploadTime = new Date();
+                    
+                    updateProgress(100, 'Upload selesai!');
+                    
+                    // Tunggu sebentar
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    // Show result
+                    showResult();
+                    
+                    showToast('✅ Upload berhasil! Token telah dibuat.', 'success');
+                    
+                } else {
+                    throw new Error(result.message || 'Upload gagal');
+                }
                 
             } catch (error) {
                 console.error('Upload error:', error);
-                showToast(`❌ Upload gagal: ${error.message}`, 'error');
+                
+                let errorMessage = '❌ Upload gagal: ';
+                if (error.name === 'AbortError') {
+                    errorMessage += 'Timeout - Server terlalu lama merespons';
+                } else if (error.message.includes('HTTP')) {
+                    errorMessage += error.message;
+                } else {
+                    errorMessage += 'Koneksi bermasalah';
+                }
+                
+                showToast(errorMessage, 'error');
                 
                 // Reset button
                 uploadBtn.disabled = false;
@@ -769,56 +1168,6 @@
                 progressContainer.classList.remove('show');
                 updateProgress(0, '');
             }
-        }
-        
-        async function uploadToTmpFiles(file) {
-            return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                const formData = new FormData();
-                
-                formData.append('file', file);
-                
-                // Progress tracking
-                xhr.upload.addEventListener('progress', (e) => {
-                    if (e.lengthComputable) {
-                        const percent = (e.loaded / e.total) * 100;
-                        updateProgress(percent, `Mengupload... ${Math.round(percent)}%`);
-                    }
-                });
-                
-                xhr.addEventListener('load', () => {
-                    if (xhr.status === 200) {
-                        try {
-                            const response = JSON.parse(xhr.responseText);
-                            if (response.status === 'success') {
-                                resolve(response.data.url);
-                            } else {
-                                reject(new Error('Upload gagal: ' + (response.message || 'Unknown error')));
-                            }
-                        } catch (e) {
-                            reject(new Error('Invalid response from server'));
-                        }
-                    } else {
-                        reject(new Error(`Server error: ${xhr.status}`));
-                    }
-                });
-                
-                xhr.addEventListener('error', () => {
-                    reject(new Error('Network error - Periksa koneksi internet'));
-                });
-                
-                xhr.addEventListener('abort', () => {
-                    reject(new Error('Upload dibatalkan'));
-                });
-                
-                xhr.timeout = 300000; // 5 minutes
-                xhr.ontimeout = () => {
-                    reject(new Error('Timeout - Server terlalu lama merespons'));
-                };
-                
-                xhr.open('POST', TMPFILES_API);
-                xhr.send(formData);
-            });
         }
         
         function updateProgress(percent, text) {
@@ -832,28 +1181,20 @@
         }
         
         // ==================== FUNGSI GENERATE TOKEN ====================
-        function generateToken(fileUrl, file) {
+        function generateBaseToken(fileUrl, file) {
             const isImage = file.type.startsWith('image/');
             const isVideo = file.type.startsWith('video/');
             
-            // Extract file ID from URL
-            let fileId = '';
-            try {
-                const urlParts = fileUrl.split('/');
-                fileId = urlParts[urlParts.length - 1].split('?')[0];
-            } catch (e) {
-                fileId = `file_${Date.now()}`;
-            }
-            
-            // Token data structure (compatible with bot)
+            // Token data structure
             const tokenData = {
-                id: fileId,
+                id: `file_${Date.now()}`,
                 n: file.name,
                 s: file.size,
                 t: isImage ? 'image' : (isVideo ? 'video' : 'file'),
                 e: Date.now() + (TOKEN_EXPIRE_MINUTES * 60 * 1000),
                 u: fileUrl,
-                r: imageRotation // Store rotation if any
+                r: imageRotation,
+                c: null
             };
             
             // Encode to base64
@@ -870,16 +1211,29 @@
         }
         
         // ==================== FUNGSI SHOW RESULT ====================
-        function showResult(token, fileUrl) {
-            currentToken = token;
-            
+        function showResult() {
             // Update UI
-            document.getElementById('tokenDisplay').textContent = token;
+            document.getElementById('baseTokenDisplay').textContent = baseToken;
             document.getElementById('resultFileName').textContent = currentFile.name;
             document.getElementById('resultFileSize').textContent = formatBytes(currentFile.size);
             document.getElementById('resultFileType').textContent = 
                 currentFile.type.startsWith('image/') ? 'Gambar' : 'Video';
-            document.getElementById('fileUrl').textContent = fileUrl;
+            
+            // Update upload time
+            if (uploadTime) {
+                document.getElementById('uploadTime').textContent = 
+                    uploadTime.toLocaleTimeString('id-ID', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+            }
+            
+            // Reset caption
+            document.getElementById('captionInput').value = '';
+            document.getElementById('captionTokenBox').style.display = 'none';
+            updateCharCount();
+            captionToken = null;
             
             // Switch sections
             document.getElementById('uploadSection').style.display = 'none';
@@ -929,44 +1283,42 @@
         }
         
         // ==================== FUNGSI UTILITY ====================
-        function copyToken() {
-            const token = document.getElementById('tokenDisplay').textContent;
+        function copyToken(type) {
+            let textToCopy = '';
             
-            // Try modern clipboard API first
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(token).then(() => {
-                    showToast('✅ Token disalin ke clipboard!', 'success');
-                }).catch(() => {
-                    fallbackCopy(token);
-                });
-            } else {
-                fallbackCopy(token);
+            if (type === 'base') {
+                textToCopy = baseToken;
+            } else if (type === 'caption') {
+                if (!captionToken) {
+                    showToast('⚠️ Belum ada token dengan caption', 'warning');
+                    return;
+                }
+                textToCopy = captionToken;
             }
-        }
-        
-        function fallbackCopy(text) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
             
-            try {
+            if (!textToCopy) return;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast(`✅ Token disalin!`, 'success');
+            }).catch(() => {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = textToCopy;
+                document.body.appendChild(textarea);
+                textarea.select();
                 document.execCommand('copy');
+                document.body.removeChild(textarea);
                 showToast('✅ Token disalin!', 'success');
-            } catch (err) {
-                showToast('❌ Gagal menyalin token', 'error');
-            }
-            
-            document.body.removeChild(textarea);
+            });
         }
         
         function resetForm() {
             currentFile = null;
-            currentToken = null;
+            baseToken = null;
+            captionToken = null;
             uploadedUrl = null;
             imageRotation = 0;
+            uploadTime = null;
             
             if (countdownInterval) {
                 clearInterval(countdownInterval);
@@ -981,9 +1333,9 @@
             document.getElementById('uploadBtn').disabled = true;
             document.getElementById('uploadBtn').innerHTML = '<i class="fas fa-key"></i> Upload & Generate Token';
             document.getElementById('previewContainer').classList.remove('show');
-            
-            // Reset preview
-            resetPreview();
+            document.getElementById('captionInput').value = '';
+            document.getElementById('captionTokenBox').style.display = 'none';
+            updateCharCount();
             
             // Switch back to upload section
             document.getElementById('resultSection').style.display = 'none';
@@ -997,24 +1349,49 @@
         }
         
         function openWhatsApp() {
-            const token = document.getElementById('tokenDisplay').textContent;
-            const message = `${token}`;
-            const url = `https://wa.me/6285126839864?text=${encodeURIComponent(message)}`;
+            let tokenToSend = captionToken || baseToken;
+            
+            if (!tokenToSend) {
+                showToast('⚠️ Tidak ada token yang tersedia', 'warning');
+                return;
+            }
+            
+            const url = `https://wa.me/6285126839864?text=${encodeURIComponent(tokenToSend)}`;
             window.open(url, '_blank');
         }
         
         function testToken() {
-            const token = document.getElementById('tokenDisplay').textContent;
+            let tokenToTest = captionToken || baseToken;
+            
+            if (!tokenToTest) {
+                showToast('⚠️ Tidak ada token yang tersedia', 'warning');
+                return;
+            }
             
             try {
-                // Decode token untuk testing
-                const data = token.split('-')[2]
+                // Pisahkan token dasar dan caption jika ada
+                const parts = tokenToTest.split(' CAPTION_');
+                const baseTokenPart = parts[0];
+                
+                // Decode token dasar
+                const data = baseTokenPart.split('-')[2]
                     .replace(/-/g, '+')
                     .replace(/_/g, '/');
                 const jsonStr = decodeURIComponent(escape(atob(data)));
                 const tokenData = JSON.parse(jsonStr);
                 
-                showToast(`✅ Token valid! Tipe: ${tokenData.t}, Expires: ${new Date(tokenData.e).toLocaleTimeString()}`, 'success');
+                let message = `✅ Token valid!\n`;
+                message += `Tipe: ${tokenData.t}\n`;
+                message += `Expires: ${new Date(tokenData.e).toLocaleTimeString()}\n`;
+                message += `Size: ${formatBytes(tokenData.s)}\n`;
+                
+                if (parts.length > 1) {
+                    message += `Caption: ✓ (Terenkripsi)`;
+                } else {
+                    message += `Caption: ✗ (Tidak ada)`;
+                }
+                
+                showToast(message, 'success');
             } catch (error) {
                 showToast('❌ Token tidak valid', 'error');
             }
@@ -1040,7 +1417,6 @@
             toast.className = `toast ${type}`;
             toast.style.display = 'flex';
             
-            // Auto hide after 3 seconds
             setTimeout(() => {
                 toast.style.display = 'none';
             }, 3000);
@@ -1059,33 +1435,6 @@
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
         }
-        
-        // ==================== INITIALIZATION ====================
-        window.addEventListener('load', () => {
-            console.log('TmpFiles.org Uploader loaded');
-            console.log('Support: Images & Videos');
-            console.log('Max Image: 50MB, Max Video: 100MB');
-            console.log('Token Expiry: 10 minutes');
-            
-            // Check if browser supports required features
-            if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
-                showToast('❌ Browser tidak mendukung fitur upload file', 'error');
-            }
-        });
-        
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 'u') {
-                e.preventDefault();
-                document.getElementById('fileInput').click();
-            }
-            
-            if (e.key === 'Escape') {
-                if (document.getElementById('resultSection').style.display !== 'none') {
-                    resetForm();
-                }
-            }
-        });
     </script>
 </body>
 </html>
