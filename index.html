@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NandSkie - Official Links</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ===== CSS VARIABLES - GAMING NEON LURUS ===== */
+        :root {
+            /* 🎨 COLOR SYSTEM - GAMING NEON */
+            --neon-blue: #2a9dff;
+            --neon-cyan: #1abc9c;
+            --neon-purple: #9b59b6;
+            --neon-green: #2ecc71;
+            --neon-orange: #f39c12;
+            --neon-pink: #e84393;
+            --neon-red: #e74c3c;
+            --neon-yellow: #f1c40f;
+            
+            /* Light variants for hover effects */
+            --neon-blue-light: rgba(42, 157, 255, 0.3);
+            --neon-cyan-light: rgba(26, 188, 156, 0.3);
+            --neon-purple-light: rgba(155, 89, 182, 0.3);
+            --neon-green-light: rgba(46, 204, 113, 0.3);
+            
+            /* Background & Glass */
+            --bg-dark: #0a0e1a;
+            --bg-darker: #070a15;
+            --glass-bg: rgba(15, 23, 42, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            
+            /* Neon Glow Effects */
+            --glow-blue: 0 0 20px rgba(42, 157, 255, 0.7);
+            --glow-cyan: 0 0 20px rgba(26, 188, 156, 0.7);
+            --glow-purple: 0 0 20px rgba(155, 89, 182, 0.7);
+            --glow-green: 0 0 20px rgba(46, 204, 113, 0.7);
+            
+            /* Typography - Professional Gaming */
+            --font-heading: 'Orbitron', sans-serif;
+            --font-body: 'Poppins', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        
+        /* ===== FONT IMPORTS ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap');
+        
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: linear-gradient(135deg, #0a1a2d, #0c2541, #0d2d4f);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* ===== BACKGROUND SYSTEM - NEON BIRU & HUJAN ===== */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        /* Layer 1: Gradient Neon Biru */
+        .bg-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(10, 26, 45, 0.95) 0%,
+                rgba(12, 37, 65, 0.9) 25%,
+                rgba(13, 45, 79, 0.85) 50%,
+                rgba(26, 92, 147, 0.8) 75%,
+                rgba(42, 157, 255, 0.7) 100%
+            );
+            z-index: 1;
+        }
+        
+        /* Layer 2: Pola Grid Neon Biru */
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(42, 157, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(42, 157, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 2;
+            opacity: 0.6;
+            animation: gridPulse 20s linear infinite;
+        }
+        
+        /* Layer 3: Efek Glow & Cahaya */
+        .glow-effects {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            opacity: 0.5;
+        }
+        
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+        }
+        
+        .glow-orb-1 {
+            width: 300px;
+            height: 300px;
+            background: rgba(42, 157, 255, 0.3);
+            top: 10%;
+            left: 10%;
+            animation: floatOrb1 25s ease-in-out infinite;
+        }
+        
+        .glow-orb-2 {
+            width: 200px;
+            height: 200px;
+            background: rgba(26, 188, 156, 0.2);
+            top: 60%;
+            left: 80%;
+            animation: floatOrb2 30s ease-in-out infinite;
+        }
+        
+        .glow-orb-3 {
+            width: 150px;
+            height: 150px;
+            background: rgba(155, 89, 182, 0.15);
+            top: 20%;
+            left: 70%;
+            animation: floatOrb3 20s ease-in-out infinite;
+        }
+        
+        /* Layer 4: Efek Hujan/Tetesan */
+        .rain-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 4;
+            overflow: hidden;
+        }
+        
+        .raindrop {
+            position: absolute;
+            top: -20px;
+            width: 1px;
+            height: 20px;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.9));
+            border-radius: 0 0 2px 2px;
+            animation: rainFall linear infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+        
+        .raindrop:nth-child(1) {
+            left: 5%;
+            animation-duration: 1.8s;
+            animation-delay: 0.1s;
+            height: 25px;
+        }
+        
+        .raindrop:nth-child(2) {
+            left: 15%;
+            animation-duration: 2.2s;
+            animation-delay: 0.5s;
+            height: 18px;
+        }
+        
+        .raindrop:nth-child(3) {
+            left: 25%;
+            animation-duration: 1.5s;
+            animation-delay: 0.2s;
+            height: 22px;
+        }
+        
+        .raindrop:nth-child(4) {
+            left: 35%;
+            animation-duration: 2s;
+            animation-delay: 0.7s;
+            height: 20px;
+        }
+        
+        .raindrop:nth-child(5) {
+            left: 45%;
+            animation-duration: 2.3s;
+            animation-delay: 0.3s;
+            height: 24px;
+        }
+        
+        .raindrop:nth-child(6) {
+            left: 55%;
+            animation-duration: 1.7s;
+            animation-delay: 0.6s;
+            height: 19px;
+        }
+        
+        .raindrop:nth-child(7) {
+            left: 65%;
+            animation-duration: 2.1s;
+            animation-delay: 0.4s;
+            height: 21px;
+        }
+        
+        .raindrop:nth-child(8) {
+            left: 75%;
+            animation-duration: 1.9s;
+            animation-delay: 0.9s;
+            height: 23px;
+        }
+        
+        .raindrop:nth-child(9) {
+            left: 85%;
+            animation-duration: 2.4s;
+            animation-delay: 0.2s;
+            height: 17px;
+        }
+        
+        .raindrop:nth-child(10) {
+            left: 95%;
+            animation-duration: 1.6s;
+            animation-delay: 0.8s;
+            height: 20px;
+        }
+        
+        /* Tambahan tetesan hujan untuk kepadatan lebih */
+        .raindrop:nth-child(11) {
+            left: 8%;
+            animation-duration: 2s;
+            animation-delay: 1.1s;
+            height: 22px;
+        }
+        
+        .raindrop:nth-child(12) {
+            left: 22%;
+            animation-duration: 1.9s;
+            animation-delay: 1.3s;
+            height: 19px;
+        }
+        
+        .raindrop:nth-child(13) {
+            left: 38%;
+            animation-duration: 2.1s;
+            animation-delay: 1.5s;
+            height: 24px;
+        }
+        
+        .raindrop:nth-child(14) {
+            left: 52%;
+            animation-duration: 1.8s;
+            animation-delay: 1.7s;
+            height: 21px;
+        }
+        
+        .raindrop:nth-child(15) {
+            left: 68%;
+            animation-duration: 2.2s;
+            animation-delay: 1.9s;
+            height: 18px;
+        }
+        
+        .raindrop:nth-child(16) {
+            left: 82%;
+            animation-duration: 1.7s;
+            animation-delay: 2.1s;
+            height: 23px;
+        }
+        
+        .raindrop:nth-child(17) {
+            left: 12%;
+            animation-duration: 2.3s;
+            animation-delay: 2.3s;
+            height: 20px;
+        }
+        
+        .raindrop:nth-child(18) {
+            left: 32%;
+            animation-duration: 1.6s;
+            animation-delay: 2.5s;
+            height: 22px;
+        }
+        
+        .raindrop:nth-child(19) {
+            left: 48%;
+            animation-duration: 2s;
+            animation-delay: 2.7s;
+            height: 19px;
+        }
+        
+        .raindrop:nth-child(20) {
+            left: 72%;
+            animation-duration: 1.9s;
+            animation-delay: 2.9s;
+            height: 24px;
+        }
+        
+        /* Layer 5: Overlay Gelap untuk Kontras */
+        .overlay-dark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                ellipse at center,
+                transparent 0%,
+                rgba(10, 14, 26, 0.6) 70%,
+                rgba(10, 14, 26, 0.8) 100%
+            );
+            z-index: 5;
+        }
+        
+        /* ===== MAIN CONTAINER - LURUS & STABIL ===== */
+        .main-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* ===== PROFILE SECTION - PROFESSIONAL CARD ===== */
+        .profile-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan));
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glass-shadow), var(--glow-blue);
+        }
+        
+        .avatar-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--neon-blue);
+            box-shadow: 0 0 25px rgba(42, 157, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-avatar:hover {
+            box-shadow: 0 0 35px rgba(42, 157, 255, 0.8);
+            border-color: var(--neon-cyan);
+        }
+        
+        .username {
+            text-align: center;
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .social-link:hover {
+            background: var(--neon-blue-light);
+            transform: translateY(-3px);
+            box-shadow: var(--glow-blue);
+        }
+        
+        /* ===== MAIN MENU - 4 TOMBOL LURUS ===== */
+        .main-menu {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 30px;
+        }
+        
+        .menu-button {
+            width: 100%;
+            padding: 18px 24px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: white;
+            font-family: var(--font-body);
+            font-size: 17px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            /* LURUS - NO ROTATE */
+            transform: none !important;
+        }
+        
+        .menu-button i {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .menu-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: left 0.6s ease;
+        }
+        
+        .menu-button:hover::before {
+            left: 100%;
+        }
+        
+        .menu-button:hover {
+            transform: translateY(-3px) !important; /* Tetap LURUS */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .menu-button:hover i {
+            transform: scale(1.15);
+        }
+        
+        /* Color Variations - Tetap LURUS */
+        .btn-download {
+            background: linear-gradient(135deg, 
+                rgba(46, 204, 113, 0.15), 
+                rgba(46, 204, 113, 0.25));
+            border-color: rgba(46, 204, 113, 0.3);
+        }
+        
+        .btn-download:hover {
+            box-shadow: var(--glow-green);
+        }
+        
+        .btn-tools {
+            background: linear-gradient(135deg, 
+                rgba(155, 89, 182, 0.15), 
+                rgba(155, 89, 182, 0.25));
+            border-color: rgba(155, 89, 182, 0.3);
+        }
+        
+        .btn-tools:hover {
+            box-shadow: var(--glow-purple);
+        }
+        
+        .btn-downloader {
+            background: linear-gradient(135deg, 
+                rgba(243, 156, 18, 0.15), 
+                rgba(243, 156, 18, 0.25));
+            border-color: rgba(243, 156, 18, 0.3);
+        }
+        
+        .btn-downloader:hover {
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.7);
+        }
+        
+        .btn-social {
+            background: linear-gradient(135deg, 
+                rgba(42, 157, 255, 0.15), 
+                rgba(42, 157, 255, 0.25));
+            border-color: rgba(42, 157, 255, 0.3);
+        }
+        
+        .btn-social:hover {
+            box-shadow: var(--glow-blue);
+        }
+        
+        /* ===== REQUEST SECTION - PROFESSIONAL INPUT ===== */
+        .request-section {
+            width: 100%;
+            max-width: 400px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--glass-shadow);
+        }
+        
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--neon-cyan);
+        }
+        
+        .section-title i {
+            font-size: 20px;
+        }
+        
+        .message-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .message-input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(42, 157, 255, 0.3);
+        }
+        
+        .request-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .request-btn {
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: white;
+            /* LURUS - NO ROTATE */
+            transform: none !important;
+        }
+        
+        .request-btn:hover {
+            transform: translateY(-2px) !important; /* Tetap LURUS */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-telegram {
+            background: linear-gradient(135deg, #0088cc, #006699);
+        }
+        
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+        }
+        
+        /* ===== MODAL SYSTEM - PROFESSIONAL GLASS ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-container {
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow), 0 0 50px rgba(42, 157, 255, 0.2);
+            overflow: hidden;
+            transform: translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            padding: 25px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-title {
+            font-family: var(--font-heading);
+            font-size: 22px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+        }
+        
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background: rgba(231, 76, 60, 0.2);
+        }
+        
+        /* ===== SEARCH BAR - STYLE ===== */
+        .search-container {
+            padding: 20px 25px 10px 25px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar:focus-within {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(42, 157, 255, 0.3);
+        }
+        
+        .search-icon {
+            color: var(--neon-cyan);
+            font-size: 18px;
+            margin-right: 12px;
+        }
+        
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 15px;
+            outline: none;
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .clear-search {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0 5px;
+            display: none;
+            transition: color 0.3s ease;
+        }
+        
+        .clear-search:hover {
+            color: var(--neon-red);
+        }
+        
+        .search-hint {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 8px;
+            text-align: center;
+        }
+        
+        .modal-content {
+            padding: 25px;
+            overflow-y: auto;
+            max-height: calc(80vh - 140px);
+        }
+        
+        /* Custom Scrollbar */
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+        
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--neon-blue);
+            border-radius: 3px;
+        }
+        
+        /* ===== LINK GRID - PROFESSIONAL LAYOUT ===== */
+        .link-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        @media (min-width: 768px) {
+            .link-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .link-button {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            /* LURUS - NO ROTATE */
+            transform: none !important;
+        }
+        
+        .link-button:hover {
+            transform: translateY(-3px) !important; /* Tetap LURUS */
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .link-button i {
+            font-size: 22px;
+            width: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .link-button:hover i {
+            transform: scale(1.15);
+        }
+        
+        .link-text {
+            flex: 1;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        
+        .link-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
+        }
+        
+        .link-arrow {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .link-button:hover .link-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Link Color Variations */
+        .link-blue {
+            border-color: rgba(42, 157, 255, 0.3);
+        }
+        
+        .link-blue:hover {
+            box-shadow: var(--glow-blue);
+        }
+        
+        .link-green {
+            border-color: rgba(46, 204, 113, 0.3);
+        }
+        
+        .link-green:hover {
+            box-shadow: var(--glow-green);
+        }
+        
+        .link-purple {
+            border-color: rgba(155, 89, 182, 0.3);
+        }
+        
+        .link-purple:hover {
+            box-shadow: var(--glow-purple);
+        }
+        
+        .link-cyan {
+            border-color: rgba(26, 188, 156, 0.3);
+        }
+        
+        .link-cyan:hover {
+            box-shadow: var(--glow-cyan);
+        }
+        
+        .link-pink {
+            border-color: rgba(232, 67, 147, 0.3);
+        }
+        
+        .link-pink:hover {
+            box-shadow: 0 0 20px rgba(232, 67, 147, 0.7);
+        }
+        
+        .link-red {
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+        
+        .link-red:hover {
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.7);
+        }
+        
+        .link-gray {
+            border-color: rgba(149, 165, 166, 0.3);
+        }
+        
+        /* ===== SEARCH RESULTS ===== */
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .no-results i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: var(--neon-purple);
+        }
+        
+        /* ===== FOOTER - PROFESSIONAL STYLE ===== */
+        .footer {
+            text-align: center;
+            padding: 25px 0;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            width: 100%;
+            max-width: 400px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .copyright {
+            margin-bottom: 8px;
+        }
+        
+        .credit {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .credit strong {
+            color: var(--neon-cyan);
+        }
+        
+        /* ===== ANIMATION KEYFRAMES ===== */
+        @keyframes gridPulse {
+            0%, 100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+        
+        @keyframes floatOrb1 {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, 20px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 10px) scale(0.9);
+            }
+        }
+        
+        @keyframes floatOrb2 {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(-25px, 15px) scale(1.05);
+            }
+            66% {
+                transform: translate(15px, -10px) scale(0.95);
+            }
+        }
+        
+        @keyframes floatOrb3 {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(10px, -15px) scale(1.08);
+            }
+        }
+        
+        /* Animasi tetesan hujan */
+        @keyframes rainFall {
+            0% {
+                transform: translateY(-100px) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(30px);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+            }
+            
+            .profile-card {
+                padding: 25px;
+            }
+            
+            .username {
+                font-size: 24px;
+            }
+            
+            .menu-button {
+                padding: 16px 20px;
+                font-size: 16px;
+            }
+            
+            .modal-container {
+                width: 95%;
+            }
+            
+            .modal-title {
+                font-size: 20px;
+            }
+            
+            .search-container {
+                padding: 15px 20px 10px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .profile-avatar {
+                width: 85px;
+                height: 85px;
+            }
+            
+            .social-link {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .menu-button {
+                padding: 15px 18px;
+                font-size: 15px;
+            }
+            
+            .request-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-header {
+                padding: 20px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .search-container {
+                padding: 15px 15px 10px 15px;
+            }
+            
+            /* Kurangi jumlah tetesan hujan di mobile */
+            .raindrop:nth-child(n+15) {
+                display: none;
+            }
+        }
+        
+        /* ===== UTILITY CLASSES ===== */
+        .disabled {
+            opacity: 0.6;
+            cursor: not-allowed !important;
+        }
+        
+        .disabled:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .highlight {
+            background-color: rgba(42, 157, 255, 0.2);
+            border-radius: 2px;
+            padding: 0 2px;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 🌌 BACKGROUND LAYERS - NEON BIRU & HUJAN -->
+    <div class="background-container">
+        <!-- Layer 1: Gradient Neon Biru -->
+        <div class="bg-gradient"></div>
+        
+        <!-- Layer 2: Pola Grid -->
+        <div class="grid-pattern"></div>
+        
+        <!-- Layer 3: Efek Glow -->
+        <div class="glow-effects">
+            <div class="glow-orb glow-orb-1"></div>
+            <div class="glow-orb glow-orb-2"></div>
+            <div class="glow-orb glow-orb-3"></div>
+        </div>
+        
+        <!-- Layer 4: Efek Hujan/Tetesan -->
+        <div class="rain-container">
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+            <div class="raindrop"></div>
+        </div>
+        
+        <!-- Layer 5: Overlay Gelap -->
+        <div class="overlay-dark"></div>
+    </div>
+    
+    <!-- 🎮 MAIN CONTAINER -->
+    <main class="main-container">
+        <!-- 👤 PROFILE CARD -->
+        <section class="profile-card" style="animation: fadeIn 0.8s ease-out;">
+            <div class="avatar-container">
+                <img src="./media/avatar.png" alt="NandSkie" class="profile-avatar" 
+                     onerror="this.src='https://ui-avatars.com/api/?name=NandSkie&background=2a9dff&color=fff&bold=true&size=100'">
+            </div>
+            
+            <h1 class="username">@NandSkie</h1>
+            
+            <div class="social-links">
+                <a href="https://wa.me/6282331243615" target="_blank" class="social-link" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://youtube.com/@NandSkie" target="_blank" class="social-link" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.instagram.com/nandz.404" target="_blank" class="social-link" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </section>
+        
+        <!-- 🔘 MAIN MENU - 4 TOMBOL -->
+        <div class="main-menu">
+            <button class="menu-button btn-download" onclick="openModal('modalDownload')">
+                <i class="fas fa-download"></i>
+                <span>DOWNLOAD APK</span>
+            </button>
+            
+            <button class="menu-button btn-tools" onclick="openModal('modalTools')">
+                <i class="fas fa-tools"></i>
+                <span>OTHER TOOLS</span>
+            </button>
+            
+            <button class="menu-button btn-downloader" onclick="openModal('modalDownloader')">
+                <i class="fas fa-download"></i>
+                <span>DOWNLOADER MENU</span>
+            </button>
+            
+            <button class="menu-button btn-social" onclick="openModal('modalSocial')">
+                <i class="fas fa-share-alt"></i>
+                <span>SOCIAL MEDIA</span>
+            </button>
+        </div>
+        
+        <!-- 🛠 REQUEST SECTION -->
+        <section class="request-section" style="animation: fadeIn 0.8s ease-out 0.2s both;">
+            <h2 class="section-title">
+                <i class="fas fa-comment-dots"></i>
+                REQUEST / REPORT BUG
+            </h2>
+            
+            <input type="text" class="message-input" id="messageInput" placeholder="hi" value="hi">
+            
+            <div class="request-buttons">
+                <button class="request-btn btn-telegram" onclick="sendTelegram()">
+                    <i class="fab fa-telegram"></i>
+                    Kirim ke Telegram
+                </button>
+                <button class="request-btn btn-whatsapp" onclick="sendWhatsApp()">
+                    <i class="fab fa-whatsapp"></i>
+                    Kirim ke WhatsApp
+                </button>
+            </div>
+        </section>
+        
+        <!-- 📝 FOOTER -->
+        <footer class="footer" style="animation: fadeIn 0.8s ease-out 0.4s both;">
+            <div class="copyright">
+                NandSkie ©️ <span id="currentYear">2026</span>
+            </div>
+            <div class="credit">
+                Website dibuat oleh <strong>NandSkie</strong>
+            </div>
+        </footer>
+    </main>
+    
+    <!-- 🪟 MODALS -->
+    
+    <!-- DOWNLOAD APK MODAL - WITH SEARCH -->
+    <div class="modal-overlay" id="modalDownload" onclick="closeModalOnBackground(event, 'modalDownload')">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-download"></i>
+                    DOWNLOAD APK
+                </h2>
+                <button class="modal-close" onclick="closeModal('modalDownload')">&times;</button>
+            </div>
+            
+            <!-- 🔎 SEARCH BAR -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="apkSearch" placeholder="🔎 Cari APK, contoh: Game Guardian, WhatsApp, Instagram..." autocomplete="off">
+                    <button class="clear-search" id="clearApkSearch" onclick="clearSearch('apkSearch', 'apkLinks', 'noResultsApk')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="search-hint">
+                    Ketik nama APK untuk mencari, contoh: <strong>Game Guardian</strong>, <strong>WhatsApp</strong>, <strong>Instagram</strong>
+                </div>
+            </div>
+            
+            <div class="modal-content">
+                <div class="link-grid" id="apkLinks">
+                    <!-- Link APK akan di-generate oleh JavaScript -->
+                </div>
+                
+                <!-- No Results Message -->
+                <div class="no-results hidden" id="noResultsApk">
+                    <i class="fas fa-search"></i>
+                    <h3>Tidak ada hasil ditemukan</h3>
+                    <p>Coba kata kunci lain seperti <strong>Game Guardian</strong>, <strong>WhatsApp</strong>, atau <strong>Instagram</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- OTHER TOOLS MODAL - WITH SEARCH -->
+    <div class="modal-overlay" id="modalTools" onclick="closeModalOnBackground(event, 'modalTools')">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-tools"></i>
+                    OTHER TOOLS
+                </h2>
+                <button class="modal-close" onclick="closeModal('modalTools')">&times;</button>
+            </div>
+            
+            <!-- 🔎 SEARCH BAR -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="toolsSearch" placeholder="🔎 Cari Tools, contoh: Winrate, Magicwheel, Zodiac..." autocomplete="off">
+                    <button class="clear-search" id="clearToolsSearch" onclick="clearSearch('toolsSearch', 'toolsLinks', 'noResultsTools')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="search-hint">
+                    Ketik nama tool untuk mencari, contoh: <strong>Winrate</strong>, <strong>Magicwheel</strong>, <strong>Zodiac</strong>
+                </div>
+            </div>
+            
+            <div class="modal-content">
+                <div class="link-grid" id="toolsLinks">
+                    <!-- Link Tools akan di-generate oleh JavaScript -->
+                </div>
+                
+                <!-- No Results Message -->
+                <div class="no-results hidden" id="noResultsTools">
+                    <i class="fas fa-search"></i>
+                    <h3>Tidak ada hasil ditemukan</h3>
+                    <p>Coba kata kunci lain seperti <strong>Winrate</strong>, <strong>Magicwheel</strong>, atau <strong>Zodiac</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- DOWNLOADER MENU MODAL - WITH SEARCH -->
+    <div class="modal-overlay" id="modalDownloader" onclick="closeModalOnBackground(event, 'modalDownloader')">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-download"></i>
+                    DOWNLOADER MENU
+                </h2>
+                <button class="modal-close" onclick="closeModal('modalDownloader')">&times;</button>
+            </div>
+            
+            <!-- 🔎 SEARCH BAR -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="downloaderSearch" placeholder="🔎 Cari Downloader, contoh: Instagram, TikTok, Facebook..." autocomplete="off">
+                    <button class="clear-search" id="clearDownloaderSearch" onclick="clearSearch('downloaderSearch', 'downloaderLinks', 'noResultsDownloader')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="search-hint">
+                    Ketik nama downloader untuk mencari, contoh: <strong>Instagram</strong>, <strong>TikTok</strong>, <strong>Facebook</strong>
+                </div>
+            </div>
+            
+            <div class="modal-content">
+                <div class="link-grid" id="downloaderLinks">
+                    <!-- Link Downloader akan di-generate oleh JavaScript -->
+                </div>
+                
+                <!-- No Results Message -->
+                <div class="no-results hidden" id="noResultsDownloader">
+                    <i class="fas fa-search"></i>
+                    <h3>Tidak ada hasil ditemukan</h3>
+                    <p>Coba kata kunci lain seperti <strong>Instagram</strong>, <strong>TikTok</strong>, atau <strong>Facebook</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SOCIAL MEDIA MODAL - WITH SEARCH -->
+    <div class="modal-overlay" id="modalSocial" onclick="closeModalOnBackground(event, 'modalSocial')">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-share-alt"></i>
+                    SOCIAL MEDIA
+                </h2>
+                <button class="modal-close" onclick="closeModal('modalSocial')">&times;</button>
+            </div>
+            
+            <!-- 🔎 SEARCH BAR -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="socialSearch" placeholder="🔎 Cari Media Sosial, contoh: WhatsApp, Instagram, YouTube..." autocomplete="off">
+                    <button class="clear-search" id="clearSocialSearch" onclick="clearSearch('socialSearch', 'socialLinks', 'noResultsSocial')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="search-hint">
+                    Ketik nama media sosial untuk mencari, contoh: <strong>WhatsApp</strong>, <strong>Instagram</strong>, <strong>YouTube</strong>
+                </div>
+            </div>
+            
+            <div class="modal-content">
+                <div class="link-grid" id="socialLinks">
+                    <!-- Link Social Media akan di-generate oleh JavaScript -->
+                </div>
+                
+                <!-- No Results Message -->
+                <div class="no-results hidden" id="noResultsSocial">
+                    <i class="fas fa-search"></i>
+                    <h3>Tidak ada hasil ditemukan</h3>
+                    <p>Coba kata kunci lain seperti <strong>WhatsApp</strong>, <strong>Instagram</strong>, atau <strong>YouTube</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ⚡ JAVASCRIPT -->
+    <script>
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Initialize message input
+            const messageInput = document.getElementById('messageInput');
+            if (messageInput) {
+                messageInput.addEventListener('focus', function() {
+                    this.select();
+                });
+                
+                messageInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendTelegram();
+                    }
+                });
+            }
+            
+            // Initialize all data and search
+            initAllData();
+            initAllSearch();
+            
+            // Add smooth hover effects
+            initHoverEffects();
+            
+            // Generate more raindrops dynamically
+            generateRaindrops();
+            
+            // Console welcome message
+            console.log('%c🎮 NandSkie Official Links', 'font-size: 18px; font-weight: bold; color: #2a9dff;');
+            console.log('%cWebsite dengan pencarian di semua layout berhasil dimuat!', 'color: #2ecc71;');
+        });
+        
+        // ===== DATA INITIALIZATION =====
+        let apkData = [];
+        let toolsData = [];
+        let downloaderData = [];
+        let socialData = [];
+        
+        function initAllData() {
+            // Daftar APK yang tersedia
+            apkData = [
+                {
+                    name: "Multi Space + Game Guardian",
+                    desc: "Game hacking tool untuk modifikasi game",
+                    url: "https://sub4unlock.co/zmWAZK",
+                    icon: "fas fa-gamepad",
+                    color: "purple",
+                    tags: ["game", "hack", "mod", "cheat", "guardian"]
+},
+                {
+                    name: "Bully Anniversary Edition [Original]",
+                    desc: "Bully Anniversary Edition versi original, tanpa mod, mulai dari nol",
+                    url: "https://NandSkie.github.io/download-page/bully",
+                    icon: "fas fa-gamepad",
+                    color: "cyan",
+                    tags: ["game", "bully", "download", "original", "pc", "mobile"]
+                },
+                {
+                    name: "Clone Master [PREMIUM]",
+                    desc: "Clone Master Premium No ADS",
+                    url: "https://NandSkie.github.io/download-page/clone-master",
+                    icon: "fas fa-gamepad",
+                    color: "cyan",
+                    tags: ["premium", "master", "clone"]
+                }
+            ];
+            
+            // Daftar Tools yang tersedia
+            toolsData = [
+                {
+                    name: "Winrate Calculator",
+                    desc: "Hitung winrate Mobile Legends dengan akurat",
+                    url: "winrate-calculate.html",
+                    icon: "fas fa-chart-line",
+                    color: "cyan",
+                    tags: ["winrate", "calculator", "ml", "mobile legends", "statistik"]
+                },
+                {
+                    name: "Magicwheel Calculator",
+                    desc: "Kalkulator untuk menghitung magic wheel MLBB",
+                    url: "magicwheel-calculate.html",
+                    icon: "fas fa-atom",
+                    color: "purple",
+                    tags: ["magicwheel", "calculator", "mlbb", "spin", "luck"]
+                },
+                {
+                    name: "Zodiac Calculator",
+                    desc: "Kalkulator zodiak dan ramalan harian",
+                    url: "zodiac-calculate.html",
+                    icon: "fas fa-puzzle-piece",
+                    color: "blue",
+                    tags: ["zodiac", "calculator", "horoscope", "ramalan", "bintang"]
+                },
+                {
+                    name: "Pure Status WhatsApp",
+                    desc: "Status WhatsApp tanpa watermark dan iklan",
+                    url: "https://pure.zenand.my.id/",
+                    icon: "fas fa-cloud-upload-alt",
+                    color: "green",
+                    tags: ["pure", "status", "whatsapp", "download", "video"]
+                },
+                {
+                    name: "FullScreen Profile WhatsApp",
+                    desc: "Foto Profile WhatsApp Support Ukuran 9:16",
+                    url: "https://pure.zenand.my.id/",
+                    icon: "fas fa-cloud-upload-alt",
+                    color: "green",
+                    tags: ["panjang", "pp", "whatsapp", "hd", "profile"]
+                }
+            ];
+            
+            // Daftar Downloader yang tersedia
+            downloaderData = [
+                {
+                    name: "Instagram Downloader",
+                    desc: "Download video dan foto dari Instagram",
+                    url: "Instagram-downloader.html",
+                    icon: "fab fa-instagram",
+                    color: "pink",
+                    tags: ["instagram", "downloader", "video", "foto", "story"]
+                },
+                {
+                    name: "TikTok Downloader",
+                    desc: "Download video TikTok tanpa watermark",
+                    url: "tiktok-downloader.html",
+                    icon: "fab fa-tiktok",
+                    color: "cyan",
+                    tags: ["tiktok", "downloader", "video", "short", "watermark"]
+                },
+                {
+                    name: "Facebook Downloader",
+                    desc: "Download video dari Facebook dengan mudah",
+                    url: "facebook-downloader.html",
+                    icon: "fab fa-facebook",
+                    color: "blue",
+                    tags: ["facebook", "downloader", "video", "reels", "story"]
+                },
+                {
+                    name: "YouTube Downloader",
+                    desc: "Download video dan audio dari YouTube",
+                    url: "youtube-downloader.html",
+                    icon: "fab fa-youtube",
+                    color: "red",
+                    tags: ["youtube", "downloader", "video", "audio", "mp3"]
+                }
+            ];
+            
+            // Daftar Social Media yang tersedia
+            socialData = [
+                {
+                    name: "WhatsApp Personal",
+                    desc: "Chat langsung dengan NandSkie",
+                    url: "https://wa.me/6282331243615",
+                    icon: "fab fa-whatsapp",
+                    color: "green",
+                    tags: ["whatsapp", "personal", "chat", "contact", "NandSkie"]
+                },
+                {
+                    name: "WhatsApp Bot",
+                    desc: "WhatsApp bot dengan berbagai fitur",
+                    url: "https://wa.me/6285126839864?text=.menu",
+                    icon: "fab fa-whatsapp",
+                    color: "green",
+                    tags: ["whatsapp", "bot", "automation", "command", "menu"]
+                },
+                {
+                    name: "Group MLBB",
+                    desc: "Grup WhatsApp untuk pemain MLBB",
+                    url: "https://chat.whatsapp.com/IBpzOhIM5CaE5zs71kxKtC",
+                    icon: "fab fa-whatsapp",
+                    color: "green",
+                    tags: ["group", "mlbb", "mobile legends", "gaming", "community"]
+                },
+                {
+                    name: "Instagram",
+                    desc: "Follow Instagram NandSkie",
+                    url: "https://www.instagram.com/nandz.404",
+                    icon: "fab fa-instagram",
+                    color: "pink",
+                    tags: ["instagram", "NandSkie", "follow", "social", "photo"]
+                },
+                {
+                    name: "GitHub",
+                    desc: "Lihat project dan source code NandSkie",
+                    url: "https://github.com/NandSkie",
+                    icon: "fab fa-github",
+                    color: "gray",
+                    tags: ["github", "code", "project", "repository", "developer"]
+                },
+                {
+                    name: "YouTube",
+                    desc: "Subscribe channel YouTube NandSkie",
+                    url: "https://youtube.com/@NandSkie",
+                    icon: "fab fa-youtube",
+                    color: "red",
+                    tags: ["youtube", "channel", "video", "subscribe", "content"]
+                },
+                {
+                    name: "Telegram",
+                    desc: "Join channel Telegram NandSkie",
+                    url: "https://t.me/NandCrazyRich",
+                    icon: "fab fa-telegram",
+                    color: "cyan",
+                    tags: ["telegram", "channel", "group", "messenger", "update"]
+                }
+            ];
+            
+            // Render initial data untuk semua modal
+            renderList('apkLinks', apkData);
+            renderList('toolsLinks', toolsData);
+            renderList('downloaderLinks', downloaderData);
+            renderList('socialLinks', socialData);
+        }
+        
+        function renderList(containerId, items) {
+            const container = document.getElementById(containerId);
+            const noResults = document.getElementById(`noResults${containerId.replace('Links', '')}`);
+            
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (items.length === 0) {
+                if (noResults) noResults.classList.remove('hidden');
+                return;
+            }
+            
+            if (noResults) noResults.classList.add('hidden');
+            
+            items.forEach(item => {
+                const link = document.createElement('a');
+                link.className = `link-button link-${item.color} ${item.url === '#' ? 'disabled' : ''}`;
+                link.href = item.url;
+                link.target = item.url.startsWith('http') ? '_blank' : '_self';
+                if (item.url === '#') {
+                    link.onclick = (e) => e.preventDefault();
+                }
+                
+                link.innerHTML = `
+                    <i class="${item.icon}"></i>
+                    <div>
+                        <div class="link-text">${item.name}</div>
+                        <div class="link-desc">${item.desc}</div>
+                    </div>
+                    <span class="link-arrow">→</span>
+                `;
+                
+                container.appendChild(link);
+            });
+        }
+        
+        // ===== SEARCH FUNCTIONALITY =====
+        function initAllSearch() {
+            // Setup search untuk semua modal
+            setupSearch('apkSearch', 'apkLinks', 'noResultsApk', apkData);
+            setupSearch('toolsSearch', 'toolsLinks', 'noResultsTools', toolsData);
+            setupSearch('downloaderSearch', 'downloaderLinks', 'noResultsDownloader', downloaderData);
+            setupSearch('socialSearch', 'socialLinks', 'noResultsSocial', socialData);
+            
+            // Focus search ketika modal dibuka
+            document.querySelectorAll('.menu-button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    setTimeout(() => {
+                        const modalType = this.querySelector('span').textContent.toLowerCase();
+                        let searchId = '';
+                        
+                        if (modalType.includes('apk')) searchId = 'apkSearch';
+                        else if (modalType.includes('tools')) searchId = 'toolsSearch';
+                        else if (modalType.includes('downloader')) searchId = 'downloaderSearch';
+                        else if (modalType.includes('social')) searchId = 'socialSearch';
+                        
+                        const searchInput = document.getElementById(searchId);
+                        if (searchInput) {
+                            searchInput.focus();
+                        }
+                    }, 300);
+                });
+            });
+        }
+        
+        function setupSearch(searchInputId, containerId, noResultsId, dataArray) {
+            const searchInput = document.getElementById(searchInputId);
+            const clearBtn = document.getElementById(`clear${searchInputId.charAt(0).toUpperCase() + searchInputId.slice(1)}`);
+            
+            if (!searchInput) return;
+            
+            // Search on input
+            searchInput.addEventListener('input', function() {
+                performSearch(this.value, containerId, noResultsId, dataArray);
+                updateClearButton(this.value, clearBtn);
+            });
+            
+            // Clear search on X click
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function() {
+                    searchInput.value = '';
+                    searchInput.focus();
+                    performSearch('', containerId, noResultsId, dataArray);
+                    updateClearButton('', clearBtn);
+                });
+            }
+        }
+        
+        function performSearch(query, containerId, noResultsId, dataArray) {
+            if (!query.trim()) {
+                renderList(containerId, dataArray);
+                return;
+            }
+            
+            const searchTerm = query.toLowerCase().trim();
+            const results = dataArray.filter(item => {
+                // Cari di nama, deskripsi, dan tags
+                return item.name.toLowerCase().includes(searchTerm) ||
+                       item.desc.toLowerCase().includes(searchTerm) ||
+                       (item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchTerm)));
+            });
+            
+            // Highlight matching text
+            const highlightedResults = results.map(item => {
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                const highlightedName = item.name.replace(regex, '<span class="highlight">$1</span>');
+                const highlightedDesc = item.desc.replace(regex, '<span class="highlight">$1</span>');
+                
+                return {
+                    ...item,
+                    name: highlightedName,
+                    desc: highlightedDesc
+                };
+            });
+            
+            renderSearchResults(containerId, noResultsId, highlightedResults);
+        }
+        
+        function renderSearchResults(containerId, noResultsId, results) {
+            const container = document.getElementById(containerId);
+            const noResults = document.getElementById(noResultsId);
+            
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (results.length === 0) {
+                if (noResults) noResults.classList.remove('hidden');
+                return;
+            }
+            
+            if (noResults) noResults.classList.add('hidden');
+            
+            results.forEach(item => {
+                const link = document.createElement('a');
+                link.className = `link-button link-${item.color} ${item.url === '#' ? 'disabled' : ''}`;
+                link.href = item.url;
+                link.target = item.url.startsWith('http') ? '_blank' : '_self';
+                if (item.url === '#') {
+                    link.onclick = (e) => e.preventDefault();
+                }
+                
+                link.innerHTML = `
+                    <i class="${item.icon}"></i>
+                    <div>
+                        <div class="link-text">${item.name}</div>
+                        <div class="link-desc">${item.desc}</div>
+                    </div>
+                    <span class="link-arrow">→</span>
+                `;
+                
+                container.appendChild(link);
+            });
+        }
+        
+        function updateClearButton(value, clearBtn) {
+            if (clearBtn) {
+                clearBtn.style.display = value.trim() ? 'block' : 'none';
+            }
+        }
+        
+        function clearSearch(searchInputId, containerId, noResultsId) {
+            const searchInput = document.getElementById(searchInputId);
+            const dataArray = getDataArrayByContainerId(containerId);
+            
+            if (searchInput) {
+                searchInput.value = '';
+                performSearch('', containerId, noResultsId, dataArray);
+                updateClearButton('', document.getElementById(`clear${searchInputId.charAt(0).toUpperCase() + searchInputId.slice(1)}`));
+            }
+        }
+        
+        function getDataArrayByContainerId(containerId) {
+            switch(containerId) {
+                case 'apkLinks': return apkData;
+                case 'toolsLinks': return toolsData;
+                case 'downloaderLinks': return downloaderData;
+                case 'socialLinks': return socialData;
+                default: return [];
+            }
+        }
+        
+        // ===== RAINDROP GENERATION =====
+        function generateRaindrops() {
+            const rainContainer = document.querySelector('.rain-container');
+            if (!rainContainer) return;
+            
+            // Clear existing raindrops except the CSS ones
+            while (rainContainer.children.length > 20) {
+                rainContainer.removeChild(rainContainer.lastChild);
+            }
+            
+            // Generate additional raindrops
+            for (let i = 0; i < 30; i++) {
+                const raindrop = document.createElement('div');
+                raindrop.className = 'raindrop';
+                
+                // Random position
+                const left = Math.random() * 100;
+                
+                // Random properties
+                const duration = 1.5 + Math.random() * 1.5;
+                const delay = Math.random() * 3;
+                const height = 15 + Math.random() * 15;
+                
+                // Apply styles
+                raindrop.style.left = `${left}%`;
+                raindrop.style.height = `${height}px`;
+                raindrop.style.animationDuration = `${duration}s`;
+                raindrop.style.animationDelay = `${delay}s`;
+                raindrop.style.opacity = `${0.3 + Math.random() * 0.7}`;
+                
+                rainContainer.appendChild(raindrop);
+            }
+        }
+        
+        // ===== MODAL FUNCTIONS =====
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Reset search jika membuka modal
+                setTimeout(() => {
+                    const searchInput = modal.querySelector('.search-input');
+                    if (searchInput) {
+                        searchInput.value = '';
+                        const containerId = modal.querySelector('.link-grid').id;
+                        const noResultsId = modal.querySelector('.no-results').id;
+                        const dataArray = getDataArrayByContainerId(containerId);
+                        performSearch('', containerId, noResultsId, dataArray);
+                        searchInput.focus();
+                    }
+                }, 300);
+            }
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        function closeModalOnBackground(event, modalId) {
+            if (event.target.classList.contains('modal-overlay')) {
+                closeModal(modalId);
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const activeModals = document.querySelectorAll('.modal-overlay.active');
+                activeModals.forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // ===== REQUEST FUNCTIONS =====
+        function sendTelegram() {
+            const message = document.getElementById('messageInput').value;
+            const encodedMessage = encodeURIComponent(message);
+            const telegramUrl = `https://t.me/Nand_Xiu?text=${encodedMessage}`;
+            window.open(telegramUrl, '_blank');
+        }
+        
+        function sendWhatsApp() {
+            const message = document.getElementById('messageInput').value;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/6282331243615?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // ===== UI ENHANCEMENTS =====
+        function initHoverEffects() {
+            // Add click feedback to all interactive elements
+            const interactiveElements = document.querySelectorAll('button, .link-button, .social-link');
+            
+            interactiveElements.forEach(element => {
+                element.addEventListener('mousedown', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                element.addEventListener('mouseup', function() {
+                    this.style.transform = '';
+                });
+                
+                element.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
+            
+            // Add subtle animation to profile avatar
+            const avatar = document.querySelector('.profile-avatar');
+            if (avatar) {
+                setInterval(() => {
+                    avatar.style.boxShadow = `0 0 ${25 + Math.random() * 10}px rgba(42, 157, 255, ${0.5 + Math.random() * 0.3})`;
+                }, 3000);
+            }
+        }
+        
+        // ===== PERFORMANCE OPTIMIZATIONS =====
+        // Debounce scroll events for better performance
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                // Optional: Add scroll-based effects here
+            }, 100);
+        });
+        
+        // Touch device detection for hover effects
+        function isTouchDevice() {
+            return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        }
+        
+        if (isTouchDevice()) {
+            document.body.classList.add('touch-device');
+        }
+    </script>
+</body>
+</html>
